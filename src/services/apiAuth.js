@@ -50,7 +50,7 @@ export async function getCurrentUser() {
 
 
 export async function logout(){
-
+  localStorage.removeItem('auth-token');
 }
 
 export async function updateCurrentUser({ password, fullName, avatar }){
