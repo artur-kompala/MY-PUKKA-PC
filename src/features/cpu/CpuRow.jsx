@@ -14,7 +14,9 @@ function CpuRow({cpu: {
     graphics,
     price,
     smt,
-    tdp
+    tdp,
+    Rank,
+    Benchmark,
 }}) {
 
     function checkManufacture(name){
@@ -30,7 +32,7 @@ function CpuRow({cpu: {
     return (
         <Table.Row>
             {checkManufacture(name)}
-            <span>?</span>
+            <span>{Rank || "-"}</span>
             <span>{name}</span>
             <div>{core_count}</div>
             <div>{core_clock}</div>
@@ -38,8 +40,8 @@ function CpuRow({cpu: {
             <div>{graphics || "-"}</div>
             <div>{tdp}</div>
             <div>{smt ? "Yes" : "No"}</div>
-            <div>{price}</div>
-            <span>Score</span>
+            <div>{price || "-"}</div>
+            <span>{Benchmark || "-"}</span>
             <div>
                 <Button size='small'>+Add to Build</Button>
             </div>

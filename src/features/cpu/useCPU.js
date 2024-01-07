@@ -4,7 +4,7 @@ import { useSearchParams } from "react-router-dom";
 import { PAGE_SIZE } from "../../utils/constants";
 
 export function useCPU() {
-  /*
+  
   const queryClient = useQueryClient();
   const [searchParams] = useSearchParams();
 
@@ -23,18 +23,18 @@ export function useCPU() {
 
   // PAGINATION
   const page = !searchParams.get("page") ? 1 : Number(searchParams.get("page"));
-  */
+  
   // QUERY
   const {
     isLoading,
-    data: cpus = {},
-    count = 1,
+    data: cpus= {},
+    count = cpus.length,
     error,
   } = useQuery({
-    queryKey: ["cpus"],
-    queryFn: () => getCPU(),
+    queryKey: ["cpus", filter, sortBy, page],
+    queryFn: () => getCPU({filter, sortBy, page}),
   });
-  /*
+  
   // PRE-FETCHING
   const pageCount = Math.ceil(count / PAGE_SIZE);
 
@@ -49,7 +49,7 @@ export function useCPU() {
       queryKey: ["cpus", filter, sortBy, page - 1],
       queryFn: () => getCPU({ filter, sortBy, page: page - 1 }),
     });
-  */
+  
 
   return { isLoading, error, cpus, count };
 }

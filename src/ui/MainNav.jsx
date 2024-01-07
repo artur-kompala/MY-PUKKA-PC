@@ -73,7 +73,7 @@ function MainNav() {
         <li>
           <StyledNavLink to="/builder">
           <FaScrewdriverWrench />
-            <span>PcBuilder</span>
+            <span>PCBuilder</span>
           </StyledNavLink>
         </li>
         <li>
