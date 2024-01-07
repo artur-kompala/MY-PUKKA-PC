@@ -8,6 +8,20 @@ import ProtectedRoute from "./ui/ProtectedRoute"
 import AppLayout from "./ui/AppLayout";
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { Toaster } from "react-hot-toast";
+import Cpu from "./pages/Cpu";
+import CpuCooler from "./pages/CpuCooler"
+import Mobo from "./pages/Mobo"
+import Gpu from "./pages/Gpu"
+import Os from "./pages/Os"
+import Psu from "./pages/Psu"
+import Case from "./pages/Case"
+import CaseFan from "./pages/CaseFan"
+import Ram from "./pages/Ram"
+import Storage from "./pages/Storage"
+import Account from "./pages/Account";
+import Builder from "./pages/Builder";
+
+
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -34,6 +48,18 @@ function App() {
               }
             >
             <Route path="home" element={<Home />} />
+            <Route path="builder" element={<Builder />} />
+            <Route path="cpu" element={<Cpu />} />
+            <Route path="cpu-cooler" element={<CpuCooler />} />
+            <Route path="mobo" element={<Mobo />} />
+            <Route path="gpu" element={<Gpu />} />
+            <Route path="os" element={<Os />} />
+            <Route path="psu" element={<Psu />} />
+            <Route path="case" element={<Case />} />
+            <Route path="case-fan" element={<CaseFan />} />
+            <Route path="ram" element={<Ram />} />
+            <Route path="Storage" element={<Storage />} />
+            <Route path="account" element={<Account />} />
             </Route>
             <Route path="login" element={<Login />} />
             <Route path="*" />

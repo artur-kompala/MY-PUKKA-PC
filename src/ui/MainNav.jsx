@@ -1,12 +1,19 @@
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import {
+  HiMiniCpuChip,
   HiOutlineCalendarDays,
   HiOutlineCog6Tooth,
   HiOutlineHome,
   HiOutlineHomeModern,
   HiOutlineUsers,
 } from "react-icons/hi2";
+import { GiComputerFan } from "react-icons/gi";
+import { BsMotherboard, BsGpuCard ,BsMemory, BsWindows} from "react-icons/bs";
+import { MdOutlinePower, MdSdStorage} from "react-icons/md";
+import { PiComputerTowerLight } from "react-icons/pi";
+import { GrFanOption } from "react-icons/gr";
+import { FaScrewdriverWrench } from "react-icons/fa6";
 
 const NavList = styled.ul`
   display: flex;
@@ -58,27 +65,75 @@ function MainNav() {
     <nav>
       <NavList>
         <li>
-          <StyledNavLink to="/dashboard">
+          <StyledNavLink to="/home">
             <HiOutlineHome />
             <span>Home</span>
           </StyledNavLink>
         </li>
         <li>
-          <StyledNavLink to="/bookings">
-            <HiOutlineCalendarDays />
-            <span>Bookings</span>
+          <StyledNavLink to="/builder">
+          <FaScrewdriverWrench />
+            <span>PcBuilder</span>
           </StyledNavLink>
         </li>
         <li>
-          <StyledNavLink to="/cabins">
-            <HiOutlineHomeModern />
-            <span>Cabins</span>
+          <StyledNavLink to="/cpu">
+            <HiMiniCpuChip />
+            <span>CPU</span>
           </StyledNavLink>
         </li>
         <li>
-          <StyledNavLink to="/users">
-            <HiOutlineUsers />
-            <span>Users</span>
+          <StyledNavLink to="/cpu-cooler">
+          <GiComputerFan />
+            <span>CPU-Cooler</span>
+          </StyledNavLink>
+        </li>
+        <li>
+          <StyledNavLink to="/mobo">
+            <BsMotherboard />
+            <span>Motherboard</span>
+          </StyledNavLink>
+        </li>
+        <li>
+          <StyledNavLink to="/gpu">
+            <BsGpuCard />
+            <span>GPU</span>
+          </StyledNavLink>
+        </li>
+        <li>
+          <StyledNavLink to="/ram">
+            <BsMemory />
+            <span>RAM</span>
+          </StyledNavLink>
+        </li>
+        <li>
+          <StyledNavLink to="/psu">
+            <MdOutlinePower />
+            <span>Power Supply</span>
+          </StyledNavLink>
+        </li>
+        <li>
+          <StyledNavLink to="/case">
+          <PiComputerTowerLight />
+            <span>Case</span>
+          </StyledNavLink>
+        </li>
+        <li>
+          <StyledNavLink to="/case-fan">
+          <GrFanOption />
+            <span>Case fan</span>
+          </StyledNavLink>
+        </li>
+        <li>
+          <StyledNavLink to="/storage">
+            <MdSdStorage />
+            <span>Storage</span>
+          </StyledNavLink>
+        </li>
+        <li>
+          <StyledNavLink to="/os">
+            <BsWindows />
+            <span>OS</span>
           </StyledNavLink>
         </li>
         <li>
