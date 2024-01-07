@@ -7,11 +7,13 @@ import CpuRow from "./CpuRow"
 import Spinner from "../../ui/Spinner"
 import { getCPU } from '../../services/apiCPU';
 import Pagination from "../../ui/Pagination";
+import { useCPU } from "./useCPU";
 
 
 
 
 function CpuTable() {
+  /*
   const [cpus, setCpus] = useState([]);
   const [count, setCount] = useState(1);
 
@@ -29,8 +31,14 @@ function CpuTable() {
 
     fetchDataAsync();
   }, []);
+  */
+  const { cpus, isLoading, count } = useCPU();
+
+  if (isLoading) return <Spinner />;
+
+  if (!cpus.length) return <Empty resourceName="cpus" />;
   console.log(cpus);
-    
+  
   
     return (
       
@@ -54,7 +62,7 @@ function CpuTable() {
         <Table.Body
           data={cpus}
           render={(cpu) => (
-            <CpuRow key={cpu.id} cpu={cpu} />
+            <CpuRow key={cpu._id} cpu={cpu} />
           )}
         />
 
