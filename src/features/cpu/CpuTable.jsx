@@ -37,8 +37,6 @@ function CpuTable() {
   if (isLoading) return <Spinner />;
 
   if (!cpus.length) return <Empty resourceName="cpus" />;
-  console.log(cpus);
-  
   
     return (
       

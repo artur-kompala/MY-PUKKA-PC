@@ -2,11 +2,16 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getCPU } from "../../services/apiCPU";
 import { useSearchParams } from "react-router-dom";
 import { PAGE_SIZE } from "../../utils/constants";
+import axios from "axios";
+const url = "http://localhost:5000";
 
 export function useCPU() {
   
   const queryClient = useQueryClient();
   const [searchParams] = useSearchParams();
+
+  const count = 1353
+
 
   // FILTER
   const filterValue = searchParams.get("status");
@@ -17,23 +22,22 @@ export function useCPU() {
   // { field: "totalPrice", value: 5000, method: "gte" };
 
   // SORT
-  const sortByRaw = searchParams.get("sortBy") || "startDate-desc";
-  const [field, direction] = sortByRaw.split("-");
-  const sortBy = { field, direction };
+  const sortBy = searchParams.get("sortBy") || "Rank-desc";
+ 
 
   // PAGINATION
   const page = !searchParams.get("page") ? 1 : Number(searchParams.get("page"));
   
   // QUERY
-  const {
+  const {   
     isLoading,
-    data: cpus= {},
-    count = cpus.length,
+    data: cpus = {},
     error,
   } = useQuery({
     queryKey: ["cpus", filter, sortBy, page],
     queryFn: () => getCPU({filter, sortBy, page}),
   });
+  
   
   // PRE-FETCHING
   const pageCount = Math.ceil(count / PAGE_SIZE);
