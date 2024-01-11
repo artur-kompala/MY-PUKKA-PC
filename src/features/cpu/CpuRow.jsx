@@ -17,6 +17,7 @@ function CpuRow({cpu: {
     tdp,
     Rank,
     Benchmark,
+    manufacture
 }}) {
 
     function checkManufacture(name){
@@ -31,7 +32,7 @@ function CpuRow({cpu: {
  
     return (
         <Table.Row>
-            {checkManufacture(name)}
+            {checkManufacture(manufacture)}
             <span>{Rank || "-"}</span>
             <span>{name}</span>
             <div>{core_count}</div>
