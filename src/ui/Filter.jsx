@@ -1,14 +1,10 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import FilterComponent from "./FilterComponent";
-import {
-  FormControlLabel,
-  Radio,
-  RadioGroup,
-} from "@mui/material";
+import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
 
 import RangeSlider from "./RangeSlider";
-import { useSearchParams} from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import Button from "./Button";
 
 const StyledFilter = styled.div`
@@ -24,152 +20,204 @@ const color = {
     color: "#4f46e5",
   },
 };
-function Filter() {
-  const [manufacturesFilter, setManufacturesFilter] = useState('All');
-  const [graphicFilter, setGraphicFilter] = useState('All');
-  const [smtFilter, setSmtFilter] = useState('All');
-  const [coreCountFilter, setCoreCountFilter] = React.useState([1, 64]);
-  const [coreClockFilter, setCoreClockFilter] = React.useState([1, 5]);
-  const [boostClockFilter, setBoostClockFilter] = React.useState([1, 5]);
-  const [tdpFilter, setTdpFilter] = React.useState([1, 200]);
-  const [priceFilter, setPriceFilter] = React.useState([0, 4500]);
-  const [scoreFilter, setScoreFilter] = React.useState([29.7, 131]);
-  const [searchParams, setSearchParams] = useSearchParams();
-  
-  useEffect(() => {
-    
-    searchParams.set('manufactures', manufacturesFilter);
-    searchParams.set('graphic', graphicFilter);
-    searchParams.set('smt', smtFilter);
+const initialState = {
+  manufacturesFilter: 'All',
+  graphicFilter: 'All',
+  smtFilter: 'All',
+  coreCountFilter: [1, 64],
+  coreClockFilter: [1, 6],
+  boostClockFilter: [1, 6],
+  tdpFilter: [1, 300],
+  priceFilter: [0, 4500],
+  scoreFilter: [29.7, 131],
+};
 
-    searchParams.set('coreCountMin', coreCountFilter[0]);
-    searchParams.set('coreCountMax', coreCountFilter[1]);
-
-    searchParams.set('coreClockMin', coreClockFilter[0]);
-    searchParams.set('coreClockMax', coreClockFilter[1]);
-
-    searchParams.set('boostClockMin', boostClockFilter[0]);
-    searchParams.set('boostClockMax', boostClockFilter[1]);
-
-    searchParams.set('tdpMin', tdpFilter[0]);
-    searchParams.set('tdpMax', tdpFilter[1]);
-
-    searchParams.set('priceMin', priceFilter[0]);
-    searchParams.set('priceMax', priceFilter[1]);
-
-    searchParams.set('scoreMin', scoreFilter[0]);
-    searchParams.set('scoreMax', scoreFilter[1]);
-    
-    
-    
-  }, [manufacturesFilter, coreCountFilter,coreClockFilter,boostClockFilter,tdpFilter,priceFilter,scoreFilter,graphicFilter,smtFilter,setSearchParams,searchParams]);
-
-  const handleManufacturesChange = (event) => {
-    setManufacturesFilter(event.target.value);
-  };
-  const handleGraphicChange = (event) => {
-    setGraphicFilter(event.target.value);
-  };
-  const handleSmtChange = (event) => {
-    setSmtFilter(event.target.value);
-  };
-
-  const handleChangeSliderCount = (event, newValue) => {
-      setCoreCountFilter(newValue);
-  };
-  const handleChangeSliderClock = (event, newValue) => {
-    setCoreClockFilter(newValue);
-  };
-  const handleChangeSliderBoost = (event, newValue) => {
-    setBoostClockFilter(newValue)
-  };
-  const handleChangeSliderTdp = (event, newValue) => {
-    setTdpFilter(newValue)
-  };
-  const handleChangeSliderPrice = (event, newValue) => {
-    setPriceFilter(newValue)
-  };
-  const handleChangeSliderScore = (event, newValue) => {
-    setScoreFilter(newValue)
-  };
-  const handleApply = () =>{
-    setSearchParams(searchParams);
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'SET_MANUFACTURES_FILTER':
+      
+      return { ...state, manufacturesFilter: action.payload };
+    case 'SET_GRAPHIC_FILTER':
+      return { ...state, graphicFilter: action.payload };
+    case 'SET_SMT_FILTER':
+      return { ...state, smtFilter: action.payload };
+    case 'SET_CORECOUNT_FILTER':
+      return { ...state, coreCountFilter: action.payload };
+    case 'SET_CORECLOCK_FILTER':
+      return { ...state, coreClockFilter: action.payload };
+    case 'SET_BOOSTCLOCK_FILTER':
+      return { ...state, boostClockFilter: action.payload };
+    case 'SET_TDP_FILTER':
+      return { ...state, tdpFilter: action.payload };
+    case 'SET_PRICE_FILTER':
+      return { ...state, priceFilter: action.payload };
+    case 'SET_SCORE_FILTER':
+      return { ...state, scoreFilter: action.payload };
+    default:
+      return state;
   }
-  
-  
+};
+
+function Filter() {
+  const [state, dispatch] = React.useReducer(reducer, initialState);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  useEffect(() => {
+    const filters = {
+      manufactures: state.manufacturesFilter,
+      graphic: state.graphicFilter,
+      smt: state.smtFilter,
+      coreCountMin: state.coreCountFilter[0],
+      coreCountMax: state.coreCountFilter[1],
+      coreClockMin: state.coreClockFilter[0],
+      coreClockMax: state.coreClockFilter[1],
+      boostClockMin: state.boostClockFilter[0],
+      boostClockMax: state.boostClockFilter[1],
+      tdpMin: state.tdpFilter[0],
+      tdpMax: state.tdpFilter[1],
+      priceMin: state.priceFilter[0],
+      priceMax: state.priceFilter[1],
+      scoreMin: state.scoreFilter[0],
+      scoreMax: state.scoreFilter[1],
+    };
+
+    for (const [key, value] of Object.entries(filters)) {
+      searchParams.set(key, value);
+    }
+  }, [state, setSearchParams, searchParams]);
+
+  const handleChange = (filterType,event) => {
+    console.log(`SET_${filterType}_FILTER`);
+    dispatch({ type: `SET_${filterType}_FILTER`, payload: event.target.value });
+  };
+
+  const handleApply = () => {
+    console.log(state.coreCountFilter)
+    setSearchParams(searchParams);
+  };
 
   return (
     <StyledFilter>
-      
       <Button onClick={handleApply}>Apply Filters</Button>
-      
-      
+
       <FilterComponent name={"Manufactures"}>
-        <RadioGroup defaultValue="All" name="radio-buttons-group" onChange={handleManufacturesChange}>
+        <RadioGroup
+          defaultValue="All"
+          name="radio-buttons-group"
+          onChange={(e)=>handleChange('MANUFACTURES',e)}
+        >
           <FormControlLabel
             value="All"
-            control={<Radio sx={color} size="large"/>}
+            control={<Radio sx={color} size="large" />}
             label="All"
           />
           <FormControlLabel
             value="AMD"
-            control={<Radio sx={color} size="large"/>}
+            control={<Radio sx={color} size="large" />}
             label="AMD"
           />
           <FormControlLabel
             value="Intel"
-            control={<Radio sx={color} size="large"/>}
+            control={<Radio sx={color} size="large" />}
             label="Intel"
           />
         </RadioGroup>
       </FilterComponent>
 
-
       <FilterComponent name={"Core Count"}>
-        <RangeSlider handleChangeSlider={handleChangeSliderCount} value={coreCountFilter} max={64} min={1}></RangeSlider>
+        <RangeSlider
+          handleChangeSlider={(e) => handleChange("CORECOUNT",e)}
+          value={state.coreCountFilter}
+          max={64}
+          min={1}
+        ></RangeSlider>
       </FilterComponent>
-
 
       <FilterComponent name={"Core Clock"}>
-        <RangeSlider handleChangeSlider={handleChangeSliderClock} value={coreClockFilter} max={5} min={1}></RangeSlider>
+        <RangeSlider
+          handleChangeSlider={(e) => handleChange("CORECLOCK",e)}
+          value={state.coreClockFilter}
+          max={6}
+          min={1}
+        ></RangeSlider>
       </FilterComponent>
 
-
       <FilterComponent name={"Boost Clock"}>
-        <RangeSlider handleChangeSlider={handleChangeSliderBoost} value={boostClockFilter} max={5} min={1}></RangeSlider>
+        <RangeSlider
+          handleChangeSlider={(e) => handleChange("BOOSTCLOCK",e)}
+          value={state.boostClockFilter}
+          max={6}
+          min={1}
+        ></RangeSlider>
       </FilterComponent>
 
       <FilterComponent name={"Graphic"}>
-        <RadioGroup defaultValue="All" name="radio-buttons-group" onChange={handleGraphicChange}>
-          <FormControlLabel value="All" control={<Radio sx={color} size="large"/>} label="All" />
-          <FormControlLabel value="Yes" control={<Radio sx={color} size="large"/>} label="Yes" />
-          <FormControlLabel value="No" control={<Radio sx={color} size="large"/>} label="No" />
+        <RadioGroup
+          defaultValue="All"
+          name="radio-buttons-group"
+          onChange={(e)=>handleChange('GRAPHIC',e)}
+        >
+          <FormControlLabel
+            value="All"
+            control={<Radio sx={color} size="large" />}
+            label="All"
+          />
+          <FormControlLabel
+            value="Yes"
+            control={<Radio sx={color} size="large" />}
+            label="Yes"
+          />
+          <FormControlLabel
+            value="No"
+            control={<Radio sx={color} size="large" />}
+            label="No"
+          />
         </RadioGroup>
       </FilterComponent>
-
 
       <FilterComponent name={"TDP"}>
-        <RangeSlider handleChangeSlider={handleChangeSliderTdp} value={tdpFilter} max={200} min={1}></RangeSlider>
+        <RangeSlider
+          handleChangeSlider={() => handleChange("TDP")}
+          value={initialState.tdpFilter}
+          max={300}
+          min={1}
+        ></RangeSlider>
       </FilterComponent>
 
-
       <FilterComponent name={"SMT"}>
-        <RadioGroup defaultValue="All" name="radio-buttons-group" onChange={handleSmtChange}>
-          <FormControlLabel value="All" control={<Radio sx={color} size="large"/>} label="All" />
-          <FormControlLabel value={true} control={<Radio sx={color} size="large"/>} label="Yes" />
-          <FormControlLabel value={false} control={<Radio sx={color} size="large"/>} label="No" />
+        <RadioGroup
+          defaultValue="All"
+          name="radio-buttons-group"
+          onChange={(e)=>handleChange('SMT',e)}
+        >
+          <FormControlLabel
+            value="All"
+            control={<Radio sx={color} size="large" />}
+            label="All"
+          />
+          <FormControlLabel
+            value={true}
+            control={<Radio sx={color} size="large" />}
+            label="Yes"
+          />
+          <FormControlLabel
+            value={false}
+            control={<Radio sx={color} size="large" />}
+            label="No"
+          />
         </RadioGroup>
       </FilterComponent>
 
-
-      <FilterComponent name={"Price"} >
-        <RangeSlider handleChangeSlider={handleChangeSliderPrice} value={priceFilter} min={0} max={4500}></RangeSlider>
+      <FilterComponent name={"Price"}>
+        <RangeSlider
+          handleChangeSlider={(e) => handleChange("PRICE",e)}
+          value={state.priceFilter}
+          min={0}
+          max={4500}
+        ></RangeSlider>
       </FilterComponent>
 
 
-      <FilterComponent name={"Score"}>
-        <RangeSlider handleChangeSlider={handleChangeSliderScore} value={scoreFilter} max={131} min={29.7}></RangeSlider>
-      </FilterComponent>
       <FilterComponent name="Micrarchitecture"></FilterComponent>
       <FilterComponent name="Core Family"></FilterComponent>
       <FilterComponent name="Socket"></FilterComponent>

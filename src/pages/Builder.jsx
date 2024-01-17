@@ -1,7 +1,10 @@
+import BuilderTable from "../features/builder/BuilderTable"
+import BuilderOperations from "../features/builder/BuilderOperations"
 function Builder() {
     return (
         <div>
-            Builder
+            <BuilderTable></BuilderTable>
+            <BuilderOperations></BuilderOperations>
         </div>
     )
 }
