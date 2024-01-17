@@ -1,14 +1,14 @@
 import Table from "../../ui/Table";
 import { SiAmd,SiIntel  } from "react-icons/si";
-import styled from "styled-components";
 import Button from "../../ui/Button"
 import { addCart } from "../../services/apiCart";
+import { useNavigate } from "react-router-dom";
 
 
 
 
 function CpuRow({cpu}) {
-
+    const navigate = useNavigate();
     const {name,boost_clock,core_clock,core_count,graphics,price,smt,tdp,Rank,Benchmark,manufacture} = cpu;
 
     function checkManufacture(name){
@@ -19,6 +19,10 @@ function CpuRow({cpu}) {
         } else {
             return "Nieznany producent";
         }
+    }
+    function handleClick(type,data){
+        addCart(type,data)
+        navigate('/builder')
     }
     
  
@@ -36,7 +40,7 @@ function CpuRow({cpu}) {
             <div>{price || "-"}</div>
             <span>{Benchmark || "-"}</span>
             <div>
-                <Button size='small' onClick={()=>addCart("CPU",cpu)}>+Add to Build</Button>
+                <Button size='small' onClick={()=>handleClick("CPU",cpu)}>+Add to Build</Button>
             </div>
         </Table.Row>
     )

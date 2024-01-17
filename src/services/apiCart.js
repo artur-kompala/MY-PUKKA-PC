@@ -2,6 +2,7 @@ import axios from "axios";
 const url = "http://localhost:5000";
 
 export async function addCart(type, product) {
+
   const storedData = JSON.parse(localStorage.getItem("auth-token"));
   const {
     session: { token },
