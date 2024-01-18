@@ -10,9 +10,6 @@ export function useCPU() {
   const queryClient = useQueryClient();
   const [searchParams] = useSearchParams();
 
-  const count = 1353
-
-
   // FILTER
   const filterManufactures = searchParams.get("manufactures");
   const filtergraphic = searchParams.get("graphic");
@@ -76,12 +73,15 @@ export function useCPU() {
   // QUERY
   const {   
     isLoading,
-    data: cpus = {},
+    data: cpuInfo = {},
     error,
   } = useQuery({
     queryKey: ["cpus", filter, sortBy, page],
     queryFn: () => getCPU({filter, sortBy, page}),
   });
+  const {data,total} = cpuInfo
+  const count = total
+  const cpus = data;
   
   
   // PRE-FETCHING

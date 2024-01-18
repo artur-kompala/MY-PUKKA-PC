@@ -1,16 +1,22 @@
-import styled from "styled-components";
 
-function Search() {
-  
+import Input from "./Input"
+import Button from "./Button"
 
-
-
+export default function Search({ query, setQuery }) {
+ 
   return (
-    <form onSubmit="event.preventDefault();" role="search">
-      <input id="search" type="search" placeholder="Search..." required />
-      <button type="submit">Go</button>
-    </form>
-  );
-}
+    <>
+    <Input
+      className="search"
+      type="text"
+      placeholder="..."
+      value={query}
+      onChange={(e) => setQuery(e.target.value)}
+    />
 
-export default Search;
+    <Button>Search</Button>
+    </>
+    
+    
+  )
+}

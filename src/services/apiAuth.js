@@ -1,5 +1,5 @@
 import axios from "axios";
-const url = "http://localhost:5000";
+import { API_URL } from "../utils/constants";
 
 export async function login({ email, password }) {
   const data = {
@@ -8,7 +8,7 @@ export async function login({ email, password }) {
   };
 
   try {
-    const res = await axios.post(`${url}/login`, data);
+    const res = await axios.post(`${API_URL}/login`, data);
 
     if (res.status === 200) {
       const data = res.data
@@ -34,7 +34,7 @@ export async function getCurrentUser() {
   }
   
   try {
-    const res = await axios.post(`${url}/verify-token`, data);
+    const res = await axios.post(`${API_URL}/verify-token`, data);
     if (res.status === 200) {
       console.log(res.data?.user)
       return res.data?.user;

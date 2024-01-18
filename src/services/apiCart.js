@@ -1,5 +1,5 @@
 import axios from "axios";
-const url = "http://localhost:5000";
+import { API_URL } from "../utils/constants";
 
 export async function addCart(type, product) {
 
@@ -15,7 +15,7 @@ export async function addCart(type, product) {
   };
 
   await axios
-    .post(`${url}/addCart?user=${user.user_metadata.fullName}`, data, {
+    .post(`${API_URL}/addCart?user=${user.user_metadata.fullName}`, data, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -35,7 +35,7 @@ export async function getCart() {
   } = storedData;
 
   let data = await axios
-    .get(`${url}/getCart?user=${user.user_metadata.fullName}`)
+    .get(`${API_URL}/getCart?user=${user.user_metadata.fullName}`)
     .then((res) => res.data)
     .catch((err) => {
       console.log(err);

@@ -30,7 +30,7 @@ function CpuRow({cpu}) {
         <Table.Row>
             {checkManufacture(manufacture)}
             <span>{Rank || "-"}</span>
-            <span>{name}</span>
+            <span onClick={()=>navigate(`/product/${name}`)}>{name}</span>
             <div>{core_count}</div>
             <div>{core_clock}</div>
             <div>{boost_clock}</div>

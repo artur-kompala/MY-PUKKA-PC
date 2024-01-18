@@ -20,6 +20,7 @@ import Ram from "./pages/Ram"
 import Storage from "./pages/Storage"
 import Account from "./pages/Account";
 import Builder from "./pages/Builder";
+import Product from "./pages/Product";
 
 
 
@@ -49,6 +50,7 @@ function App() {
             >
             <Route path="home" element={<Home />} />
             <Route path="builder" element={<Builder />} />
+            <Route path="product/:name" element={<Product />} />
             <Route path="cpu" element={<Cpu />} />
             <Route path="cpu-cooler" element={<CpuCooler />} />
             <Route path="mobo" element={<Mobo />} />
