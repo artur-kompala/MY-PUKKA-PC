@@ -8,11 +8,11 @@ const FilterName = styled.div`
     justify-content: space-between;
     padding: 1rem 7rem;
     
+    
 `
 const FilterBox = styled.div`
     background-color: var(--color-grey-0);
     border-radius: var(--border-radius-md);
-    margin-top: 1rem;
 `
 
 

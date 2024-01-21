@@ -13,7 +13,7 @@ const ShopBox = styled.div`
   border-radius: var(--border-radius-md);
   padding: 0rem 1.2rem;
   display: grid;
-  grid-template-columns: 1fr 0.5fr;
+  grid-template-columns: 1fr  1.0fr 1.5fr;
     
     
 `
@@ -47,7 +47,8 @@ function ProductDetails({details}) {
             <h3>Cheapest shop:</h3>
                 {sortedOffers.map(shop=>(
                     <ShopBox key={shop}>
-                        <p><strong>{shop.shop_name}</strong> {shop.price} {shop.currency}</p>
+                        <em>{shop.shop_name}</em>   
+                        <strong style={{color: '#727477'}}>{shop.price} {shop.currency}</strong>
                         <Button onClick={()=>window.location.assign(shop.url)}>Go to Shop</Button>
                     </ShopBox>
                 ))}      

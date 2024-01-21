@@ -1,16 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import FilterComponent from "./FilterComponent";
 import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
 
 import RangeSlider from "./RangeSlider";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import Button from "./Button";
+
 
 const StyledFilter = styled.div`
   background-color: var(--color-grey-100);
   padding: 1.6rem;
   border-radius: var(--border-radius-md);
+  display: grid;
+  grid-template-columns: 1fr ;
+  gap: 1rem;
+`;
+
+const StyledFilterButton = styled.div`
+   display: grid;
+   grid-template-columns: 1fr 1fr;
+   gap: 1rem;
 `;
 
 const color = {
@@ -61,6 +71,7 @@ const reducer = (state, action) => {
 function Filter() {
   const [state, dispatch] = React.useReducer(reducer, initialState);
   const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const filters = {
@@ -92,14 +103,21 @@ function Filter() {
   };
 
   const handleApply = () => {
-    console.log(state.coreCountFilter)
     setSearchParams(searchParams);
   };
+  const handleReset = () =>{
+    navigate('/cpu')
+  }
 
   return (
     <StyledFilter>
-      <Button onClick={handleApply}>Apply Filters</Button>
-
+      <StyledFilterButton>
+        <Button onClick={handleApply}>Apply</Button>
+        <Button onClick={handleReset}>Reset</Button>
+      </StyledFilterButton>
+      
+      
+      
       <FilterComponent name={"Manufactures"}>
         <RadioGroup
           defaultValue="All"

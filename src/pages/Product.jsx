@@ -14,7 +14,7 @@ function Product() {
             <ProductFilter/>
           </Row>
     
-          <ProductLayout/>
+          <ProductLayout name={name}/>
         </>
       );
 }

@@ -25,12 +25,12 @@ function CpuRow({cpu}) {
         navigate('/builder')
     }
     
- 
+    console.log(manufacture);
     return (
         <Table.Row>
             {checkManufacture(manufacture)}
             <span>{Rank || "-"}</span>
-            <span onClick={()=>navigate(`/product/${name}`)}>{name}</span>
+            <span onClick={()=>navigate(`/product/${ manufacture + ' '+ name}`)}>{name}</span>
             <div>{core_count}</div>
             <div>{core_clock}</div>
             <div>{boost_clock}</div>

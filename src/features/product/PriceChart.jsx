@@ -11,8 +11,9 @@ import {
   YAxis,
 } from "recharts";
 import { useDarkMode } from "../../context/DarkModeContext";
-import { eachDayOfInterval, format, isSameDay, subDays } from "date-fns";
+import {  format} from "date-fns";
 import { useParams } from "react-router-dom";
+import { useEffect } from "react";
 
 const StyledPriceChart = styled(ProductBox)`
   grid-column: 1 / -1;
@@ -45,15 +46,29 @@ function linearRegressionPredict(nextIndices, numbers) {
   return predictions;
 }
 
+
+
 function PriceChart({ price, numDays}) {
+  
   const {name} = useParams()
   const { isDarkMode } = useDarkMode();
+  const ostatni = numDays[numDays.length - 1];
+  const [dzien, miesiac, rok] = ostatni.split('-');
+  const dataISO8601 = `${rok}-${miesiac}-${dzien}`;
+
+  const ostatniaDataObiekt = new Date(dataISO8601);
+
+  for(let i = 1; i < 8; i++) {
+    const nowaData = `${ostatniaDataObiekt.getDate() + i}.${ostatniaDataObiekt.getMonth() + 1}.${ostatniaDataObiekt.getFullYear()}`;
+    numDays.push(nowaData);
+  }
 
   const predictions = linearRegressionPredict(7,price)
+  console.log(predictions);
 
   const data = numDays.map((date, index) => {
     return {
-      label: format(date, "MMM dd"),
+      label: date,
       totalPrice: price[index],
       extrasPrice: predictions[index-6],
     };
@@ -76,8 +91,8 @@ function PriceChart({ price, numDays}) {
   return (
     <StyledPriceChart>
       <Heading as="h3">
-        {name} price from {format(numDays.at(0), "MMM dd yyyy")} &mdash;{" "}
-        {format(numDays.at(-1), "MMM dd yyyy")}{" "}
+        {name} price from {numDays.at(0)} &mdash;{" "}
+        {numDays.at(-1)}{" "}
       </Heading>
 
       <ResponsiveContainer height={260} width="100%">
@@ -88,7 +103,7 @@ function PriceChart({ price, numDays}) {
             tickLine={{ stroke: colors.text }}
           />
           <YAxis
-            unit="$"
+            unit="PLN"
             tick={{ fill: colors.text }}
             tickLine={{ stroke: colors.text }}
           />
@@ -101,7 +116,7 @@ function PriceChart({ price, numDays}) {
             fill={colors.totalPrice.fill}
             strokeWidth={2}
             name="Total Price"
-            unit="$"
+            unit="PLN"
           />
           <Area
             dataKey="extrasPrice"
@@ -110,7 +125,7 @@ function PriceChart({ price, numDays}) {
             fill={colors.extrasPrice.fill}
             strokeWidth={2}
             name="Extras Price"
-            unit="$"
+            unit="PLN"
           />
         </AreaChart>
       </ResponsiveContainer>
