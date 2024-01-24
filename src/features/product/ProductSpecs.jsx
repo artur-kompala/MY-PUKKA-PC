@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import ProductBox from "./ProductBox";
 const StyledSpecsItem = styled.div`
   background-color: var(--color-grey-50);
   border: 1px solid var(--color-grey-100);

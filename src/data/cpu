@@ -1,0 +1,10 @@
+name,manufacturer,process,socket,core_family,smt,graphics,tdp,watts_usage,core_clock,boost_clock,core_count,price,pcie,chipset,memory_type
+Core i9-13900K,Intel,10nm,LGA 1700,Raptor Lake,Yes,UHD Graphics 770,125W,125,3.0 GHz,5.8 GHz,24,?,PCIe 5.0,Z690/Z790,DDR4/DDR5
+Core i9-13900,Intel,10nm,LGA 1700,Raptor Lake,Yes,UHD Graphics 770,65W,65,3.5,?,24,?,PCIe 5.0,Z690/Z790,DDR4/DDR5
+Core i9-13900KF,Intel,10nm,LGA 1700,Raptor Lake,Yes,None,125W,125,3.0 GHz,5.8 GHz,24,?,PCIe 5.0,Z690/Z790,DDR4/DDR5
+Core i7-13700K,Intel,10nm,LGA 1700,Raptor Lake,Yes,UHD Graphics 770,125W,125,3.4 GHz,5.4 GHz,16,?,PCIe 5.0,Z690/Z790,DDR4/DDR5
+Core i7-13700,Intel,10nm,LGA 1700,Raptor Lake,Yes,UHD Graphics 770,65W,65,?,?,16,?,PCIe 5.0,Z690/Z790,DDR4/DDR5
+Core i7-13700KF,Intel,10nm,LGA 1700,Raptor Lake,Yes,None,125W,125,3.4 GHz,5.4 GHz,16,?,PCIe 5.0,Z690/Z790,DDR4/DDR5
+Core i5-13600K,Intel,10nm,LGA 1700,Raptor Lake,Yes,UHD Graphics 770,125W,125,3.5 GHz,5.1 GHz,14,?,PCIe 5.0,Z690/Z790,DDR4/DDR5
+Core i5-13600,Intel,10nm,LGA 1700,Raptor Lake,Yes,UHD Graphics 770,65W,65,?,?,14,?,PCIe 5.0,Z690/Z790,DDR4/DDR5
+Core i5-13600KF,Intel,10nm,LGA 1700,Raptor Lake,Yes,None,125W,125,3.5 GHz,5.1 GHz,14,?,PCIe 5.0,Z690/Z790,DDR4/DDR5

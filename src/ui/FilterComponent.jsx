@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import Row from './Row';
 import styled from 'styled-components';
 import { FaArrowUp ,FaArrowDown} from "react-icons/fa";
 
@@ -30,9 +29,7 @@ const FilterComponent = ({name,children}) => {
             <p>{name}</p>
             {!isExpanded ? <FaArrowDown /> : <FaArrowUp />}
         </FilterName>
-        
-        
-      
+           
       {isExpanded && (
         <ul>
           {children}

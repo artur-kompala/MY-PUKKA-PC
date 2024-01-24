@@ -3,7 +3,7 @@ import PriceChart from "./PriceChart";
 import ProductDetails from "./ProductDetails";
 import ProductSpecs from "./ProductSpecs";
 import ProductBenchmark from "./ProductBenchmark";
-import { getProduct } from "../../services/ApiProduct";
+import { getProduct } from "../../services/apiProduct";
 import { useQuery } from "@tanstack/react-query";
 import Spinner from "../../ui/Spinner";
 
@@ -15,14 +15,17 @@ const StyledProductLayout = styled.div`
   gap: 2.4rem;
 `;
 
-function ProductLayout({name}) {
+function ProductLayout({name,cpu}) {
     const {   
       isLoading,
       data = {},
       error,
     } = useQuery({
+      queryKey: ['product', name],
       queryFn: () => getProduct({name}),
     });
+    
+    
     
     if(isLoading){
       return <Spinner></Spinner>
@@ -34,9 +37,9 @@ function ProductLayout({name}) {
       return(
         <StyledProductLayout>
         <ProductDetails details={query.results[0].content}></ProductDetails>
-        <ProductBenchmark></ProductBenchmark>
+        <ProductBenchmark cpu={cpu}></ProductBenchmark>
         <PriceChart price={price} numDays={date} />
-        <ProductSpecs details={query.results[0].content}></ProductSpecs>
+        <ProductSpecs details={query.results[0].content} cpu={cpu}></ProductSpecs>
         </StyledProductLayout>
 
       )

@@ -11,9 +11,7 @@ import {
   YAxis,
 } from "recharts";
 import { useDarkMode } from "../../context/DarkModeContext";
-import {  format} from "date-fns";
 import { useParams } from "react-router-dom";
-import { useEffect } from "react";
 
 const StyledPriceChart = styled(ProductBox)`
   grid-column: 1 / -1;
@@ -24,7 +22,9 @@ const StyledPriceChart = styled(ProductBox)`
     stroke: var(--color-grey-300);
   }
 `;
-function linearRegressionPredict(nextIndices, numbers) {
+function linearRegressionPredict(nextIndices, price) {
+  const numbers = price.map((x)=>parseInt(x));
+
   const n = numbers.length;
   let sumX = 0, sumY = 0, sumXY = 0, sumXX = 0;
 
@@ -42,19 +42,17 @@ function linearRegressionPredict(nextIndices, numbers) {
   for (let i = n; i < n + nextIndices; i++) {
       predictions.push(slope * i + intercept);
   }
-  predictions.unshift(numbers[n-1])
+  predictions.unshift(numbers.at(-1))
   return predictions;
 }
-
-
 
 function PriceChart({ price, numDays}) {
   
   const {name} = useParams()
   const { isDarkMode } = useDarkMode();
-  const ostatni = numDays[numDays.length - 1];
-  const [dzien, miesiac, rok] = ostatni.split('-');
-  const dataISO8601 = `${rok}-${miesiac}-${dzien}`;
+  const ostatni = numDays.at(-1);
+  const [dzien, miesiac, rok] = ostatni.split('.');
+  const dataISO8601 = `${rok}.${miesiac}.${dzien}`;
 
   const ostatniaDataObiekt = new Date(dataISO8601);
 
@@ -62,15 +60,14 @@ function PriceChart({ price, numDays}) {
     const nowaData = `${ostatniaDataObiekt.getDate() + i}.${ostatniaDataObiekt.getMonth() + 1}.${ostatniaDataObiekt.getFullYear()}`;
     numDays.push(nowaData);
   }
-
+  console.log(price);
   const predictions = linearRegressionPredict(7,price)
-  console.log(predictions);
-
+console.log(predictions);
   const data = numDays.map((date, index) => {
     return {
       label: date,
       totalPrice: price[index],
-      extrasPrice: predictions[index-6],
+      extrasPrice: predictions[index-price.length+1],
     };
   });
 
@@ -95,7 +92,7 @@ function PriceChart({ price, numDays}) {
         {numDays.at(-1)}{" "}
       </Heading>
 
-      <ResponsiveContainer height={260} width="100%">
+      <ResponsiveContainer height={360} width="100%">
         <AreaChart data={data}>
           <XAxis
             dataKey="label"
@@ -107,15 +104,15 @@ function PriceChart({ price, numDays}) {
             tick={{ fill: colors.text }}
             tickLine={{ stroke: colors.text }}
           />
-          <CartesianGrid strokeDasharray="10" />
+          <CartesianGrid strokeDasharray="1" />
           <Tooltip contentStyle={{ backgroundColor: colors.background }} />
           <Area
             dataKey="totalPrice"
             type="monotone"
             stroke={colors.totalPrice.stroke}
             fill={colors.totalPrice.fill}
-            strokeWidth={2}
-            name="Total Price"
+            strokeWidth={3}
+            name="Price"
             unit="PLN"
           />
           <Area
@@ -124,7 +121,7 @@ function PriceChart({ price, numDays}) {
             stroke={colors.extrasPrice.stroke}
             fill={colors.extrasPrice.fill}
             strokeWidth={2}
-            name="Extras Price"
+            name="Estimated price"
             unit="PLN"
           />
         </AreaChart>

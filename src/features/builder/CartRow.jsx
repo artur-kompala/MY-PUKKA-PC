@@ -50,7 +50,8 @@ function CartRow({cart,list,isLoading}) {
         return (
             <Table.Row>
               <div>{list}</div>
-              {<div onClick={()=>navigate(`/product/${cart[i].data.name}`)}>{cart[i].data.name}</div>}
+              {<div onClick={()=>navigate(`/product/${cart[i].data.manufacture+ " " +cart[i].data.name}`)}>{cart[i].data.name}</div>}
+              <div>{cart[i].data.price} PLN</div>
             </Table.Row>
         );
      

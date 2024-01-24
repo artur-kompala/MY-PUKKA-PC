@@ -45,8 +45,8 @@ function ProductDetails({details}) {
         </ProductBox>
         <ProductBox>
             <h3>Cheapest shop:</h3>
-                {sortedOffers.map(shop=>(
-                    <ShopBox key={shop}>
+                {sortedOffers.map((shop,index)=>(
+                    <ShopBox key={index}>
                         <em>{shop.shop_name}</em>   
                         <strong style={{color: '#727477'}}>{shop.price} {shop.currency}</strong>
                         <Button onClick={()=>window.location.assign(shop.url)}>Go to Shop</Button>

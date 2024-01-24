@@ -2,8 +2,6 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getCPU } from "../../services/apiCPU";
 import { useSearchParams } from "react-router-dom";
 import { PAGE_SIZE } from "../../utils/constants";
-import axios from "axios";
-const url = "http://localhost:5000";
 
 export function useCPU() {
   
@@ -11,79 +9,39 @@ export function useCPU() {
   const [searchParams] = useSearchParams();
 
   // FILTER
-  const filterManufactures = searchParams.get("manufactures");
-  const filtergraphic = searchParams.get("graphic");
-  const filtersmt = searchParams.get("smt");
+const filterKeys = [
+  "manufactures", "graphic", "smt",
+  "coreCountMin", "coreCountMax",
+  "coreClockMin", "coreClockMax",
+  "boostClockMin", "boostClockMax",
+  "tdpMin", "tdpMax",
+  "priceMin", "priceMax",
+  "scoreMin", "scoreMax"
+];
 
-  const filtercoreCountMin = searchParams.get("coreCountMin");
-  const filtercoreCountMax = searchParams.get("coreCountMax");
-
-  const filtercoreClockMin = searchParams.get("coreClockMin");
-  const filtercoreClockMax = searchParams.get("coreClockMax");
-
-  const filterboostClockMin = searchParams.get("boostClockMin");
-  const filterboostClockMax = searchParams.get("boostClockMax");
-
-  const filtertdpMin = searchParams.get("tdpMin");
-  const filtertdpMax = searchParams.get("tdpMax");
-
-  const filterpriceMin= searchParams.get("priceMin");
-  const filterpriceMax = searchParams.get("priceMax");
-
-  const filterscoreMin= searchParams.get("scoreMin");
-  const filterscoreMax = searchParams.get("scoreMax");
-
-
-  const filter = [
-    { field: "manufactures", value: filterManufactures},
-    {field: "graphic", value: filtergraphic},
-    {field: "smt", value: filtersmt},
-
-    {field: "core_count_Min", value: filtercoreCountMin},
-    {field: "core_count_Max", value: filtercoreCountMax},
-
-    {field: "core_clock_Min", value: filtercoreClockMin},
-    {field: "core_clock_Max", value: filtercoreClockMax},
-
-    {field: "boost_Clock_Min", value: filterboostClockMin},
-    {field: "boost_Clock_Max", value: filterboostClockMax},
-
-    {field: "tdp_Min", value: filtertdpMin},
-    {field: "tdp_Max", value: filtertdpMax},
-
-    {field: "priceMin", value: filterpriceMin},
-    {field: "priceMax", value: filterpriceMax},
-
-    {field: "score_Min", value: filterscoreMin},
-    {field: "score_Max", value: filterscoreMax},
-    
-
-  
-  ] 
-  
-  
+const filter = filterKeys.map(key => ({
+  field: key,
+  value: searchParams.get(key)
+}));
 
   // SORT
-  const sortBy = searchParams.get("sortBy") || "Rank-desc";
+  const sortBy = searchParams.get("sortBy") || "rank-desc";
  
-
   // PAGINATION
   const page = !searchParams.get("page") ? 1 : Number(searchParams.get("page"));
   
   // QUERY
   const {   
     isLoading,
-    data: cpuInfo = {},
+    data: cpuInfo = {data: {}},
     error,
   } = useQuery({
     queryKey: ["cpus", filter, sortBy, page],
     queryFn: () => getCPU({filter, sortBy, page}),
   });
-  const {data,total} = cpuInfo
-  const count = total
-  const cpus = data;
-  
-  
+  const cpus = cpuInfo.data.data 
+  const count = cpuInfo.data.total 
+
   // PRE-FETCHING
   const pageCount = Math.ceil(count / PAGE_SIZE);
 
@@ -100,5 +58,5 @@ export function useCPU() {
     });
   
 
-  return { isLoading, error, cpus, count };
+  return { isLoading, error, cpus, count};
 }
