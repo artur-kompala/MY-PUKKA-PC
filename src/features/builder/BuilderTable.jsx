@@ -13,6 +13,7 @@ function BuilderTable() {
     error,
   } = useQuery({
     queryFn: () => getCart(),
+    queryKey: ["cart"],
   });
  if(!isLoading){
     const cart = data[0].cart
@@ -27,7 +28,7 @@ function BuilderTable() {
   
           <Table.Body
             data={list}
-            render={(list) => <CartRow list={list} cart={cart} isLoading={isLoading}/>}
+            render={(list) => <CartRow list={list} cart={cart} isLoading={isLoading} key={list}/>}
           />
         </Table>
       </Menus>

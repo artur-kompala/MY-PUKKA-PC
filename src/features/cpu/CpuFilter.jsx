@@ -1,6 +1,5 @@
 import React, { useEffect} from "react";
 import styled from "styled-components";
-import FilterComponent from "../../ui/FilterComponent";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Button from "../../ui/Button";
 import FilterRadioGroup from "../../ui/FilterRadioGroup";
@@ -43,52 +42,61 @@ const initialState = {
   tdpFilter: [1, 300],
   priceFilter: [0, 4500],
   scoreFilter: [29.7, 131],
+  coreFamilyFilter: 'All',
+  socketFilter: 'All'
 };
 
-const labelsManufactures = [
-  { value: "All", label: "All" },
-  { value: "AMD", label: "AMD" },
-  { value: "Intel", label: "Intel" },
-];
+const labels = {
+  manufactures : [
+    { value: "All", label: "All" },
+    { value: "AMD", label: "AMD" },
+    { value: "Intel", label: "Intel" },
+  ],
+  graphic : [
+    { value: "All", label: "All" },
+    { value: "Yes", label: "Yes" },
+    { value: "No", label: "No" },
+  ],
+  smt : [
+    { value: "All", label: "All" },
+    { value: true, label: "Yes" },
+    { value: false, label: "No" },
+  ],
+  coreFamily : [
+    { value: "All", label: "All" },
+    { value: 'Raptor Lake', label: "Raptor Lake" },
+    { value: 'Zen 4', label: "Zen 4" },
+  ],
+  socket : [
+    { value: "All", label: "All" },
+    { value: 'AM5', label: "AM5" },
+    { value: 'LGA1700', label: "LGA1700" },
+  ]
 
-const labelsGraphic = [
-  { value: "All", label: "All" },
-  { value: "Yes", label: "Yes" },
-  { value: "No", label: "No" },
-];
+}
 
-const labelsSMT = [
-  { value: "All", label: "All" },
-  { value: true, label: "Yes" },
-  { value: false, label: "No" },
-];
 
 const reducer = (state, action) => {
-  switch (action.type) {
-    case 'SET_MANUFACTURES_FILTER':
-      return { ...state, manufacturesFilter: action.payload };
-    case 'SET_GRAPHIC_FILTER':
-      return { ...state, graphicFilter: action.payload };
-    case 'SET_SMT_FILTER':
-      return { ...state, smtFilter: action.payload };
-    case 'SET_CORECOUNT_FILTER':
-      return { ...state, coreCountFilter: action.payload };
-    case 'SET_CORECLOCK_FILTER':
-      return { ...state, coreClockFilter: action.payload };
-    case 'SET_BOOSTCLOCK_FILTER':
-      return { ...state, boostClockFilter: action.payload };
-    case 'SET_TDP_FILTER':
-      return { ...state, tdpFilter: action.payload };
-    case 'SET_PRICE_FILTER':
-      return { ...state, priceFilter: action.payload };
-    case 'SET_SCORE_FILTER':
-      return { ...state, scoreFilter: action.payload };
-    default:
-      return state;
+  const actionTypes = {
+    SET_MANUFACTURES_FILTER: 'manufacturesFilter',
+    SET_GRAPHIC_FILTER: 'graphicFilter',
+    SET_COREFAMILY_FILTER: 'coreFamilyFilter',
+    SET_SOCKET_FILTER: 'socketFilter',
+    SET_SMT_FILTER: 'smtFilter',
+    SET_CORECOUNT_FILTER: 'coreCountFilter',
+    SET_CORECLOCK_FILTER: 'coreClockFilter',
+    SET_BOOSTCLOCK_FILTER: 'boostClockFilter',
+    SET_TDP_FILTER: 'tdpFilter',
+    SET_PRICE_FILTER: 'priceFilter',
+    SET_SCORE_FILTER: 'scoreFilter',
+  };
+  if (action.type in actionTypes) {
+    const filterKey = actionTypes[action.type];
+    return { ...state, [filterKey]: action.payload };
   }
 };
 
-function Filter() {
+function CpuFilter() {
   const [state, dispatch] = React.useReducer(reducer, initialState);
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -110,6 +118,9 @@ function Filter() {
       priceMax: state.priceFilter[1],
       scoreMin: state.scoreFilter[0],
       scoreMax: state.scoreFilter[1],
+      coreFamily:state.coreFamilyFilter,
+      socket: state.socketFilter
+
     };
 
     for (const [key, value] of Object.entries(filters)) {
@@ -124,6 +135,7 @@ function Filter() {
   const handleApply = () => {
     setSearchParams(searchParams);
   };
+
   const handleReset = () =>{
     navigate('/cpu')
     window.location.reload();
@@ -135,19 +147,18 @@ function Filter() {
         <Button onClick={handleApply}>Apply</Button>
         <Button onClick={handleReset}>Reset</Button>
       </StyledFilterButton>   
-      <FilterRadioGroup name={"Manufactures"} defaultValue={initialState.manufacturesFilter} onChange={handleChange} handleLabel={'MANUFACTURES'}labels={labelsManufactures} color={color}/>
+      <FilterRadioGroup name={"Manufactures"} defaultValue={initialState.manufacturesFilter} onChange={handleChange} handleLabel={'MANUFACTURES'}labels={labels.manufactures} color={color}/>
       <FilterRangeSlider name={"Core Count"} handleChangeSlider={handleChange} handleLabel={'CORECOUNT'} value={state.coreCountFilter} min={initialState.coreCountFilter[0]} max={initialState.coreCountFilter[1]} />
       <FilterRangeSlider name={"Core Clock"} handleChangeSlider={handleChange} handleLabel={'CORECLOCK'} value={state.coreClockFilter} min={initialState.coreClockFilter[0]} max={initialState.coreClockFilter[1]} />
       <FilterRangeSlider name={"Boost Clock"} handleChangeSlider={handleChange} handleLabel={'BOOSTCLOCK'} value={state.boostClockFilter} min={initialState.boostClockFilter[0]} max={initialState.boostClockFilter[1]} />
-      <FilterRadioGroup name={"Graphic"} defaultValue={initialState.graphicFilter} handleLabel={'GRAPHIC'}onChange={handleChange} labels={labelsGraphic} color={color}/>
+      <FilterRadioGroup name={"Graphic"} defaultValue={initialState.graphicFilter} handleLabel={'GRAPHIC'}onChange={handleChange} labels={labels.graphic} color={color}/>
       <FilterRangeSlider name={"TDP"} handleChangeSlider={handleChange} handleLabel={'TDP'}value={state.tdpFilter} min={initialState.tdpFilter[0]} max={initialState.tdpFilter[1]} />
-      <FilterRadioGroup name={"SMT"} defaultValue={initialState.smtFilter} handleLabel={'SMT'}onChange={handleChange} labels={labelsSMT} color={color}/>
+      <FilterRadioGroup name={"SMT"} defaultValue={initialState.smtFilter} handleLabel={'SMT'}onChange={handleChange} labels={labels.smt} color={color}/>
       <FilterRangeSlider name={"Price"} handleChangeSlider={handleChange} handleLabel={'PRICE'}value={state.priceFilter} min={initialState.priceFilter[0]} max={initialState.priceFilter[1]} />
-      <FilterComponent name="Micrarchitecture"></FilterComponent>
-      <FilterComponent name="Core Family"></FilterComponent>
-      <FilterComponent name="Socket"></FilterComponent>
+      <FilterRadioGroup name={"Core Family"} defaultValue={initialState.coreFamilyFilter} handleLabel={"COREFAMILY"} onChange={handleChange} labels={labels.coreFamily} color={color}></FilterRadioGroup>
+      <FilterRadioGroup name={"Socket"} defaultValue={initialState.socketFilter} handleLabel={"SOCKET"} onChange={handleChange} labels={labels.socket} color={color}></FilterRadioGroup>
     </StyledFilter>
   );
 }
 
-export default Filter;
+export default CpuFilter;

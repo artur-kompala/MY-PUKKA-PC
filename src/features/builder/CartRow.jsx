@@ -45,25 +45,23 @@ function CartRow({cart,list,isLoading}) {
     return <Spinner></Spinner>
   }
   
-  for (let i = 0; i < cart.length; i++) {
-    if (cart[i].type === list) {
+  for(const type in cart) {  
+    if (type === list) {
         return (
             <Table.Row>
               <div>{list}</div>
-              {<div onClick={()=>navigate(`/product/${cart[i].data.manufacture+ " " +cart[i].data.name}`)}>{cart[i].data.name}</div>}
-              <div>{cart[i].data.price} PLN</div>
+              {<div onClick={()=>navigate(`/product/${cart[type].manufacture+ " " +cart[type].name}`)}>{cart[type].manufacture+ " " +cart[type].name}</div>}
+              <div>{cart[type].price} PLN</div>
             </Table.Row>
         );
-     
-    }else{
-        return(
-            <Table.Row>
-                <div>{list}</div>
-                <Button onClick={() => chooseComponent(list)}>Choose</Button>
-            </Table.Row>
-        )
     }
   }
+  return(
+    <Table.Row>
+        <div>{list}</div>
+        <Button onClick={() => chooseComponent(list)}>Choose</Button>
+    </Table.Row>
+)
 }
 
 export default CartRow;

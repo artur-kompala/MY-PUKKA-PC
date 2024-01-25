@@ -1,22 +1,18 @@
 import SortBy from "../../ui/SortBy";
 import TableOperations from "../../ui/TableOperations";
 
-function CpuTableoperations() {
+function CpuCoolerTableoperations() {
     return (
         <TableOperations>
     
           <SortBy
             options={[
-              { value: "rank-desc", label: "rank 📈" },
               { value: "price-desc", label: "price ⬇️" },
-              { value: "core_count-desc", label: "core count ⬇️" },
-              { value: "rank-asc", label: "rank 📉" },
               { value: "price-asc", label: "price ⬆️" },
-              { value: "core_count-asc", label: "core count ⬆️" },
             ]}
           />
         </TableOperations>
       );
 }
 
-export default CpuTableoperations
+export default CpuCoolerTableoperations
