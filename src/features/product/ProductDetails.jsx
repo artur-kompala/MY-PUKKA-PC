@@ -37,7 +37,7 @@ function ProductDetails({details}) {
     return (
         <>
         <ProductBox>
-            <Img src={imgSrc} alt="product" width={300}></Img>
+            <img src={imgSrc} referrerPolicy="no-referrer" alt="product"  width={300}/>
         </ProductBox>
         <ProductBox>
             <h3>Description:</h3>

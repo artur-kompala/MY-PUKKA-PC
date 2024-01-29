@@ -14,6 +14,8 @@ import { MdOutlinePower, MdSdStorage} from "react-icons/md";
 import { PiComputerTowerLight } from "react-icons/pi";
 import { GrFanOption } from "react-icons/gr";
 import { FaScrewdriverWrench } from "react-icons/fa6";
+import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 const NavList = styled.ul`
   display: flex;
@@ -61,85 +63,91 @@ const StyledNavLink = styled(NavLink)`
 `;
 
 function MainNav() {
+  const {t,i18n} = useTranslation();
+  console.log(i18n);
+  useEffect(()=>{
+      const lng = navigator.language
+      i18n.changeLanguage(lng)
+  },[])
   return (
     <nav>
       <NavList>
         <li>
           <StyledNavLink to="/home">
             <HiOutlineHome />
-            <span>Home</span>
+            <span>{t('home')}</span>
           </StyledNavLink>
         </li>
         <li>
           <StyledNavLink to="/builder">
           <FaScrewdriverWrench />
-            <span>PCBuilder</span>
+            <span>{t('pcbuilder')}</span>
           </StyledNavLink>
         </li>
         <li>
           <StyledNavLink to="/cpu">
             <HiMiniCpuChip />
-            <span>CPU</span>
+            <span>{t('cpu')}</span>
           </StyledNavLink>
         </li>
         <li>
           <StyledNavLink to="/cpu-cooler">
           <GiComputerFan />
-            <span>CPU-Cooler</span>
+            <span>{t('cpu-cooler')}</span>
           </StyledNavLink>
         </li>
         <li>
           <StyledNavLink to="/mobo">
             <BsMotherboard />
-            <span>Motherboard</span>
+            <span>{t('mobo')}</span>
           </StyledNavLink>
         </li>
         <li>
           <StyledNavLink to="/gpu">
             <BsGpuCard />
-            <span>GPU</span>
+            <span>{t('gpu')}</span>
           </StyledNavLink>
         </li>
         <li>
           <StyledNavLink to="/ram">
             <BsMemory />
-            <span>RAM</span>
+            <span>{t('ram')}</span>
           </StyledNavLink>
         </li>
         <li>
           <StyledNavLink to="/psu">
             <MdOutlinePower />
-            <span>Power Supply</span>
+            <span>{t('psu')}</span>
           </StyledNavLink>
         </li>
         <li>
           <StyledNavLink to="/case">
           <PiComputerTowerLight />
-            <span>Case</span>
+            <span>{t('case')}</span>
           </StyledNavLink>
         </li>
         <li>
           <StyledNavLink to="/case-fan">
           <GrFanOption />
-            <span>Case fan</span>
+            <span>{t('casefan')}</span>
           </StyledNavLink>
         </li>
         <li>
           <StyledNavLink to="/storage">
             <MdSdStorage />
-            <span>Storage</span>
+            <span>{t('storage')}</span>
           </StyledNavLink>
         </li>
         <li>
           <StyledNavLink to="/os">
             <BsWindows />
-            <span>OS</span>
+            <span>{t('os')}</span>
           </StyledNavLink>
         </li>
         <li>
           <StyledNavLink to="/settings">
             <HiOutlineCog6Tooth />
-            <span>Settings</span>
+            <span>{t('settings')}</span>
           </StyledNavLink>
         </li>
       </NavList>

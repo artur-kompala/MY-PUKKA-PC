@@ -2,6 +2,8 @@ import styled from "styled-components";
 import LoginForm from "../features/authentication/LoginForm";
 import Logo from "../ui/Logo";
 import Heading from "../ui/Heading";
+import { useTranslation } from "react-i18next";
+import { useEffect } from "react";
 
 const LoginLayout = styled.main`
   min-height: 100vh;
@@ -14,10 +16,17 @@ const LoginLayout = styled.main`
 `;
 
 function Login() {
+  const {t,i18n} = useTranslation();
+  console.log(i18n);
+  useEffect(()=>{
+      const lng = navigator.language
+      i18n.changeLanguage(lng)
+  },[])
+  
   return (
     <LoginLayout>
         <Logo />
-        <Heading as="h4">Log in to your account</Heading>
+        <Heading as="h4">{t('greeting')}</Heading>
         <LoginForm />
     </LoginLayout>
   );

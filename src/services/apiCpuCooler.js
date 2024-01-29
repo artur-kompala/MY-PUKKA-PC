@@ -22,3 +22,5 @@ export async function getOneCpuCooler({name}){
     })
     return data
 }
+
+

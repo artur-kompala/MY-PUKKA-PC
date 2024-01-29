@@ -20,12 +20,11 @@ function Product() {
     });
     
   if(!isLoading){
-
     return (
         <>
           <Row type="horizontal">
             <Heading as="h1">{name}</Heading>
-            <ProductFilter/>
+           
           </Row>
           <ProductLayout name={name} cpu={data.data}/>
         </>

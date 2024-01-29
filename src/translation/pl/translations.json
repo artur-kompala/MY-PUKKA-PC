@@ -1,0 +1,20 @@
+{
+    "greeting": "Zaloguj się do swojego konta",
+    "email": "Adres email",
+    "password": "Hasło",
+    "login": "Zaloguj",
+    "register": "Rejestruj",
+    "home": "Strona główna",
+    "pcbuilder": "Budowanie PC",
+    "cpu": "Procesor",
+    "cpu-cooler": "Chłodzenie procesora",
+    "mobo": "Płyta główna",
+    "gpu": "Karta graficzna",
+    "ram": "Pamieć RAM",
+    "psu": "Zasilacz",
+    "case": "Obudowa",
+    "casefan": "Chłodzenie",
+    "storage": "Dyski",
+    "os": "System",
+    "settings": "Ustawienia"
+}

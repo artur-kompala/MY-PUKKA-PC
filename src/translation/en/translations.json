@@ -1,0 +1,20 @@
+{
+    "greeting": "Log in to your account",
+    "email": "Email address",
+    "password": "Password",
+    "login": "Log in",
+    "register": "Sign up",
+    "home": "Home",
+    "pcbuilder": "PCBuilder",
+    "cpu": "CPU",
+    "cpu-cooler": "CPU Cooler",
+    "mobo": "Motherboard",
+    "gpu": "GPU",
+    "ram": "RAM",
+    "psu": "Power Supply",
+    "case": "Case",
+    "casefan": "Case fan",
+    "storage": "Storage",
+    "os": "OS",
+    "settings": "Settings"
+} 

@@ -12,6 +12,8 @@ import {
 } from "recharts";
 import { useDarkMode } from "../../context/DarkModeContext";
 import { useParams } from "react-router-dom";
+import ProductFilter from "./ProductFilter";
+import Row from "../../ui/Row"
 
 const StyledPriceChart = styled(ProductBox)`
   grid-column: 1 / -1;
@@ -22,53 +24,87 @@ const StyledPriceChart = styled(ProductBox)`
     stroke: var(--color-grey-300);
   }
 `;
-function linearRegressionPredict(nextIndices, price) {
-  const numbers = price.map((x)=>parseInt(x));
+function predict(prices) {
+  let n = prices.length;
+  let sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0;
 
-  const n = numbers.length;
-  let sumX = 0, sumY = 0, sumXY = 0, sumXX = 0;
-
+  // Obliczanie sum potrzebnych do wzorów
   for (let i = 0; i < n; i++) {
       sumX += i;
-      sumY += numbers[i];
-      sumXY += i * numbers[i];
-      sumXX += i * i;
+      sumY += prices[i].price;
+      sumXY += i * prices[i].price;
+      sumX2 += i * i;
   }
 
-  const slope = (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX);
-  const intercept = (sumY - slope * sumX) / n;
+  // Obliczanie współczynników regresji liniowej
+  let slope = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
+  let intercept = (sumY - slope * sumX) / n;
 
-  const predictions = [];
-  for (let i = n; i < n + nextIndices; i++) {
-      predictions.push(slope * i + intercept);
-  }
-  predictions.unshift(numbers.at(-1))
-  return predictions;
+  // Przewidywanie następnej ceny
+  let nextPrice = slope * n + intercept;
+
+  return nextPrice;
 }
 
-function PriceChart({ price, numDays}) {
+function generateNextSevenDates(dates,last) {
+  const lastdate = dates.at(-1).date
+  const oneDay = 24 * 60 * 60 * 1000;
+  for (let i = 0; i < last; i++) {
+    const currentDate = new Date(lastdate);
+    currentDate.setTime(currentDate.getTime() + (i * oneDay));
+    dates.push({date: currentDate.toISOString(),price: predict(dates)})
+
+  }
+  console.log(dates);
+  return dates
+}
+
+function zmienNaDzienMiesiac(data) {
+  let dataObj = new Date(data);
+  let dzien = dataObj.getDate();
+  let miesiac = dataObj.getMonth() + 1;
+
   
+  dzien = dzien < 10 ? '0' + dzien : dzien;
+  miesiac = miesiac < 10 ? '0' + miesiac : miesiac;
+
+  return dzien + '.' + miesiac;
+}
+
+function PriceChart({chart,last}) {
+  console.log(chart.length);
+  const n = chart.length
   const {name} = useParams()
   const { isDarkMode } = useDarkMode();
-  const ostatni = numDays.at(-1);
-  const [dzien, miesiac, rok] = ostatni.split('.');
-  const dataISO8601 = `${rok}.${miesiac}.${dzien}`;
+  chart.forEach(obj=>{
+    obj.price = Number(obj.price)
+  })
 
-  const ostatniaDataObiekt = new Date(dataISO8601);
 
-  for(let i = 1; i < 8; i++) {
-    const nowaData = `${ostatniaDataObiekt.getDate() + i}.${ostatniaDataObiekt.getMonth() + 1}.${ostatniaDataObiekt.getFullYear()}`;
-    numDays.push(nowaData);
-  }
-  console.log(price);
-  const predictions = linearRegressionPredict(7,price)
-console.log(predictions);
-  const data = numDays.map((date, index) => {
-    return {
-      label: date,
-      totalPrice: price[index],
-      extrasPrice: predictions[index-price.length+1],
-    };
+ 
+  const data = generateNextSevenDates(chart,last).map((item, index) => {
+    if(index === parseInt(n)-1){
+      return {
+        label: zmienNaDzienMiesiac(item.date),
+        totalPrice: Number(item.price),
+        extrasPrice: item.price,
+      };
+    }
+    if(index <= parseInt(n)-1){
+        return {
+          label: zmienNaDzienMiesiac(item.date),
+          totalPrice: Number(item.price),
+        }
+    }
+    if(index >= parseInt(n)-1){
+      return {
+        label: zmienNaDzienMiesiac(item.date),
+        extrasPrice: item.price,
+      };
+    }
+    
+    
+    
   });
 
   const colors = isDarkMode
@@ -87,10 +123,13 @@ console.log(predictions);
 
   return (
     <StyledPriceChart>
+      <Row type="horizontal">
       <Heading as="h3">
-        {name} price from {numDays.at(0)} &mdash;{" "}
-        {numDays.at(-1)}{" "}
+        {name} price from  &mdash;{" "}
       </Heading>
+      <ProductFilter/>
+      </Row>
+      
 
       <ResponsiveContainer height={360} width="100%">
         <AreaChart data={data}>
@@ -100,7 +139,7 @@ console.log(predictions);
             tickLine={{ stroke: colors.text }}
           />
           <YAxis
-            unit="PLN"
+            unit="zł"
             tick={{ fill: colors.text }}
             tickLine={{ stroke: colors.text }}
           />
@@ -113,7 +152,7 @@ console.log(predictions);
             fill={colors.totalPrice.fill}
             strokeWidth={3}
             name="Price"
-            unit="PLN"
+            unit="zł"
           />
           <Area
             dataKey="extrasPrice"
@@ -122,7 +161,7 @@ console.log(predictions);
             fill={colors.extrasPrice.fill}
             strokeWidth={2}
             name="Estimated price"
-            unit="PLN"
+            unit="zł"
           />
         </AreaChart>
       </ResponsiveContainer>

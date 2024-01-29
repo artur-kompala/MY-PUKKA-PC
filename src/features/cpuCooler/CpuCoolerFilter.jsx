@@ -31,14 +31,6 @@ const color = {
   },
 };
 
-const initialState = {
-  manufacturesFilter: "All",
-  typeFilter: "All",
-  socketFilter: "All",
-  tdpFilter: [1, 300],
-  priceFilter: [0, 4500],
-};
-
 const labels = {
   manufactures: [
     { value: "All", label: "All" },
@@ -74,7 +66,16 @@ const reducer = (state, action) => {
   }
 };
 
+const initialState = {
+  manufacturesFilter: "All",
+  typeFilter: "All",
+  socketFilter: "All",
+  tdpFilter: [0,300],
+  priceFilter: [0,1500],
+};
+
 function CpuCoolerFilter() {
+
   const [state, dispatch] = React.useReducer(reducer, initialState);
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();

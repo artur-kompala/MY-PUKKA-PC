@@ -24,6 +24,7 @@ import Product from "./pages/Product";
 
 
 
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -34,6 +35,7 @@ const queryClient = new QueryClient({
 });
 
 function App() {
+
   return (
     <DarkModeProvider>
       <GlobalStyles />
@@ -63,7 +65,7 @@ function App() {
             <Route path="Storage" element={<Storage />} />
             <Route path="account" element={<Account />} />
             </Route>
-            <Route path="login" element={<Login />} />
+            <Route path="login" element={<Login/>} />
             <Route path="*" />
           </Routes>
         </BrowserRouter>

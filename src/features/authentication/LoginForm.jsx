@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../../ui/Button";
 import Form from "../../ui/Form";
 import Input from "../../ui/Input";
 import FormRowVertical from "../../ui/FormRowVertical";
 import { useLogin } from "./useLogin";
 import SpinnerMini from "../../ui/SpinnerMini";
+import { useTranslation } from "react-i18next";
 
 function LoginForm() {
   const [email, setEmail] = useState("");
@@ -23,10 +24,11 @@ function LoginForm() {
       }
     );
   }
-
+  const {t,i18n} = useTranslation();
+  
   return (
     <Form onSubmit={handleSubmit}>
-      <FormRowVertical label="Email address">
+      <FormRowVertical label={t('email')}>
         <Input
           type="email"
           id="email"
@@ -38,7 +40,7 @@ function LoginForm() {
         />
       </FormRowVertical>
 
-      <FormRowVertical label="Password">
+      <FormRowVertical label={t('password')}>
         <Input
           type="password"
           id="password"
@@ -50,7 +52,7 @@ function LoginForm() {
       </FormRowVertical>
       <FormRowVertical>
         <Button size="large" disabled={isLoading}>
-          {!isLoading ? "Log in" : <SpinnerMini />}
+          {!isLoading ? t('login') : <SpinnerMini />}
         </Button>
       </FormRowVertical>
     </Form>
