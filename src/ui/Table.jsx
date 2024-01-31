@@ -4,7 +4,7 @@ import styled from "styled-components";
 const StyledTable = styled.div`
   border: 1px solid var(--color-grey-200);
 
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   background-color: var(--color-grey-0);
   border-radius: 7px;
   overflow: hidden;
@@ -13,7 +13,7 @@ const StyledTable = styled.div`
 const CommonRow = styled.div`
   display: grid;
   grid-template-columns: ${(props) => props.columns};
-  column-gap: 2.4rem;
+  column-gap: 1.4rem;
   align-items: center;
   transition: none;
 `;

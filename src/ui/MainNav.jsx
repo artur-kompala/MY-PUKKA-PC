@@ -2,11 +2,8 @@ import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import {
   HiMiniCpuChip,
-  HiOutlineCalendarDays,
   HiOutlineCog6Tooth,
   HiOutlineHome,
-  HiOutlineHomeModern,
-  HiOutlineUsers,
 } from "react-icons/hi2";
 import { GiComputerFan } from "react-icons/gi";
 import { BsMotherboard, BsGpuCard ,BsMemory, BsWindows} from "react-icons/bs";
@@ -14,7 +11,6 @@ import { MdOutlinePower, MdSdStorage} from "react-icons/md";
 import { PiComputerTowerLight } from "react-icons/pi";
 import { GrFanOption } from "react-icons/gr";
 import { FaScrewdriverWrench } from "react-icons/fa6";
-import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
 const NavList = styled.ul`
@@ -64,11 +60,6 @@ const StyledNavLink = styled(NavLink)`
 
 function MainNav() {
   const {t,i18n} = useTranslation();
-  console.log(i18n);
-  useEffect(()=>{
-      const lng = navigator.language
-      i18n.changeLanguage(lng)
-  },[])
   return (
     <nav>
       <NavList>

@@ -17,7 +17,6 @@ const LoginLayout = styled.main`
 
 function Login() {
   const {t,i18n} = useTranslation();
-  console.log(i18n);
   useEffect(()=>{
       const lng = navigator.language
       i18n.changeLanguage(lng)

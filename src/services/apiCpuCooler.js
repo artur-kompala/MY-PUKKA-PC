@@ -23,4 +23,15 @@ export async function getOneCpuCooler({name}){
     return data
 }
 
+export async function getCpuCoolerFilters(){
+    const data = await axios.get(`${API_URL}/getCpuCoolerFilters`)
+    .then(res=> res.data)
+    .catch(err =>{
+        console.log(err)
+    })
+    
+    const query = {data}
+    
+    return query
+}
 

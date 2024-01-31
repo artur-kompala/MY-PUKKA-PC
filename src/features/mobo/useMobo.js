@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import { PAGE_SIZE } from "../../utils/constants";
 import { getMobos } from "../../services/apiMobo";
 
-export function useCpuCooler() {
+export function useMobo() {
   const queryClient = useQueryClient();
   const [searchParams] = useSearchParams();
 

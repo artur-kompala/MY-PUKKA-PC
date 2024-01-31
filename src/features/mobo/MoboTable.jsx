@@ -14,15 +14,19 @@ function MoboTable() {
 
   return (
     <Menus>
-      <Table columns="0.5fr 0.5fr 0.4fr 0.5fr 0.2fr 0.3fr 0.2fr 0.4fr 0.5fr 8rem">
+      <Table columns="3.0fr 1.5fr 1.5fr 1.5fr 1.5fr 1.5fr 1.5fr 1.5fr 1.5fr 1.5fr 1.5fr 1.5fr 1.5fr 8rem">
         <Table.Header>
           <div></div>
           <div>Name</div>
-          <div>RPM</div>
-          <div>Noise level</div>
-          <div>Type</div>
-          <div>TDP</div>
-          <div>Led</div>
+          <div>Socket</div>
+          <div>Form factor</div>
+          <div>Memory slots</div>
+          <div>Memory type</div>
+          <div>Memory speed</div>
+          <div>Chipset</div>
+          <div>graphics support</div>
+          <div>Pcie</div>
+          <div>M.2 (2280) slot</div>
           <div>Color</div>
           <div>Price (PLN)</div>
         </Table.Header>

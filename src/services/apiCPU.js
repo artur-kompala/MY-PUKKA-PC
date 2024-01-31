@@ -22,3 +22,4 @@ export async function getOneCPU({name}){
     })
     return data
 }
+

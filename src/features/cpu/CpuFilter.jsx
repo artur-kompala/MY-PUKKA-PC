@@ -1,36 +1,11 @@
 import React, { useEffect} from "react";
-import styled from "styled-components";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Button from "../../ui/Button";
 import FilterRadioGroup from "../../ui/FilterRadioGroup";
 import FilterRangeSlider from "../../ui/FilterRangeSlider";
+import { StyledFilter, StyledFilterButton } from "../../ui/StyledFilter";
+import color from "../../styles/color";
 
-
-const StyledFilter = styled.div`
-  background-color: var(--color-grey-100);
-  padding: 1.6rem;
-  border-radius: var(--border-radius-md);
-  display: grid;
-  grid-template-columns: 1fr ;
-  gap: 1rem;
-`;
-
-const StyledFilterButton = styled.div`
-   display: grid;
-   grid-template-columns: 1fr 1fr;
-   gap: 1rem;
-`;
-
-const color = {
-  marginX: 2,
-  color: "#4f46e5",
-  "&.Mui-checked": {
-    color: "#4f46e5",
-  },
-  '& .MuiSvgIcon-root': {
-    fontSize: 24,
-  }
-};
 
 const initialState = {
   manufacturesFilter: 'All',
