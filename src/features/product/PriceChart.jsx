@@ -55,7 +55,7 @@ function generateNextSevenDates(dates,last) {
     dates.push({date: currentDate.toISOString(),price: predict(dates)})
 
   }
-  console.log(dates);
+  
   return dates
 }
 
@@ -72,7 +72,7 @@ function zmienNaDzienMiesiac(data) {
 }
 
 function PriceChart({chart,last}) {
-  console.log(chart.length);
+  
   const n = chart.length
   const {name} = useParams()
   const { isDarkMode } = useDarkMode();

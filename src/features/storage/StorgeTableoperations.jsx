@@ -1,7 +1,7 @@
 import SortBy from "../../ui/SortBy";
 import TableOperations from "../../ui/TableOperations";
 
-function GpuTableoperations() {
+function StorgeTableoperations() {
     return (
         <TableOperations>
     
@@ -11,12 +11,10 @@ function GpuTableoperations() {
               { value: "price-asc", label: "price ⬆️" },
               { value: "rank-desc", label: "rank 📈" },
               { value: "rank-asc", label: "rank 📉" },
-              { value: "memory-desc", label: "memory 📈" },
-              { value: "memory-asc", label: "memory 📉" },
             ]}
           />
         </TableOperations>
       );
 }
 
-export default GpuTableoperations
+export default StorgeTableoperations

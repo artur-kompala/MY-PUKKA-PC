@@ -47,10 +47,15 @@ function CartRow({cart,list,isLoading}) {
   
   for(const type in cart) {  
     if (type === list) {
+        
         return (
             <Table.Row>
               <div>{list}</div>
-              {<div onClick={()=>navigate(`/product/${cart[type].manufacture+ " " +cart[type].name}`)}>{cart[type].manufacture+ " " +cart[type].name}</div>}
+              { 
+                type==="GPU"?
+                <div onClick={()=>navigate(`/product/${cart[type].manufacture+ " " +cart[type].name}`)}>{cart[type].manufacture+ " " +cart[type].name + " " + cart[type].chipset}</div>:
+                <div onClick={()=>navigate(`/product/${cart[type].manufacture+ " " +cart[type].name}`)}>{cart[type].manufacture+ " " +cart[type].name}</div>
+                }
               <div>{cart[type].price} PLN</div>
             </Table.Row>
         );

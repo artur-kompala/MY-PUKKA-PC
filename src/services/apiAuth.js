@@ -36,13 +36,13 @@ export async function getCurrentUser() {
   try {
     const res = await axios.post(`${API_URL}/verify-token`, data);
     if (res.status === 200) {
-      console.log(res.data?.user)
+      
       return res.data?.user;
     } else {
       return null
     }
   } catch (err) {
-      console.log(err.message)
+     console.log(err);
   }
 
   return null

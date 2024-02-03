@@ -20,7 +20,7 @@ function ProductLayout({name,cpu}) {
   const [searchParams] = useSearchParams();
   const last = searchParams.get('last') || '7';
 
-  console.log(last);
+ 
     const {   
       isLoading,
       data = {},
@@ -30,7 +30,7 @@ function ProductLayout({name,cpu}) {
       queryFn: () => getProduct({name,last}),
     });
     
-    console.log(data);
+    
     
     if(isLoading){
       return <Spinner></Spinner>

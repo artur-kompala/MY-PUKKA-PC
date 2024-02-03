@@ -1,28 +1,22 @@
 import React, { useEffect } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import Button from "../../ui/Button";
 import FilterRadioGroup from "../../ui/FilterRadioGroup";
 import FilterRangeSlider from "../../ui/FilterRangeSlider";
 import { StyledFilter, StyledFilterButton } from "../../ui/StyledFilter";
 import color from "../../styles/color";
+import { getMoboFilters } from "../../services/apiMobo";
+import useFilters from "../useFilters";
 
 const labels = {
   manufactures: [
     { value: "All", label: "All" },
-    { value: "ASRock", label: "ASRock" },
-    { value: "Asus", label: "Asus" },
-    { value: "Gigabyte", label: "Gigabyte" },
-    { value: "MSI", label: "MSI" },
-  ],
-  form_factor: [
-    { value: "All", label: "All" },
-    { value: "ATX", label: "ATX" },
-    { value: "Micro ATX", label: "Micro ATX" },
   ],
   socket: [
     { value: "All", label: "All" },
-    { value: "AM5", label: "AM5" },
-    { value: "LGA1700", label: "LGA1700" },
+  ],
+  form_factor: [
+    { value: "All", label: "All" },
   ],
   wifi: [
     { value: "All", label: "All" },
@@ -44,40 +38,67 @@ const labels = {
     { value: true, label: "Yes" },
     { value: false, label: "No" },
   ],
+  chipset: [
+    { value: "All", label: "All" },
+  ],
+  price: [],
 };
 
-const reducer = (state, action) => {
-  const actionTypes = {
-    SET_MANUFACTURES_FILTER: "manufacturesFilter",
-    SET_FORM_FACTOR_FILTER: "form_factorFilter",
-    SET_SOCKET_FILTER: "socketFilter",
-    SET_WIFI_FILTER: "wifiFilter",
-    SET_M2_FILTER: "m2Filter",
-    SET_PCIE_FILTER: "pcieFilter",
-    SET_INTEGRATED_GRAPHICS_SUPPORT_FILTER: "integrated_graphics_supportFilter",
-    SET_PRICE_FILTER: "priceFilter",
-  };
-  if (action.type in actionTypes) {
-    const filterKey = actionTypes[action.type];
-    return { ...state, [filterKey]: action.payload };
-  }
-};
 
-const initialState = {
-  manufacturesFilter: "All",
-  form_factorFilter: "All",
-  socketFilter: "All",
-  wifiFilter: "All",
-  m2Filter: "All",
-  pcieFilter: "All",
-  integrated_graphics_supportFilter: "All",
-  priceFilter: [0, 1500],
-};
+const dataFilter = await getMoboFilters();
+
+dataFilter.data.manufacture.map((item) =>
+  labels.manufactures.push({ value: item, label: item })
+);
+dataFilter.data.form_factor.map((item) =>
+  labels.form_factor.push({ value: item, label: item })
+);
+dataFilter.data.socket.map((item) =>
+  labels.socket.push({ value: item, label: item })
+);
+dataFilter.data.chipset.map((item) =>
+  labels.chipset.push({ value: item, label: item })
+);
+
+labels.price[0] = dataFilter.data.maxMin[0].minPrice;
+labels.price[1] = dataFilter.data.maxMin[0].maxPrice;
+
 
 function MoboFilter() {
+  const initialState = {
+    manufacturesFilter: "All",
+    form_factorFilter: "All",
+    socketFilter: "All",
+    chipsetFilter: "All",
+    wifiFilter: "All",
+    m2Filter: "All",
+    pcieFilter: "All",
+    integrated_graphics_supportFilter: "All",
+    priceFilter: labels.price,
+  };
+
+  const reducer = (state, action) => {
+    const actionTypes = {
+      SET_MANUFACTURES_FILTER: "manufacturesFilter",
+      SET_FORM_FACTOR_FILTER: "form_factorFilter",
+      SET_SOCKET_FILTER: "socketFilter",
+      SET_CHIPSET_FILTER: "chipsetFilter",
+      SET_WIFI_FILTER: "wifiFilter",
+      SET_M2_FILTER: "m2Filter",
+      SET_PCIE_FILTER: "pcieFilter",
+      SET_INTEGRATED_GRAPHICS_SUPPORT_FILTER: "integrated_graphics_supportFilter",
+      SET_PRICE_FILTER: "priceFilter",
+    };
+    if (action.type in actionTypes) {
+      const filterKey = actionTypes[action.type];
+      return { ...state, [filterKey]: action.payload };
+    }else{
+      return initialState
+    }
+  };
+
   const [state, dispatch] = React.useReducer(reducer, initialState);
   const [searchParams, setSearchParams] = useSearchParams();
-  const navigate = useNavigate();
 
   useEffect(() => {
     const filters = {
@@ -85,6 +106,7 @@ function MoboFilter() {
       form_factor: state.form_factorFilter,
       socket: state.socketFilter,
       wifi: state.wifiFilter,
+      chipset: state.chipsetFilter,
       m2: state.m2Filter,
       pcie: state.pcieFilter,
       integrated_graphics_support: state.integrated_graphics_supportFilter,
@@ -97,24 +119,17 @@ function MoboFilter() {
     }
   }, [state, setSearchParams, searchParams]);
 
+  const {handleApply, handleReset} = useFilters();
+
   const handleChange = (filterType, event) => {
     dispatch({ type: `SET_${filterType}_FILTER`, payload: event.target.value });
-  };
-
-  const handleApply = () => {
-    setSearchParams(searchParams);
-  };
-
-  const handleReset = () => {
-    navigate("/mobo");
-    window.location.reload();
   };
 
   return (
     <StyledFilter>
       <StyledFilterButton>
-        <Button onClick={handleApply}>Apply</Button>
-        <Button onClick={handleReset}>Reset</Button>
+        <Button onClick={()=>handleApply(searchParams,setSearchParams)}>Apply</Button>
+        <Button onClick={()=>handleReset(dispatch,'/mobo')}>Reset</Button>
       </StyledFilterButton>
       <FilterRadioGroup
         name={"Manufactures"}
@@ -141,6 +156,14 @@ function MoboFilter() {
         color={color}
       ></FilterRadioGroup>
       <FilterRadioGroup
+        name={"Chipset"}
+        defaultValue={initialState.chipsetFilter}
+        handleLabel={"CHIPSET"}
+        onChange={handleChange}
+        labels={labels.chipset}
+        color={color}
+      ></FilterRadioGroup>
+      <FilterRadioGroup
         name={"Wifi"}
         defaultValue={initialState.wifiFilter}
         handleLabel={"WIFI"}
@@ -154,6 +177,22 @@ function MoboFilter() {
         handleLabel={"M2"}
         onChange={handleChange}
         labels={labels.m2}
+        color={color}
+      ></FilterRadioGroup>
+       <FilterRadioGroup
+        name={"Graphics"}
+        defaultValue={initialState.integrated_graphics_supportFilter}
+        handleLabel={"INTEGRATED_GRAPHICS_SUPPORT"}
+        onChange={handleChange}
+        labels={labels.integrated_graphics_support}
+        color={color}
+      />
+      <FilterRadioGroup
+        name={"PCIe"}
+        defaultValue={initialState.pcieFilter}
+        handleLabel={"PCIE"}
+        onChange={handleChange}
+        labels={labels.pcie}
         color={color}
       ></FilterRadioGroup>
       <FilterRangeSlider

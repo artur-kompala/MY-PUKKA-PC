@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import Button from "../../ui/Button";
 import FilterRangeSlider from "../../ui/FilterRangeSlider";
 import FilterRadioGroup from "../../ui/FilterRadioGroup";
@@ -7,7 +7,6 @@ import { getCpuCoolerFilters } from "../../services/apiCpuCooler";
 import { StyledFilter, StyledFilterButton } from "../../ui/StyledFilter";
 import color from "../../styles/color";
 import useFilters from "../useFilters";
-
 
 const labels = {
   manufactures: [{ value: "All", label: "All" }],
@@ -28,6 +27,7 @@ dataFilter.data.socket.map((item) =>
 dataFilter.data.type.map((item) =>
   labels.type.push({ value: item, label: item })
 );
+
 labels.tdp[0] = dataFilter.data.maxMin[0].minTdp;
 labels.tdp[1] = dataFilter.data.maxMin[0].maxTdp;
 labels.price[0] = dataFilter.data.maxMin[0].minPrice;

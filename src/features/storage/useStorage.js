@@ -1,24 +1,25 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useSearchParams } from "react-router-dom";
 import { PAGE_SIZE } from "../../utils/constants";
-import { getGpus } from "../../services/apiGpu";
+import { getStorages } from "../../services/apiStorage";
 
-export function useGpu() {
+export function useStorage() {
   const queryClient = useQueryClient();
   const [searchParams] = useSearchParams();
 
   // FILTER
   const filterKeys = [
     "manufactures",
-    "chipset",
-    "pcie",
-    "fg",
+    "type",
+    "inter",
+    "readMin",
+    "readMax",
+    "writeMin",
+    "writeMax",
+    "capacityMin",
+    "capacityMax",
     "priceMin",
     "priceMax",
-    "memoryMin",
-    "memoryMax",
-    "lengthMin",
-    "lengthMax",
   ];
 
   const filter = filterKeys.map((key) => ({
@@ -35,29 +36,29 @@ export function useGpu() {
   // QUERY
   const {
     isLoading,
-    data: gpuInfo = { data: {} },
+    data: StorageInfo = { data: {} },
     error,
   } = useQuery({
-    queryKey: ["gpus", filter, sortBy, page],
-    queryFn: () => getGpus({ filter, sortBy, page }),
+    queryKey: ["storages", filter, sortBy, page],
+    queryFn: () => getStorages({ filter, sortBy, page }),
   });
-  const gpus = gpuInfo.data.data;
-  const count = gpuInfo.data.total;
+  const storages = StorageInfo.data.data;
+  const count = StorageInfo.data.total;
 
   // PRE-FETCHING
   const pageCount = Math.ceil(count / PAGE_SIZE);
 
   if (page < pageCount)
     queryClient.prefetchQuery({
-      queryKey: ["gpus", filter, sortBy, page + 1],
-      queryFn: () => getGpus({ filter, sortBy, page: page + 1 }),
+      queryKey: ["storages", filter, sortBy, page + 1],
+      queryFn: () => getStorages({ filter, sortBy, page: page + 1 }),
     });
 
   if (page > 1)
     queryClient.prefetchQuery({
-      queryKey: ["gpus", filter, sortBy, page - 1],
-      queryFn: () => getGpus({ filter, sortBy, page: page - 1 }),
+      queryKey: ["storages", filter, sortBy, page - 1],
+      queryFn: () => getStorages({ filter, sortBy, page: page - 1 }),
     });
 
-  return { isLoading, error, gpus, count };
+  return { isLoading, error, storages, count };
 }

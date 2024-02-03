@@ -11,7 +11,7 @@ const handleApply = (searchParams,setSearchParams) => {
 };
 
 const handleReset = (dispatch,adress) => {
-    navigate("/cpu-cooler");
+    navigate(adress);
     dispatch({ type: 'reset' });
 };
 

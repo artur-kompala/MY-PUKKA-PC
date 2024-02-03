@@ -15,9 +15,11 @@ export function useMobo() {
     "priceMin",
     "priceMax",
     "wifi",
-    "chipset",
+    "m2",
     "integrated_graphics_support",
-    "memory_type"
+    "chipset",
+    "pcie",
+
   ];
 
   const filter = filterKeys.map((key) => ({

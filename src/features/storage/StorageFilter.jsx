@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { getGpuFilters } from "../../services/apiGpu";
+import { getStorageFilters } from "../../services/apiStorage";
 import { useSearchParams } from "react-router-dom";
 import useFilters from "../useFilters";
 import { StyledFilter, StyledFilterButton } from "../../ui/StyledFilter";
@@ -10,53 +10,55 @@ import FilterRangeSlider from "../../ui/FilterRangeSlider";
 
 const labels = {
     manufactures: [{ value: "All", label: "All" }],
-    chipset: [{ value: "All", label: "All" }],
-    pcie: [{ value: "All", label: "All" }],
-    fg: [{ value: "All", label: "All" }],
+    type: [{ value: "All", label: "All" }],
+    inter: [{ value: "All", label: "All" }],
     price: [],
-    memory: []
+    read: [],
+    write: [],
+    capacity: [],
   };
   
-  const dataFilter = await getGpuFilters();
-  
+  const dataFilter = await getStorageFilters();
+  console.log(dataFilter);
   dataFilter.data.manufacture.map((item) =>
     labels.manufactures.push({ value: item, label: item })
   );
-  dataFilter.data.pcie.map((item) =>
-    labels.pcie.push({ value: item, label: item })
+  dataFilter.data.inter.map((item) =>
+    labels.inter.push({ value: item, label: item })
   );
-  dataFilter.data.chipset.map((item) =>
-    labels.chipset.push({ value: item, label: item })
-  );
-  dataFilter.data.fg.map((item) =>
-    labels.fg.push({ value: item, label: item })
+  dataFilter.data.type.map((item) =>
+    labels.type.push({ value: item, label: item })
   );
   
   labels.price[0] = dataFilter.data.maxMin[0].minPrice;
   labels.price[1] = dataFilter.data.maxMin[0].maxPrice;
-  labels.memory[0] = dataFilter.data.maxMin[0].minMemory;
-  labels.memory[1] = dataFilter.data.maxMin[0].maxMemory;
-  
+  labels.read[0] = dataFilter.data.maxMin[0].minRead;
+  labels.read[1] = dataFilter.data.maxMin[0].maxRead;
+  labels.write[0] = dataFilter.data.maxMin[0].minWrite;
+  labels.write[1] = dataFilter.data.maxMin[0].maxWrite;
+  labels.capacity[0] = dataFilter.data.maxMin[0].minCapacity;
+  labels.capacity[1] = dataFilter.data.maxMin[0].maxCapacity;
 
-
-function GpuFilter() {
+function StorageFilter() {
     const initialState = {
         manufacturesFilter: "All",
-        chipsetFilter: "All",
-        pcieFilter: "All",
-        fgFilter: "All",
+        typeFilter: "All",
+        interFilter: "All",
         priceFilter: labels.price,
-        memoryFilter: labels.memory,
+        readFilter: labels.read,
+        writeFilter: labels.write,
+        capacityFilter: labels.capacity,
       };
     
       const reducer = (state, action) => {
         const actionTypes = {
           SET_MANUFACTURES_FILTER: "manufacturesFilter",
-          SET_CHIPSET_FILTER: "chipsetFilter",
-          SET_PCIE_FILTER: "pcieFilter",
-          SET_FG_FILTER: "fgFilter",
+          SET_TYPE_FILTER: "typeFilter",
+          SET_INTER_FILTER: "interFilter",
           SET_PRICE_FILTER: "priceFilter",
-          SET_MEMORY_FILTER: "memoryFilter",
+          SET_READ_FILTER: "readFilter",
+          SET_WRITE_FILTER: "writeFilter",
+          SET_CAPACITY_FILTER: "capacityFilter",
         };
         if (action.type in actionTypes) {
           const filterKey = actionTypes[action.type];
@@ -72,13 +74,16 @@ function GpuFilter() {
       useEffect(() => {
         const filters = {
           manufactures: state.manufacturesFilter,
-          chipset: state.chipsetFilter,
-          pcie: state.pcieFilter,
-          fg: state.fgFilter,
+          type: state.typeFilter,
+          inter: state.interFilter,
           priceMin: state.priceFilter[0],
           priceMax: state.priceFilter[1],
-          memoryMin: state.memoryFilter[0],
-          memoryMax: state.memoryFilter[1],
+          readMin: state.readFilter[0],
+          readMax: state.readFilter[1],
+          writeMin: state.writeFilter[0],
+          writeMax: state.writeFilter[1],
+          capacityMin: state.capacityFilter[0],
+          capacityMax: state.capacityFilter[1],
         };
         for (const [key, value] of Object.entries(filters)) {
           searchParams.set(key, value);
@@ -95,7 +100,7 @@ function GpuFilter() {
         <StyledFilter>
           <StyledFilterButton>
             <Button onClick={()=>handleApply(searchParams,setSearchParams)}>Apply</Button>
-            <Button onClick={()=>handleReset(dispatch,'/gpu')}>Reset</Button>
+            <Button onClick={()=>handleReset(dispatch,'/storage')}>Reset</Button>
           </StyledFilterButton>
           <FilterRadioGroup
             name={"Manufactures"}
@@ -106,36 +111,44 @@ function GpuFilter() {
             color={color}
           />
           <FilterRadioGroup
-            name={"Chipset"}
-            defaultValue={initialState.chipsetFilter}
-            handleLabel={"CHIPSET"}
+            name={"Type"}
+            defaultValue={initialState.typeFilter}
+            handleLabel={"TYPE"}
             onChange={handleChange}
-            labels={labels.chipset}
+            labels={labels.type}
             color={color}
           />
           <FilterRadioGroup
-            name={"PCIe"}
-            defaultValue={initialState.pcieFilter}
-            handleLabel={"PCIE"}
+            name={"Interface"}
+            defaultValue={initialState.interFilter}
+            handleLabel={"INTER"}
             onChange={handleChange}
-            labels={labels.pcie}
-            color={color}
-          ></FilterRadioGroup>
-          <FilterRadioGroup
-            name={"Frame Genertor"}
-            defaultValue={initialState.fgFilter}
-            handleLabel={"FG"}
-            onChange={handleChange}
-            labels={labels.fg}
+            labels={labels.inter}
             color={color}
           ></FilterRadioGroup>
           <FilterRangeSlider
-            name={"Memory"}
+            name={"Read"}
             handleChangeSlider={handleChange}
-            handleLabel={"MEMORY"}
-            value={state.memoryFilter}
-            min={initialState.memoryFilter[0]}
-            max={initialState.memoryFilter[1]}
+            handleLabel={"READ"}
+            value={state.readFilter}
+            min={initialState.readFilter[0]}
+            max={initialState.readFilter[1]}
+          />
+          <FilterRangeSlider
+            name={"Write"}
+            handleChangeSlider={handleChange}
+            handleLabel={"WRITE"}
+            value={state.writeFilter}
+            min={initialState.writeFilter[0]}
+            max={initialState.writeFilter[1]}
+          />
+          <FilterRangeSlider
+            name={"Capcity"}
+            handleChangeSlider={handleChange}
+            handleLabel={"CAPACITY"}
+            value={state.capacityFilter}
+            min={initialState.capacityFilter[0]}
+            max={initialState.capacityFilter[1]}
           />
           <FilterRangeSlider
         name={"Price"}
@@ -149,4 +162,4 @@ function GpuFilter() {
       );
 }
 
-export default GpuFilter
+export default StorageFilter
