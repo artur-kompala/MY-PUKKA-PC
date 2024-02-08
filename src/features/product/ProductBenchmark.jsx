@@ -14,21 +14,21 @@ const BenchmarkBox = styled.div`
   gap: 2.4rem;
 `;
 
-function ProductBenchmark({cpu}) {
+function ProductBenchmark() {
   
   return (
     <>
       <BenchmarkBox>
         <em>Rank:</em>
-        <strong style={colorGrey}>{cpu.rank}</strong>
+        <strong style={colorGrey}>Rank</strong>
       </BenchmarkBox>
       <BenchmarkBox>
         <em>Score:</em>
-        <strong style={colorGrey}>{cpu.benchmark}</strong>
+        <strong style={colorGrey}>bench</strong>
       </BenchmarkBox>
       <BenchmarkBox>
         <em>Samples:</em>
-        <strong style={colorGrey}>{cpu.samples}</strong>
+        <strong style={colorGrey}>samp</strong>
       </BenchmarkBox>
     </>
   );

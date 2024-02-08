@@ -13,7 +13,7 @@ function OsTable() {
 
   return (
     <Menus>
-      <Table columns="3.0fr 3.0fr 3.0fr 3.0fr 3.0fr 3.0fr 10rem">
+      <Table columns="3.0fr 4.0fr 4.0fr 4.0fr 3.0fr 3.0fr 3.0fr">
         <Table.Header>
           <div></div>
           <div>Manufacturer</div>

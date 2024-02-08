@@ -16,7 +16,7 @@ const StyledProductLayout = styled.div`
   gap: 2.4rem;
 `;
 
-function ProductLayout({gid,cpu}) {
+function ProductLayout({gid}) {
   const [searchParams] = useSearchParams();
   const last = searchParams.get('last') || '7';
 
@@ -40,14 +40,11 @@ function ProductLayout({gid,cpu}) {
       
     
       return(
-        <StyledProductLayout>
-          
+        <StyledProductLayout> 
         <ProductDetails details={query.results[0].content}></ProductDetails>
-        <ProductBenchmark cpu={cpu}></ProductBenchmark>
+        <ProductBenchmark></ProductBenchmark>
         <PriceChart chart={chart} last={last}/>
-        <ProductSpecs details={query.results[0].content} cpu={cpu}></ProductSpecs>
-        
-        
+        <ProductSpecs details={query.results[0].content}></ProductSpecs>
         </StyledProductLayout>
       )
     }else{

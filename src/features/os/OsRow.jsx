@@ -9,20 +9,19 @@ function OsRow({os}) {
     const {manufacture,name,price,gid,max_memory,mode} = os;
 
     function handleClick(type,data){
-        addCart(type,data)
-        navigate('/builder')
+        addCart(type,data).then(navigate('/builder'))
     }
 
     return (
         <Table.Row>
             {manufacture === "Microsoft" ? <FaWindows size={60}/> : "-"}
             <div>{manufacture}</div>
-            <span onClick={()=>navigate(`/product/${ manufacture + ' '+ name}`)}>{name}</span>
+            <span onClick={()=>navigate(`/product/${gid}`)}>{name}</span>
             <div>{mode}</div>
             <div>{max_memory}</div>
             <div>{price ? `${price}`: "-"}</div>
             <div>
-                <Button size='small' onClick={()=>handleClick("OS",os)}>+Add to Build</Button>
+                <Button size='small' onClick={()=>handleClick("os",os)}>+Add to Build</Button>
             </div>
         </Table.Row>
     )

@@ -24,14 +24,13 @@ function MoboRow({ mobo }) {
     m2,
   } = mobo;
 
-  function handleClick(type, data) {
-    addCart(type, data);
-    navigate("/builder");
-  }
+  function handleClick(type,data){
+    addCart(type,data).then(navigate('/builder'))
+}
   return (
     <Table.Row>
         <img style={{backgroundColor: 'white', borderRadius: '5px', padding: '5px',width: '10rem',height: '7rem'}}src={`${manufacture}.svg`} alt={manufacture}></img>
-        <span onClick={()=>navigate(`/product/${ manufacture + ' '+ name}`)}>{name}</span>
+        <span onClick={()=>navigate(`/product/${gid}`)}>{name}</span>
         <div>{socket}</div>
         <div>{form_factor}</div>
         <div>{memory_slots}</div>
@@ -49,7 +48,7 @@ function MoboRow({ mobo }) {
         
         <div>{price ? `${price}`: "-"}</div>
         <div>
-            <Button size='small' onClick={()=>handleClick("Montherboard",mobo)}>+Add to Build</Button>
+            <Button size='small' onClick={()=>handleClick("mobo",mobo)}>+Add to Build</Button>
         </div>
     </Table.Row>
 )

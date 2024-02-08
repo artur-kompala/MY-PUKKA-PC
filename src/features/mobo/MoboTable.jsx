@@ -14,7 +14,7 @@ function MoboTable() {
 
   return (
     <Menus>
-      <Table columns="3.0fr 1.5fr 1.5fr 1.5fr 1.5fr 1.5fr 1.5fr 1.5fr 1.5fr 1.5fr 1.5fr 1.5fr 1.5fr 8rem">
+      <Table columns="3.0fr 1.5fr 1.5fr 1.5fr 1.5fr 1.5fr 1.5fr 1.5fr 1.5fr 1.5fr 1.5fr 1.5fr 1.5fr 1.5fr">
         <Table.Header>
           <div></div>
           <div>Name</div>

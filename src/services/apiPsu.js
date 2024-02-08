@@ -13,14 +13,6 @@ export async function getPsu({filter, sortBy, page}){
     return query
 }
 
-export async function getOnePsu({name}){
-    const data = await axios.get(`${API_URL}/cpuCooler?name=${name}`)
-    .then(res=>res.data)
-    .catch(err =>{
-        console.log(err)
-    })
-    return data
-}
 
 export async function getPsuFilters(){
     const data = await axios.get(`${API_URL}/getPsuFilters`)

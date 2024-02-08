@@ -21,11 +21,8 @@ function CpuRow({cpu}) {
     const {name,boost_clock,price,core_clock,core_count,graphics,smt,tdp,rank,benchmark,manufacture,gid} = cpu;
 
     function handleClick(type,data){
-        addCart(type,data)
-        navigate('/builder')
+        addCart(type,data).then(navigate('/builder'))
     }
-    
-
     
     return (
         <Table.Row>
@@ -41,7 +38,7 @@ function CpuRow({cpu}) {
             <div>{price || "-"}</div>
             <span>{benchmark || "-"}</span>
             <div>
-                <Button size='small' onClick={()=>handleClick("CPU",cpu)}>+Add to Build</Button>
+                <Button size='small' onClick={()=>handleClick("cpu",cpu)}>+Add to Build</Button>
             </div>
         </Table.Row>
     )

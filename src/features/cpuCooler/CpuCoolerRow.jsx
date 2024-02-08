@@ -8,14 +8,13 @@ function CpuCoolerRow({cooler}) {
     const {manufacture,name,price,rpm,noise_level,color,size,type,socket,tdp,gid,led} = cooler;
 
     function handleClick(type,data){
-        addCart(type,data)
-        navigate('/builder')
+        addCart(type,data).then(navigate('/builder'))
     }
 
     return (
         <Table.Row>
             <img style={{backgroundColor: 'white', borderRadius: '5px', padding: '5px',width: '10rem',height: '7rem'}}src={`${manufacture}.svg`} alt={manufacture}></img>
-            <span onClick={()=>navigate(`/product/${ manufacture + ' '+ name}`)}>{name}</span>
+            <span onClick={()=>navigate(`/product/${gid}`)}>{name}</span>
             <div>{`${rpm[0]}-${rpm[1]}`}</div>
             <div>{`${noise_level[0]}-${noise_level[1]} dB`}</div>
             <div>{type}</div>
@@ -29,7 +28,7 @@ function CpuCoolerRow({cooler}) {
             
             <div>{price ? `${price}`: "-"}</div>
             <div>
-                <Button size='small' onClick={()=>handleClick("CPU-Cooler",cooler)}>+Add to Build</Button>
+                <Button size='small' onClick={()=>handleClick("cooler",cooler)}>+Add to Build</Button>
             </div>
         </Table.Row>
     )

@@ -14,16 +14,6 @@ export async function getCPU({filter, sortBy, page}){
     return query
 }
 
-export async function getOneCPU({gid}){
-   
-    const data = await axios.get(`${API_URL}/getOneCpu?gid=${gid}`)
-    .then(res=>res.data)
-    .catch(err =>{
-        console.log(err)
-    })
-    return data
-}
-
 export async function getCpuFilters(){
     const data = await axios.get(`${API_URL}/getCpuFilters`)
     .then(res=> res.data)

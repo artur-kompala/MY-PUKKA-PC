@@ -14,7 +14,7 @@ function CpuTable() {
 
   return (
     <Menus>
-      <Table columns="0.5fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr 0.8fr  0.5fr 8rem">
+      <Table columns="1.5fr 1.5fr 1.5fr 1.5fr 1.5fr 1.5fr 1.5fr 1.5fr 1.5fr 1.8fr 1.5fr 1.5fr">
         <Table.Header>
           <div></div>
           <div>Rank</div>

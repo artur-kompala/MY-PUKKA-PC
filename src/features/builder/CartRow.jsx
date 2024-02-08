@@ -2,39 +2,44 @@ import { useNavigate } from "react-router-dom";
 import Button from "../../ui/Button";
 import Table from "../../ui/Table";
 import Spinner from "../../ui/Spinner";
+import Modal from "../../ui/Modal";
+import Menus from "../../ui/Menus";
+import { HiPencil, HiSquare2Stack, HiTrash } from "react-icons/hi2";
+import ConfirmDelete from "../../ui/ConfirmDelete";
+import { deleteItemCart } from "../../services/apiCart";
 
-function CartRow({cart,list,isLoading}) {
+function CartRow({cart,list,isLoading,refetch}) {
   const navigate = useNavigate();
   function chooseComponent(component) {
     switch (component) {
-      case "CPU":
+      case "cpu":
         navigate("/cpu");
         break;
-      case "CPU-Cooler":
+      case "cooler":
         navigate("/cpu-cooler");
         break;
-      case "Montherboard":
+      case "mobo":
         navigate("/mobo");
         break;
-      case "GPU":
+      case "gpu":
         navigate("/gpu");
         break;
-      case "RAM":
+      case "memory":
         navigate("/ram");
         break;
-      case "Power Supply":
+      case "psu":
         navigate("/psu");
         break;
-      case "Case":
+      case "cas":
         navigate("/case");
         break;
-      case "Case fan":
+      case "fan":
         navigate("/case-fan");
         break;
-      case "Storage":
+      case "storage":
         navigate("/storage");
         break;
-      case "OS":
+      case "os":
         navigate("/os");
         break;
       default:
@@ -57,10 +62,39 @@ function CartRow({cart,list,isLoading}) {
                 <div onClick={()=>navigate(`/product/${cart[type].manufacture+ " " +cart[type].name}`)}>{cart[type].manufacture+ " " +cart[type].name}</div>
                 }
               <div>{cart[type].price} PLN</div>
+              <Modal>
+          <Menus.Menu>
+            <Menus.Toggle id={cart[type]._id} />
+
+            <Menus.List id={cart[type]._id}>
+              
+              <Modal.Open opens="edit">
+                <Menus.Button icon={<HiPencil />}>Edit</Menus.Button>
+              </Modal.Open>
+
+              <Modal.Open opens="delete">
+                <Menus.Button icon={<HiTrash />}>Delete</Menus.Button>
+              </Modal.Open>
+            </Menus.List>
+
+            <Modal.Window name="edit">
+              
+            </Modal.Window>
+
+            <Modal.Window name="delete">
+              <ConfirmDelete
+                refetch={refetch}
+                resourceName={`${list}`}
+                onConfirm={() => deleteItemCart(list,refetch)}
+              />
+            </Modal.Window>
+          </Menus.Menu>
+        </Modal>
             </Table.Row>
         );
     }
   }
+
   return(
     <Table.Row>
         <div>{list}</div>

@@ -14,14 +14,6 @@ export async function getCpuCoolers({filter, sortBy, page}){
     return query
 }
 
-export async function getOneCpuCooler({name}){
-    const data = await axios.get(`${API_URL}/cpuCooler?name=${name}`)
-    .then(res=>res.data)
-    .catch(err =>{
-        console.log(err)
-    })
-    return data
-}
 
 export async function getCpuCoolerFilters(){
     const data = await axios.get(`${API_URL}/getCpuCoolerFilters`)

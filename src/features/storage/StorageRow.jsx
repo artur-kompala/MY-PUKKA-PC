@@ -8,15 +8,14 @@ function StorageRow({storage}) {
     const {name,price,manufacture,score,capacity,type,cache,form_factor,read,write,gid,rank} = storage;
 
     function handleClick(type,data){
-        addCart(type,data)
-        navigate('/builder')
+        addCart(type,data).then(navigate('/builder'))
     }
 
     return (
         <Table.Row>
             <img style={{backgroundColor: 'white', borderRadius: '5px', padding: '5px',width: '10rem',height: '7rem'}}src={`${manufacture}.svg`} alt={manufacture}></img>
             <div>{rank}</div>
-            <span onClick={()=>navigate(`/product/${ manufacture + ' '+ name}`)}>{name}</span>
+            <span onClick={()=>navigate(`/product/${gid}`)}>{name}</span>
             <div>{`${capacity}GB`}</div>
             <div>{type}</div>
             <div>{cache}</div>
@@ -26,7 +25,7 @@ function StorageRow({storage}) {
             <div>{score}</div>
             <div>{price ? `${price}`: "-"}</div>
             <div>
-                <Button size='small' onClick={()=>handleClick("Storage",storage)}>+Add to Build</Button>
+                <Button size='small' onClick={()=>handleClick("storage",storage)}>+Add to Build</Button>
             </div>
         </Table.Row>
     )

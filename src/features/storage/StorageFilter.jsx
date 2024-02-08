@@ -19,7 +19,7 @@ const labels = {
   };
   
   const dataFilter = await getStorageFilters();
-  console.log(dataFilter);
+  
   dataFilter.data.manufacture.map((item) =>
     labels.manufactures.push({ value: item, label: item })
   );

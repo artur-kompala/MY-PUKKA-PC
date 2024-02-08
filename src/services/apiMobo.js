@@ -14,14 +14,6 @@ export async function getMobos({filter, sortBy, page}){
     return query
 }
 
-export async function getOneCpuCooler({name}){
-    const data = await axios.get(`${API_URL}/mobo?name=${name}`)
-    .then(res=>res.data)
-    .catch(err =>{
-        console.log(err)
-    })
-    return data
-}
 
 export async function getMoboFilters(){
     const data = await axios.get(`${API_URL}/getMoboFilters`)

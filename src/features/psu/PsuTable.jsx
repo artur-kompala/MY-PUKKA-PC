@@ -13,7 +13,7 @@ function PsuTable() {
 
   return (
     <Menus>
-      <Table columns="0.8fr 0.8fr 0.4fr 0.8fr 0.8fr 0.8fr 0.8fr 0.8fr 0.8fr 8rem">
+      <Table columns="0.8fr 1.5fr 0.4fr 0.8fr 0.8fr 0.8fr 0.8fr 0.8fr 0.8fr">
         <Table.Header>
           <div></div>
           <div>Name</div>

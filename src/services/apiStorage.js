@@ -13,14 +13,6 @@ export async function getStorages({filter, sortBy, page}){
     return query
 }
 
-export async function getOneStorage({name}){
-    const data = await axios.get(`${API_URL}/storage?name=${name}`)
-    .then(res=>res.data)
-    .catch(err =>{
-        console.log(err)
-    })
-    return data
-}
 
 export async function getStorageFilters(){
     const data = await axios.get(`${API_URL}/getStorageFilters`)

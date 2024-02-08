@@ -1,13 +1,14 @@
 import axios from "axios";
 import { API_URL } from "../utils/constants";
+import toast from "react-hot-toast";
 
-export async function addCart(type, product) {
-
-  const storedData = JSON.parse(localStorage.getItem("auth-token"));
+const storedData = JSON.parse(localStorage.getItem("auth-token"));
   const {
     session: { token },
     user,
   } = storedData;
+
+export async function addCart(type, product) {
 
   const data = {
     type: type,
@@ -20,27 +21,36 @@ export async function addCart(type, product) {
         "Content-Type": "application/json",
       },
     })
-    .then((res) => res.data)
-    .catch((err) => {
-      console.log(err);
-    });
-  return;
+    .then(()=> toast.success("Product added successfully"))
+    .catch((err) => ()=>toast.error(err.message))
+    .finally(()=>{
+      return;
+    })
 }
 
 export async function getCart() {
-    const storedData = JSON.parse(localStorage.getItem("auth-token"));
-  const {
-    session: { token },
-    user,
-  } = storedData;
-
+   
   let data = await axios
     .get(`${API_URL}/getCart?user=${user.user_metadata.fullName}`)
     .then((res) => res.data)
     .catch((err) => {
-      console.log(err);
+      toast.error(err.message);
     });
 
     return data
+}
+
+export async function deleteItemCart(item,refetch){
+
+  await axios
+    .delete(`${API_URL}/deleteItemCart?user=${user.user_metadata.fullName}&item=${item}`)
+    .then(()=> toast.success("Successfully delete"))
+    .catch((err) => toast.error(err.message))
+    .finally(()=>{
+      refetch();
+      return;
+    });
+
+
 }
 

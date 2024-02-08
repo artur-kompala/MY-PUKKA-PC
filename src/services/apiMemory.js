@@ -13,15 +13,6 @@ export async function getMemory({filter, sortBy, page}){
     return query
 }
 
-export async function getOneMemory({name}){
-    const data = await axios.get(`${API_URL}/getOneMemory?name=${name}`)
-    .then(res=>res.data)
-    .catch(err =>{
-        console.log(err)
-    })
-    return data
-}
-
 export async function getMemoryFilters(){
     const data = await axios.get(`${API_URL}/getMemoryFilters`)
     .then(res=> res.data)

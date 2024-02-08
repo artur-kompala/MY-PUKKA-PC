@@ -8,14 +8,13 @@ function MemoryRow({memory}) {
     const {manufacture,name,price,type,speed,module,capacity,led,color,tense,delays,gid} = memory;
 
     function handleClick(type,data){
-        addCart(type,data)
-        navigate('/builder')
+        addCart(type,data).then(navigate('/builder'))
     }
 
     return (
         <Table.Row>
             <img style={{backgroundColor: 'white', borderRadius: '5px', padding: '5px',width: '10rem',height: '7rem'}}src={`${manufacture}.svg`} alt={manufacture}></img>
-            <span onClick={()=>navigate(`/product/${ manufacture + ' '+ name}`)}>{name}</span>
+            <span onClick={()=>navigate(`/product/${gid}`)}>{name}</span>
             <div>{type}</div>
             <div>{speed}</div>
             <div>{`${capacity}GB`}</div>
@@ -24,7 +23,7 @@ function MemoryRow({memory}) {
             <div>{`${tense}V`}</div>
             <div>{`${delays} CL`}</div>
             <div>{price ? `${price}`: "-"}</div>
-            <Button size='small' onClick={()=>handleClick("RAM",memory)}>+Add to Build</Button>
+            <Button size='small' onClick={()=>handleClick("memory",memory)}>+Add to Build</Button>
 
         </Table.Row>
     )
