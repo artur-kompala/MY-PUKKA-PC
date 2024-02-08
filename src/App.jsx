@@ -15,12 +15,12 @@ import Gpu from "./pages/Gpu"
 import Os from "./pages/Os"
 import Psu from "./pages/Psu"
 import Case from "./pages/Case"
-import CaseFan from "./pages/CaseFan"
 import Ram from "./pages/Ram"
 import Storage from "./pages/Storage"
 import Account from "./pages/Account";
 import Builder from "./pages/Builder";
 import Product from "./pages/Product";
+import Fan from "./pages/Fan";
 
 
 
@@ -52,7 +52,7 @@ function App() {
             >
             <Route path="home" element={<Home />} />
             <Route path="builder" element={<Builder />} />
-            <Route path="product/:name" element={<Product />} />
+            <Route path="product/:gid" element={<Product />} />
             <Route path="cpu" element={<Cpu />} />
             <Route path="cpu-cooler" element={<CpuCooler />} />
             <Route path="mobo" element={<Mobo />} />
@@ -60,7 +60,7 @@ function App() {
             <Route path="os" element={<Os />} />
             <Route path="psu" element={<Psu />} />
             <Route path="case" element={<Case />} />
-            <Route path="case-fan" element={<CaseFan />} />
+            <Route path="case-fan" element={<Fan />} />
             <Route path="ram" element={<Ram />} />
             <Route path="Storage" element={<Storage />} />
             <Route path="account" element={<Account />} />

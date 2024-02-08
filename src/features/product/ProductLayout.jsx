@@ -16,7 +16,7 @@ const StyledProductLayout = styled.div`
   gap: 2.4rem;
 `;
 
-function ProductLayout({name,cpu}) {
+function ProductLayout({gid,cpu}) {
   const [searchParams] = useSearchParams();
   const last = searchParams.get('last') || '7';
 
@@ -26,8 +26,8 @@ function ProductLayout({name,cpu}) {
       data = {},
       error,
     } = useQuery({
-      queryKey: ['product', name,last],
-      queryFn: () => getProduct({name,last}),
+      queryKey: ['product', gid,last],
+      queryFn: () => getProduct({gid,last}),
     });
     
     

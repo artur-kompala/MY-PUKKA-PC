@@ -18,7 +18,7 @@ function checkManufacture(name){
 
 function CpuRow({cpu}) {
     const navigate = useNavigate();
-    const {name,boost_clock,price,core_clock,core_count,graphics,smt,tdp,rank,benchmark,manufacture} = cpu;
+    const {name,boost_clock,price,core_clock,core_count,graphics,smt,tdp,rank,benchmark,manufacture,gid} = cpu;
 
     function handleClick(type,data){
         addCart(type,data)
@@ -31,7 +31,7 @@ function CpuRow({cpu}) {
         <Table.Row>
             {checkManufacture(manufacture)}
             <span>{rank || "-"}</span>
-            <span onClick={()=>navigate(`/product/${ manufacture + ' '+ name}`)}>{name}</span>
+            <span onClick={()=>navigate(`/product/${gid}`)}>{name}</span>
             <div>{core_count}</div>
             <div>{core_clock}</div>
             <div>{boost_clock}</div>

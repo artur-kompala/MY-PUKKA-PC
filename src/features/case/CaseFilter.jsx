@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
+import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import useFilters from "../useFilters";
 import { StyledFilter, StyledFilterButton } from "../../ui/StyledFilter";
@@ -6,50 +7,56 @@ import Button from "../../ui/Button";
 import FilterRadioGroup from "../../ui/FilterRadioGroup";
 import color from "../../styles/color";
 import FilterRangeSlider from "../../ui/FilterRangeSlider";
-import { getMemoryFilters } from "../../services/apiMemory";
+import { getCaseFilters } from "../../services/apiCase";
 
 const labels = {
     manufactures: [{ value: "All", label: "All" }],
     type: [{ value: "All", label: "All" }],
-    speed: [],
+    form_factor: [{ value: "All", label: "All" }],
     price: [],
-    capacity: [],
+    gpu_length: [],
+    cpu_cooler_length: [],
   };
   
-  const dataFilter = await getMemoryFilters();
-  
+  const dataFilter = await getCaseFilters();
+
   dataFilter.data.manufacture.map((item) =>
     labels.manufactures.push({ value: item, label: item })
+  );
+  dataFilter.data.form_factor.map((item) =>
+    labels.form_factor.push({ value: item, label: item })
   );
   dataFilter.data.type.map((item) =>
     labels.type.push({ value: item, label: item })
   );
   
-  labels.speed[0] = dataFilter.data.maxMin[0].minSpeed;
-  labels.speed[1] = dataFilter.data.maxMin[0].maxSpeed;
+  labels.gpu_length[0] = dataFilter.data.maxMin[0].minGpuLength;
+  labels.gpu_length[1] = dataFilter.data.maxMin[0].maxGpuLength;
+  labels.cpu_cooler_length[0] = dataFilter.data.maxMin[0].minCpuLength;
+  labels.cpu_cooler_length[1] = dataFilter.data.maxMin[0].maxCpuLength;
   labels.price[0] = dataFilter.data.maxMin[0].minPrice;
   labels.price[1] = dataFilter.data.maxMin[0].maxPrice;
-  labels.capacity[0] = dataFilter.data.maxMin[0].minCapacity;
-  labels.capacity[1] = dataFilter.data.maxMin[0].maxCapacity;
   
 
 
-function MemoryFilter() {
+function CaseFilter() {
     const initialState = {
         manufacturesFilter: "All",
         typeFilter: "All",
-        speedFilter: labels.speed,
+        form_factorFilter: "All",
+        gpu_lengthFilter: labels.gpu_length,
+        cpu_cooler_lengthFilter: labels.cpu_cooler_length,
         priceFilter: labels.price,
-        capacityFilter: labels.capacity,
       };
     
       const reducer = (state, action) => {
         const actionTypes = {
           SET_MANUFACTURES_FILTER: "manufacturesFilter",
           SET_TYPE_FILTER: "typeFilter",
+          SET_FORM_FACTOR_FILTER: "form_factorFilter",
           SET_PRICE_FILTER: "priceFilter",
-          SET_SPEED_FILTER: "speedFilter",
-          SET_CAPACITY_FILTER: "capacityFilter",
+          SET_CPU_COOLER_LENGTH_FILTER: "cpu_cooler_lengthFilter",
+          SET_GPU_LENGTH_FILTER: "gpu_lengthFilter",
         };
         if (action.type in actionTypes) {
           const filterKey = actionTypes[action.type];
@@ -66,12 +73,13 @@ function MemoryFilter() {
         const filters = {
           manufactures: state.manufacturesFilter,
           type: state.typeFilter,
-          speedMin: state.speedFilter[0],
-          speedMax: state.speedFilter[1],
+          form_factor: state.form_factorFilter,
+          cpu_cooler_lengthMin: state.cpu_cooler_lengthFilter[0],
+          cpu_cooler_lengthMax: state.cpu_cooler_lengthFilter[1],
+          gpu_lengthMin: state.gpu_lengthFilter[0],
+          gpu_lengthMax: state.gpu_lengthFilter[1],
           priceMin: state.priceFilter[0],
           priceMax: state.priceFilter[1],
-          capacityMin: state.capacityFilter[0],
-          capacityMax: state.capacityFilter[1],
         };
         for (const [key, value] of Object.entries(filters)) {
           searchParams.set(key, value);
@@ -88,7 +96,7 @@ function MemoryFilter() {
         <StyledFilter>
           <StyledFilterButton>
             <Button onClick={()=>handleApply(searchParams,setSearchParams)}>Apply</Button>
-            <Button onClick={()=>handleReset(dispatch,'/ram')}>Reset</Button>
+            <Button onClick={()=>handleReset(dispatch,'/case')}>Reset</Button>
           </StyledFilterButton>
           <FilterRadioGroup
             name={"Manufactures"}
@@ -106,13 +114,29 @@ function MemoryFilter() {
             labels={labels.type}
             color={color}
           />
+          <FilterRadioGroup
+            name={"Form factor"}
+            defaultValue={initialState.form_factorFilter}
+            handleLabel={"FORM_FACTOR"}
+            onChange={handleChange}
+            labels={labels.form_factor}
+            color={color}
+          ></FilterRadioGroup>
           <FilterRangeSlider
-            name={"Speed"}
+            name={"Cpu Cooler Length"}
             handleChangeSlider={handleChange}
-            handleLabel={"SPEED"}
-            value={state.speedFilter}
-            min={initialState.speedFilter[0]}
-            max={initialState.speedFilter[1]}
+            handleLabel={"CPU_COOLER_LENGTH"}
+            value={state.cpu_cooler_lengthFilter}
+            min={initialState.cpu_cooler_lengthFilter[0]}
+            max={initialState.cpu_cooler_lengthFilter[1]}
+          />
+          <FilterRangeSlider
+            name={"Gpu Length"}
+            handleChangeSlider={handleChange}
+            handleLabel={"GPU_LENGTH"}
+            value={state.gpu_lengthFilter}
+            min={initialState.gpu_lengthFilter[0]}
+            max={initialState.gpu_lengthFilter[1]}
           />
           <FilterRangeSlider
             name={"Price"}
@@ -122,16 +146,8 @@ function MemoryFilter() {
             min={initialState.priceFilter[0]}
             max={initialState.priceFilter[1]}
           />
-          <FilterRangeSlider
-            name={"Capcity"}
-            handleChangeSlider={handleChange}
-            handleLabel={"CAPACITY"}
-            value={state.capacityFilter}
-            min={initialState.capacityFilter[0]}
-            max={initialState.capacityFilter[1]}
-          />
         </StyledFilter>
       );
 }
 
-export default MemoryFilter
+export default CaseFilter

@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { getPsuFilters } from "../../services/apiPsu";
 import { useSearchParams } from "react-router-dom";
 import useFilters from "../useFilters";
 import { StyledFilter, StyledFilterButton } from "../../ui/StyledFilter";
@@ -6,50 +7,49 @@ import Button from "../../ui/Button";
 import FilterRadioGroup from "../../ui/FilterRadioGroup";
 import color from "../../styles/color";
 import FilterRangeSlider from "../../ui/FilterRangeSlider";
-import { getMemoryFilters } from "../../services/apiMemory";
 
 const labels = {
     manufactures: [{ value: "All", label: "All" }],
     type: [{ value: "All", label: "All" }],
-    speed: [],
+    efficiency: [{ value: "All", label: "All" }],
+    wattage: [],
     price: [],
-    capacity: [],
   };
   
-  const dataFilter = await getMemoryFilters();
+  const dataFilter = await getPsuFilters();
   
   dataFilter.data.manufacture.map((item) =>
     labels.manufactures.push({ value: item, label: item })
+  );
+  dataFilter.data.efficiency.map((item) =>
+    labels.efficiency.push({ value: item, label: item })
   );
   dataFilter.data.type.map((item) =>
     labels.type.push({ value: item, label: item })
   );
   
-  labels.speed[0] = dataFilter.data.maxMin[0].minSpeed;
-  labels.speed[1] = dataFilter.data.maxMin[0].maxSpeed;
+  labels.wattage[0] = dataFilter.data.maxMin[0].minWattage;
+  labels.wattage[1] = dataFilter.data.maxMin[0].maxWattage;
   labels.price[0] = dataFilter.data.maxMin[0].minPrice;
   labels.price[1] = dataFilter.data.maxMin[0].maxPrice;
-  labels.capacity[0] = dataFilter.data.maxMin[0].minCapacity;
-  labels.capacity[1] = dataFilter.data.maxMin[0].maxCapacity;
   
 
-
-function MemoryFilter() {
+function PsuFilter() {
     const initialState = {
         manufacturesFilter: "All",
         typeFilter: "All",
-        speedFilter: labels.speed,
+        efficiencyFilter: "All",
+        wattageFilter: labels.wattage,
         priceFilter: labels.price,
-        capacityFilter: labels.capacity,
       };
     
       const reducer = (state, action) => {
         const actionTypes = {
           SET_MANUFACTURES_FILTER: "manufacturesFilter",
           SET_TYPE_FILTER: "typeFilter",
+          SET_EFFICIENCY_FILTER: "efficiencyFilter",
           SET_PRICE_FILTER: "priceFilter",
-          SET_SPEED_FILTER: "speedFilter",
-          SET_CAPACITY_FILTER: "capacityFilter",
+          SET_WATTAGE_FILTER: "wattageFilter",
         };
         if (action.type in actionTypes) {
           const filterKey = actionTypes[action.type];
@@ -66,12 +66,11 @@ function MemoryFilter() {
         const filters = {
           manufactures: state.manufacturesFilter,
           type: state.typeFilter,
-          speedMin: state.speedFilter[0],
-          speedMax: state.speedFilter[1],
+          efficiency: state.efficiencyFilter,
+          wattageMin: state.wattageFilter[0],
+          wattageMax: state.wattageFilter[1],
           priceMin: state.priceFilter[0],
           priceMax: state.priceFilter[1],
-          capacityMin: state.capacityFilter[0],
-          capacityMax: state.capacityFilter[1],
         };
         for (const [key, value] of Object.entries(filters)) {
           searchParams.set(key, value);
@@ -88,7 +87,7 @@ function MemoryFilter() {
         <StyledFilter>
           <StyledFilterButton>
             <Button onClick={()=>handleApply(searchParams,setSearchParams)}>Apply</Button>
-            <Button onClick={()=>handleReset(dispatch,'/ram')}>Reset</Button>
+            <Button onClick={()=>handleReset(dispatch,'/psu')}>Reset</Button>
           </StyledFilterButton>
           <FilterRadioGroup
             name={"Manufactures"}
@@ -106,13 +105,21 @@ function MemoryFilter() {
             labels={labels.type}
             color={color}
           />
+          <FilterRadioGroup
+            name={"Efficiency"}
+            defaultValue={initialState.efficiencyFilter}
+            handleLabel={"SOCKET"}
+            onChange={handleChange}
+            labels={labels.efficiency}
+            color={color}
+          ></FilterRadioGroup>
           <FilterRangeSlider
-            name={"Speed"}
+            name={"Wattge"}
             handleChangeSlider={handleChange}
-            handleLabel={"SPEED"}
-            value={state.speedFilter}
-            min={initialState.speedFilter[0]}
-            max={initialState.speedFilter[1]}
+            handleLabel={"WATTGE"}
+            value={state.wattageFilter}
+            min={initialState.wattageFilter[0]}
+            max={initialState.wattageFilter[1]}
           />
           <FilterRangeSlider
             name={"Price"}
@@ -122,16 +129,8 @@ function MemoryFilter() {
             min={initialState.priceFilter[0]}
             max={initialState.priceFilter[1]}
           />
-          <FilterRangeSlider
-            name={"Capcity"}
-            handleChangeSlider={handleChange}
-            handleLabel={"CAPACITY"}
-            value={state.capacityFilter}
-            min={initialState.capacityFilter[0]}
-            max={initialState.capacityFilter[1]}
-          />
         </StyledFilter>
       );
 }
 
-export default MemoryFilter
+export default PsuFilter

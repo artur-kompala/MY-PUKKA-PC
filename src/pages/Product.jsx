@@ -8,25 +8,25 @@ import { useQuery } from "@tanstack/react-query";
 import Spinner from "../ui/Spinner";
 
 function Product() {
-    const {name} = useParams()
-
+    const {gid} = useParams()
+    console.log(gid);
     const {   
       isLoading,
       data = {},
       error,
     } = useQuery({
-      queryKey: ['cpu', name],
-      queryFn: () => getOneCPU({name}),
+      queryKey: ['cpu', gid],
+      queryFn: () => getOneCPU({gid}),
     });
     
   if(!isLoading){
     return (
         <>
           <Row type="horizontal">
-            <Heading as="h1">{name}</Heading>
+            <Heading as="h1">{gid}</Heading>
            
           </Row>
-          <ProductLayout name={name} cpu={data.data}/>
+          <ProductLayout gid={gid} cpu={data.data}/>
         </>
       );
     }else{

@@ -1,10 +1,10 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useSearchParams } from "react-router-dom";
 import { PAGE_SIZE } from "../../utils/constants";
-import { getMemory } from "../../services/apiMemory";
+import { getPsu } from "../../services/apiPsu";
 
 
-export function useMemory() {
+export function usePsu() {
   const queryClient = useQueryClient();
   const [searchParams] = useSearchParams();
 
@@ -12,12 +12,11 @@ export function useMemory() {
   const filterKeys = [
     "manufactures",
     "type",
+    "efficiency",
     "priceMin",
     "priceMax",
-    "speedMin",
-    "speedMax",
-    "capacityMin",
-    "capacityMax",
+    "wattageMin",
+    "wattageMax",
   ];
 
   const filter = filterKeys.map((key) => ({
@@ -34,29 +33,29 @@ export function useMemory() {
   // QUERY
   const {
     isLoading,
-    data: memoryInfo = { data: {} },
+    data: psuInfo = { data: {} },
     error,
   } = useQuery({
-    queryKey: ["memory", filter, sortBy, page],
-    queryFn: () => getMemory({ filter, sortBy, page }),
+    queryKey: ["psus", filter, sortBy, page],
+    queryFn: () => getPsu({ filter, sortBy, page }),
   });
-  const memories = memoryInfo.data.data;
-  const count = memoryInfo.data.total;
+  const psus = psuInfo.data.data;
+  const count = psuInfo.data.total;
 
   // PRE-FETCHING
   const pageCount = Math.ceil(count / PAGE_SIZE);
 
   if (page < pageCount)
     queryClient.prefetchQuery({
-      queryKey: ["memory", filter, sortBy, page + 1],
-      queryFn: () => getMemory({ filter, sortBy, page: page + 1 }),
+      queryKey: ["psus", filter, sortBy, page + 1],
+      queryFn: () => getPsu({ filter, sortBy, page: page + 1 }),
     });
 
   if (page > 1)
     queryClient.prefetchQuery({
-      queryKey: ["memory", filter, sortBy, page - 1],
-      queryFn: () => getMemory({ filter, sortBy, page: page - 1 }),
+      queryKey: ["psus", filter, sortBy, page - 1],
+      queryFn: () => getPsu({ filter, sortBy, page: page - 1 }),
     });
 
-  return { isLoading, error, memories, count };
+  return { isLoading, error, psus, count };
 }

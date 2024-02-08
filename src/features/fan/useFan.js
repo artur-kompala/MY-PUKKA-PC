@@ -1,23 +1,22 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useSearchParams } from "react-router-dom";
 import { PAGE_SIZE } from "../../utils/constants";
-import { getMemory } from "../../services/apiMemory";
+import { getFans } from "../../services/apiFan";
 
-
-export function useMemory() {
+export function useFan() {
   const queryClient = useQueryClient();
   const [searchParams] = useSearchParams();
 
   // FILTER
   const filterKeys = [
     "manufactures",
-    "type",
+    "size",
     "priceMin",
     "priceMax",
-    "speedMin",
-    "speedMax",
-    "capacityMin",
-    "capacityMax",
+    "noiseMin",
+    "noiseMax",
+    "flowMin",
+    "flowMax",
   ];
 
   const filter = filterKeys.map((key) => ({
@@ -34,29 +33,29 @@ export function useMemory() {
   // QUERY
   const {
     isLoading,
-    data: memoryInfo = { data: {} },
+    data: fanInfo = { data: {} },
     error,
   } = useQuery({
-    queryKey: ["memory", filter, sortBy, page],
-    queryFn: () => getMemory({ filter, sortBy, page }),
+    queryKey: ["fans", filter, sortBy, page],
+    queryFn: () => getFans({ filter, sortBy, page }),
   });
-  const memories = memoryInfo.data.data;
-  const count = memoryInfo.data.total;
+  const fans = fanInfo.data.data;
+  const count = fanInfo.data.total;
 
   // PRE-FETCHING
   const pageCount = Math.ceil(count / PAGE_SIZE);
 
   if (page < pageCount)
     queryClient.prefetchQuery({
-      queryKey: ["memory", filter, sortBy, page + 1],
-      queryFn: () => getMemory({ filter, sortBy, page: page + 1 }),
+      queryKey: ["fans", filter, sortBy, page + 1],
+      queryFn: () => getFans({ filter, sortBy, page: page + 1 }),
     });
 
   if (page > 1)
     queryClient.prefetchQuery({
-      queryKey: ["memory", filter, sortBy, page - 1],
-      queryFn: () => getMemory({ filter, sortBy, page: page - 1 }),
+      queryKey: ["fans", filter, sortBy, page - 1],
+      queryFn: () => getFans({ filter, sortBy, page: page - 1 }),
     });
 
-  return { isLoading, error, memories, count };
+  return { isLoading, error, fans, count };
 }

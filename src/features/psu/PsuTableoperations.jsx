@@ -1,7 +1,7 @@
 import SortBy from "../../ui/SortBy";
 import TableOperations from "../../ui/TableOperations";
 
-function MemoryTableoperations() {
+function PsuTableoperations() {
     return (
         <TableOperations>
     
@@ -15,4 +15,4 @@ function MemoryTableoperations() {
       );
 }
 
-export default MemoryTableoperations
+export default PsuTableoperations

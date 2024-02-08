@@ -7,7 +7,7 @@ import Spinner from "../../ui/Spinner";
 import { useCpuCooler } from "./useCpuCooler";
 
 function CpuCoolerTable() {
-    const { coolers, isLoading, count } = useCpuCooler();
+  const { coolers, isLoading, count } = useCpuCooler();
 
   if (isLoading) return <Spinner />;
 
