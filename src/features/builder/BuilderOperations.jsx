@@ -3,12 +3,12 @@ import ProductBox from "../product/ProductBox";
 import { BsArrowsAngleContract } from "react-icons/bs";
 import { FaRegLightbulb } from "react-icons/fa";
 import { useCompatibility } from "./useCompatibility";
+import { useTranslation } from "react-i18next";
 
 function BuilderOperations({ totalCost, totalPower,data}) {
-    const issues = useCompatibility(data[0].cart,totalPower)
-    
-    
-   
+  const {t,i18n} = useTranslation();
+    const issues = useCompatibility(data[0],totalPower)
+  
   const StyledBuilderLayout = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -21,17 +21,17 @@ function BuilderOperations({ totalCost, totalPower,data}) {
     <StyledBuilderLayout>
       <ProductBox>
         <p>
-          Total cost: <strong>{totalCost.toFixed(2)} PLN</strong>
+          {t("totalCostLabel")} <strong>{totalCost.toFixed(2)} PLN</strong>
         </p>
       </ProductBox>
       <ProductBox>
         <p>
-          Power usage: <strong>{totalPower.toFixed(0)} W</strong>
+        {t("powerUsageLabel")} <strong>{totalPower.toFixed(0)} W</strong>
         </p>
       </ProductBox>
       <ProductBox>
         <BsArrowsAngleContract />
-        <p>Compatibility issues:</p>
+        <p> {t("compatibilityIssues")}</p>
         {issues.map((item,index)=>{
            return (
            <ProductBox key={index}>
@@ -43,7 +43,7 @@ function BuilderOperations({ totalCost, totalPower,data}) {
       </ProductBox>
       <ProductBox>
         <FaRegLightbulb />
-        <p>Suggestion:</p>
+        <p> {t("suggestion")}</p>
       </ProductBox>
     </StyledBuilderLayout>
   );

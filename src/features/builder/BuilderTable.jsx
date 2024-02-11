@@ -3,6 +3,7 @@ import Table from "../../ui/Table";
 import CartRow from "./CartRow";
 import Spinner from "../../ui/Spinner";
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 function BuilderTable({
   setTotalCost,
@@ -10,7 +11,10 @@ function BuilderTable({
   isLoading,
   data,
   refetch,
+  counter,
+  setCounter
 }) {
+  const {t,i18n} = useTranslation();
   const list = [
     "cpu",
     "cooler",
@@ -55,11 +59,12 @@ function BuilderTable({
 
     return (
       <Menus>
-        <Table columns="5fr 5fr 5fr 1fr">
+        <Table columns="5fr 5fr 5fr 1fr 1fr">
           <Table.Header>
-            <div>Component</div>
-            <div>Product</div>
-            <div>Price</div>
+            <div>{t('component')}</div>
+            <div>{t('product')}</div>
+            <div>{t('quantity')}</div>
+            <div>{t('price')}</div>
           </Table.Header>
 
           <Table.Body
@@ -71,6 +76,8 @@ function BuilderTable({
                 isLoading={isLoading}
                 key={list}
                 refetch={refetch}
+                counter={counter}
+                setCounter={setCounter}
               />
             )}
           />

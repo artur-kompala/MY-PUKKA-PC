@@ -2,13 +2,14 @@ import axios from "axios";
 import { API_URL } from "../utils/constants";
 import toast from "react-hot-toast";
 
-const storedData = JSON.parse(localStorage.getItem("auth-token"));
+
+
+export async function addCart(type, product) {
+  const storedData = JSON.parse(localStorage.getItem("auth-token"));
   const {
     session: { token },
     user,
   } = storedData;
-
-export async function addCart(type, product) {
 
   const data = {
     type: type,
@@ -29,6 +30,12 @@ export async function addCart(type, product) {
 }
 
 export async function getCart() {
+
+  const storedData = JSON.parse(localStorage.getItem("auth-token"));
+  const {
+    session: { token },
+    user,
+  } = storedData;
    
   let data = await axios
     .get(`${API_URL}/getCart?user=${user.user_metadata.fullName}`)
@@ -41,6 +48,12 @@ export async function getCart() {
 }
 
 export async function deleteItemCart(item,refetch){
+
+  const storedData = JSON.parse(localStorage.getItem("auth-token"));
+  const {
+    session: { token },
+    user,
+  } = storedData;
 
   await axios
     .delete(`${API_URL}/deleteItemCart?user=${user.user_metadata.fullName}&item=${item}`)
