@@ -22,6 +22,7 @@ function CartRow({cart,list,isLoading,refetch,counter,setCounter}) {
   const {t,i18n} = useTranslation();
   const navigate = useNavigate();
  
+ 
   
   function chooseComponent(component) {
     switch (component) {
@@ -69,11 +70,7 @@ function CartRow({cart,list,isLoading,refetch,counter,setCounter}) {
         return (
             <Table.Row>
               <div>{list}</div>
-              { 
-                type==="GPU"?
-                <div onClick={()=>navigate(`/product/${cart[type].gid}`)}>{cart[type].manufacture+ " " +cart[type].name + " " + cart[type].chipset}</div>:
                 <div onClick={()=>navigate(`/product/${cart[type].gid}`)}>{cart[type].manufacture+ " " +cart[type].name}</div>
-                }
               <QuantityBox>
                 <Button $size="small" onClick={()=>setCounter((c)=>c-1)}>-</Button>
                 <h3>{counter}</h3>
@@ -96,7 +93,6 @@ function CartRow({cart,list,isLoading,refetch,counter,setCounter}) {
             </Menus.List>
 
             <Modal.Window name="edit">
-              
             </Modal.Window>
 
             <Modal.Window name="delete">
@@ -107,6 +103,7 @@ function CartRow({cart,list,isLoading,refetch,counter,setCounter}) {
               />
             </Modal.Window>
           </Menus.Menu>
+
         </Modal>
             </Table.Row>
         );

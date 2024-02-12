@@ -9,18 +9,19 @@ export async function login({ email, password }) {
 
   try {
     const res = await axios.post(`${API_URL}/login`, data);
-
+    
     if (res.status === 200) {
       const data = res.data
       localStorage.setItem('auth-token', JSON.stringify(data));
 
       return data;
     } else {
+      
       throw new Error(`Nieudane logowanie. Kod statusu: ${res.status}`);
       
     }
   } catch (error) {
-    throw new Error(error.message);
+    throw new Error(error.response.data.message);
   }
   
 }
@@ -47,8 +48,6 @@ export async function getCurrentUser() {
 
   return null
 }
-
-
 export async function logout(){
   localStorage.removeItem('auth-token');
 }

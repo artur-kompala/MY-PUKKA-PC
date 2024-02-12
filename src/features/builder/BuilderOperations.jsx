@@ -4,10 +4,12 @@ import { BsArrowsAngleContract } from "react-icons/bs";
 import { FaRegLightbulb } from "react-icons/fa";
 import { useCompatibility } from "./useCompatibility";
 import { useTranslation } from "react-i18next";
+import {useSugestion} from "./useSugestion"
 
 function BuilderOperations({ totalCost, totalPower,data}) {
   const {t,i18n} = useTranslation();
     const issues = useCompatibility(data[0],totalPower)
+    const sugestion = useSugestion()
   
   const StyledBuilderLayout = styled.div`
     display: grid;
@@ -44,6 +46,15 @@ function BuilderOperations({ totalCost, totalPower,data}) {
       <ProductBox>
         <FaRegLightbulb />
         <p> {t("suggestion")}</p>
+        {sugestion.map((item,index)=>{
+          return (
+          <ProductBox key={index}>
+          <h3>{item.component}</h3>
+          <p>{item.desc}</p>
+        </ProductBox>
+          )
+        })}
+        
       </ProductBox>
     </StyledBuilderLayout>
   );
