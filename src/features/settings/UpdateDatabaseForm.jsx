@@ -10,7 +10,7 @@ import Input from "../../ui/Input";
 function UpdateDatabaseForm() {
   const { t } = useTranslation();
   const { updateDatabase, isUpdating } = useUpdateDatabase();
-  const [collection, setCollection] = useState("cpu"); 
+  const [collection, setCollection] = useState("cpu");
   const [formData, setFormData] = useState({});
 
   const handleInputChange = (e) => {
@@ -29,17 +29,33 @@ function UpdateDatabaseForm() {
       [name]: arrayValues,
     }));
   };
+
+  const handleArrayNumberChange = (e) => {
+    const { name, value } = e.target;
+    
+    const arrayNumberValues = value.split(",").map((item) => {
+      const trimmedItem = item.trim();
+      
+      const number = Number(trimmedItem);
+      return isNaN(number) ? 0 : number; 
+    });
+
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: arrayNumberValues,
+    }));
+  };
   const handleInputNumber = (e) => {
     const { name, value } = e.target;
-    setFormData(prevState => ({
+    setFormData((prevState) => ({
       ...prevState,
       [name]: Number(value), // Konwertuje wartość inputa na liczbę
     }));
   };
-  
+
   const handleInputBool = (e) => {
     const { name, checked } = e.target;
-    setFormData(prevState => ({
+    setFormData((prevState) => ({
       ...prevState,
       [name]: checked, // Przypisuje wartość boolowską na podstawie zaznaczenia checkboxa
     }));
@@ -86,7 +102,7 @@ function UpdateDatabaseForm() {
             { value: "os", label: t("os") },
           ]}
           value={collection}
-          onChange={handleCollectionChange} 
+          onChange={handleCollectionChange}
           id="collection"
           disabled={isUpdating}
         />
@@ -170,6 +186,7 @@ function UpdateDatabaseForm() {
             <Input
               type="number"
               name="core_clock"
+              step={0.01}
               onChange={handleInputNumber}
               disabled={isUpdating}
             />
@@ -186,6 +203,7 @@ function UpdateDatabaseForm() {
             <Input
               type="number"
               name="boost_clock"
+              step={0.01}
               onChange={handleInputNumber}
               disabled={isUpdating}
             />
@@ -202,7 +220,7 @@ function UpdateDatabaseForm() {
             <Input
               type="text"
               name="chipset"
-              onChange={handleArrayChange} 
+              onChange={handleArrayChange}
               disabled={isUpdating}
             />
           </FormRow>
@@ -210,7 +228,7 @@ function UpdateDatabaseForm() {
             <Input
               type="text"
               name="memory_type"
-              onChange={handleArrayChange} 
+              onChange={handleArrayChange}
               disabled={isUpdating}
             />
           </FormRow>
@@ -225,99 +243,98 @@ function UpdateDatabaseForm() {
         </>
       )}
 
-{collection === "cooler" && (
-  <>
-    {/* Cooler Fields */}
-    <FormRow label={t("manufacture")}>
-      <Input
-        type="text"
-        name="manufacture"
-        onChange={handleInputChange}
-        disabled={isUpdating}
-      />
-    </FormRow>
-    <FormRow label={t("name")}>
-      <Input
-        type="text"
-        name="name"
-        onChange={handleInputChange}
-        disabled={isUpdating}
-      />
-    </FormRow>
-    <FormRow label={t("rpm")}>
-      <Input
-        type="text"
-        name="rpm"
-        onChange={handleArrayChange} // Konwersja stringa na tablicę liczb
-        disabled={isUpdating}
-      />
-    </FormRow>
-    <FormRow label={t("noise_level")}>
-      <Input
-        type="text"
-        name="noise_level"
-        onChange={handleArrayChange} // Konwersja stringa na tablicę liczb
-        disabled={isUpdating}
-      />
-    </FormRow>
-    <FormRow label={t("color")}>
-      <Input
-        type="text"
-        name="color"
-        onChange={handleArrayChange} // Konwersja stringa na tablicę stringów
-        disabled={isUpdating}
-      />
-    </FormRow>
-    <FormRow label={t("size")}>
-      <Input
-        type="number"
-        name="size"
-        onChange={handleInputNumber}
-        disabled={isUpdating}
-      />
-    </FormRow>
-    <FormRow label={t("type")}>
-      <Input
-        type="text"
-        name="type"
-        onChange={handleInputChange}
-        disabled={isUpdating}
-      />
-    </FormRow>
-    <FormRow label={t("socket")}>
-      <Input
-        type="text"
-        name="socket"
-        onChange={handleArrayChange} 
-        disabled={isUpdating}
-      />
-    </FormRow>
-    <FormRow label={t("tdp")}>
-      <Input
-        type="number"
-        name="tdp"
-        onChange={handleInputNumber}
-        disabled={isUpdating}
-      />
-    </FormRow>
-    <FormRow label={t("gid")}>
-      <Input
-        type="text"
-        name="gid"
-        onChange={handleInputChange}
-        disabled={isUpdating}
-      />
-    </FormRow>
-    <FormRow label={t("led")}>
-      <Input
-        type="checkbox"
-        name="led"
-        onChange={handleInputBool}
-        disabled={isUpdating}
-      />
-    </FormRow>
-  </>
-)}
+      {collection === "cooler" && (
+        <>
+          <FormRow label={t("manufacture")}>
+            <Input
+              type="text"
+              name="manufacture"
+              onChange={handleInputChange}
+              disabled={isUpdating}
+            />
+          </FormRow>
+          <FormRow label={t("name")}>
+            <Input
+              type="text"
+              name="name"
+              onChange={handleInputChange}
+              disabled={isUpdating}
+            />
+          </FormRow>
+          <FormRow label={t("rpm")}>
+            <Input
+              type="text"
+              name="rpm"
+              onChange={handleArrayNumberChange} 
+              disabled={isUpdating}
+            />
+          </FormRow>
+          <FormRow label={t("noise_level")}>
+            <Input
+              type="text"
+              name="noise_level"
+              onChange={handleArrayNumberChange} 
+              disabled={isUpdating}
+            />
+          </FormRow>
+          <FormRow label={t("color")}>
+            <Input
+              type="text"
+              name="color"
+              onChange={handleArrayChange} 
+              disabled={isUpdating}
+            />
+          </FormRow>
+          <FormRow label={t("size")}>
+            <Input
+              type="number"
+              name="size"
+              onChange={handleInputNumber}
+              disabled={isUpdating}
+            />
+          </FormRow>
+          <FormRow label={t("type")}>
+            <Input
+              type="text"
+              name="type"
+              onChange={handleInputChange}
+              disabled={isUpdating}
+            />
+          </FormRow>
+          <FormRow label={t("socket")}>
+            <Input
+              type="text"
+              name="socket"
+              onChange={handleArrayChange}
+              disabled={isUpdating}
+            />
+          </FormRow>
+          <FormRow label={t("tdp")}>
+            <Input
+              type="number"
+              name="tdp"
+              onChange={handleInputNumber}
+              disabled={isUpdating}
+            />
+          </FormRow>
+          <FormRow label={t("gid")}>
+            <Input
+              type="text"
+              name="gid"
+              onChange={handleInputChange}
+              disabled={isUpdating}
+            />
+          </FormRow>
+          <FormRow label={t("led")}>
+            <Input
+              type="checkbox"
+              name="led"
+              onChange={handleInputBool}
+              disabled={isUpdating}
+            />
+          </FormRow>
+        </>
+      )}
 
       <FormRow>
         <Button
