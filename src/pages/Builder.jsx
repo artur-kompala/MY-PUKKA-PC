@@ -9,7 +9,7 @@ function Builder() {
 
     const [totalCost,setTotalCost] = useState(0)
     const [totalPower,setTotalPower] = useState(0)
-    const [counter,setCounter] = useState(0)
+    const [counter,setCounter] = useState([1,1])
 
     const { isLoading, data = {}, error, refetch } = useQuery({
         queryKey: ["cart"],

@@ -59,3 +59,23 @@ export async function updateCurrentUser({ password, fullName, avatar }){
 export async function signup({ fullName, email, password }){
 
 }
+
+export async function updateBench({ collection,file}){
+  const data = {
+    collection,
+    file
+  }
+
+  try {
+    const res = await axios.post(`${API_URL}/updateBenchmark`,data)
+    if(res.status === 200){
+      return null;
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export async function updateData({collection,data}){
+    console.log(data);
+}

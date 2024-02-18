@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import ProductBox from "../product/ProductBox";
-import { BsArrowsAngleContract } from "react-icons/bs";
-import { FaRegLightbulb } from "react-icons/fa";
 import { useCompatibility } from "./useCompatibility";
 import { useTranslation } from "react-i18next";
 import {useSugestion} from "./useSugestion"
+import Compatibility from "./Compatibility";
+import Suggestion from "./Suggestion";
 
 function BuilderOperations({ totalCost, totalPower,data}) {
   const {t,i18n} = useTranslation();
@@ -32,29 +32,10 @@ function BuilderOperations({ totalCost, totalPower,data}) {
         </p>
       </ProductBox>
       <ProductBox>
-        <BsArrowsAngleContract />
-        <p> {t("compatibilityIssues")}</p>
-        {issues.map((item,index)=>{
-           return (
-           <ProductBox key={index}>
-            <h3>{item.component}</h3>
-            <p>{item.desc}</p>
-           </ProductBox>
-           )
-        })}
+        <Compatibility issues={issues}></Compatibility>
       </ProductBox>
       <ProductBox>
-        <FaRegLightbulb />
-        <p> {t("suggestion")}</p>
-        {sugestion.map((item,index)=>{
-          return (
-          <ProductBox key={index}>
-          <h3>{item.component}</h3>
-          <p>{item.desc}</p>
-        </ProductBox>
-          )
-        })}
-        
+        <Suggestion sugestion={sugestion}></Suggestion>
       </ProductBox>
     </StyledBuilderLayout>
   );

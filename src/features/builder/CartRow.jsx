@@ -10,20 +10,12 @@ import { deleteItemCart } from "../../services/apiCart";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { useState } from "react";
+import QuanityBox from "./QuanityBox";
 
-const QuantityBox = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin: 0 30% 0;
-  align-items: center;
-`
-
-function CartRow({cart,list,isLoading,refetch,counter,setCounter}) {
-  const {t,i18n} = useTranslation();
+function CartRow({ cart, list, isLoading, refetch, counter, setCounter }) {
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
- 
- 
-  
+
   function chooseComponent(component) {
     switch (component) {
       case "cpu":
@@ -60,62 +52,66 @@ function CartRow({cart,list,isLoading,refetch,counter,setCounter}) {
         break;
     }
   }
-  if(isLoading){
-    return <Spinner></Spinner>
+
+  if (isLoading) {
+    return <Spinner></Spinner>;
   }
-  
-  for(const type in cart) {  
+
+  for (const type in cart) {
     if (type === list) {
-        
-        return (
-            <Table.Row>
-              <div>{list}</div>
-                <div onClick={()=>navigate(`/product/${cart[type].gid}`)}>{cart[type].manufacture+ " " +cart[type].name}</div>
-              <QuantityBox>
-                <Button $size="small" onClick={()=>setCounter((c)=>c-1)}>-</Button>
-                <h3>{counter}</h3>
-                <Button $size="small"onClick={()=>setCounter((c)=>c+1)}>+</Button>
-              </QuantityBox>
-              <div>{cart[type].price} PLN</div>
-              <Modal>
-          <Menus.Menu>
-            <Menus.Toggle id={cart[type]._id} />
+      return (
+        <Table.Row>
+          <div>{t(list)}</div>
+          <div onClick={() => navigate(`/product/${cart[type].gid}`)}>
+            {cart[type].manufacture + " " + cart[type].name}
+          </div>
+          {list === "memory" ? (
+            <QuanityBox
+              counter={counter}
+              setCounter={setCounter}
+              index={0}
+            ></QuanityBox>
+          ) : list === "fan" ? (
+            <QuanityBox
+              counter={counter}
+              setCounter={setCounter}
+              index={1}
+            ></QuanityBox>
+          ) : (
+            <div></div>
+          )}
+          <div>{cart[type].price} PLN</div>
+          <Modal>
+            <Menus.Menu>
+              <Menus.Toggle id={cart[type]._id} />
 
-            <Menus.List id={cart[type]._id}>
-              
-              <Modal.Open opens="edit">
-                <Menus.Button icon={<HiPencil />}>{t("edit")}</Menus.Button>
-              </Modal.Open>
+              <Menus.List id={cart[type]._id}>
 
-              <Modal.Open opens="delete">
-                <Menus.Button icon={<HiTrash />}>{t("delete")}</Menus.Button>
-              </Modal.Open>
-            </Menus.List>
+                <Modal.Open opens="delete">
+                  <Menus.Button icon={<HiTrash />}>{t("delete")}</Menus.Button>
+                </Modal.Open>
+              </Menus.List>
 
-            <Modal.Window name="edit">
-            </Modal.Window>
-
-            <Modal.Window name="delete">
-              <ConfirmDelete
-                refetch={refetch}
-                resourceName={`${list}`}
-                onConfirm={() => deleteItemCart(list,refetch)}
-              />
-            </Modal.Window>
-          </Menus.Menu>
-
-        </Modal>
-            </Table.Row>
-        );
+              <Modal.Window name="delete">
+                <ConfirmDelete
+                  refetch={refetch}
+                  resourceName={`${list}`}
+                  onConfirm={() => deleteItemCart(list, refetch)}
+                />
+              </Modal.Window>
+            </Menus.Menu>
+          </Modal>
+        </Table.Row>
+      );
     }
   }
 
-  return(
+  return (
     <Table.Row>
-        <div>{list}</div>
-        <Button onClick={() => chooseComponent(list)}>{t("choose")}</Button>
+      <div>{t(list)}</div>
+      <Button onClick={() => chooseComponent(list)}>{t("choose")}</Button>
     </Table.Row>
-)
+  );
 }
 
 export default CartRow;
