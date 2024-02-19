@@ -23,6 +23,8 @@ function UpdateBenchmarkForm() {
     setcollection('gpu');
   }
 
+  
+
   return (
     <Form onSubmit={handleSubmit}>
       <FormRow label={t('collection')}>

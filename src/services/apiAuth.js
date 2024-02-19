@@ -1,5 +1,7 @@
 import axios from "axios";
 import { API_URL } from "../utils/constants";
+import toast from "react-hot-toast";
+
 
 export async function login({ email, password }) {
   const data = {
@@ -61,21 +63,32 @@ export async function signup({ fullName, email, password }){
 }
 
 export async function updateBench({ collection,file}){
-  const data = {
-    collection,
-    file
-  }
-
+  let formData = new FormData();
+  formData.append('collection', collection);
+  formData.append('file', file); 
+  
   try {
-    const res = await axios.post(`${API_URL}/updateBenchmark`,data)
+    const res = await axios.post(`${API_URL}/updateBenchmark`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+  } catch (err) {
+      toast.error(err);
+  }
+}
+
+export async function updateData({collection,data}){
+  const query = {
+    collection,
+    data
+  }
+  try {
+    const res = await axios.post(`${API_URL}/updateDatabase`,query)
     if(res.status === 200){
       return null;
     }
   } catch (err) {
     console.log(err);
   }
-}
-
-export async function updateData({collection,data}){
-    console.log(data);
 }

@@ -7,9 +7,8 @@ export function useUpdateDatabase() {
 
   const { mutate: updateDatabase, isLoading: isUpdating } = useMutation({
     mutationFn: updateData,
-    onSuccess: ({ database }) => {
+    onSuccess: () => {
       toast.success("Database successfully updated");
-      queryClient.setQueryData(["database"], database);
     },
     onError: (err) => toast.error(err.message),
   });

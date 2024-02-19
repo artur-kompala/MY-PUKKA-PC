@@ -8,9 +8,10 @@ import { useCPU } from "./useCPU";
 import { TableRow } from "@mui/material";
 
 function CpuTable() {
-  const { cpus, isLoading, count } = useCPU();
+  const { cpus, isLoading, count,error} = useCPU();
 
   if (isLoading) return <Spinner />;
+  if(error) return <h1>Brak połączenia</h1>
 
   return (
     <Menus>

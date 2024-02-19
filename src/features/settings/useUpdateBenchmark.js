@@ -3,13 +3,10 @@ import { toast } from "react-hot-toast";
 import { updateBench} from "../../services/apiAuth"
 
 export function useUpdateBenchmark() {
-  const queryClient = useQueryClient();
-
   const { mutate: updateBenchmark, isLoading: isUpdating } = useMutation({
     mutationFn: updateBench,
-    onSuccess: ({ benchmark }) => {
+    onSuccess: () => {
       toast.success("Benchmark successfully updated");
-      queryClient.setQueryData(["benchmark"], benchmark);
     },
     onError: (err) => toast.error(err.message),
   });
