@@ -7,6 +7,7 @@ import FilterRadioGroup from "../../ui/FilterRadioGroup";
 import color from "../../styles/color";
 import FilterRangeSlider from "../../ui/FilterRangeSlider";
 import { getMemoryFilters } from "../../services/apiMemory";
+import { useTranslation } from "react-i18next";
 
 const labels = {
     manufactures: [{ value: "All", label: "All" }],
@@ -35,6 +36,7 @@ const labels = {
 
 
 function MemoryFilter() {
+  const {t} = useTranslation();
     const initialState = {
         manufacturesFilter: "All",
         typeFilter: "All",
@@ -87,11 +89,11 @@ function MemoryFilter() {
       return (
         <StyledFilter>
           <StyledFilterButton>
-            <Button onClick={()=>handleApply(searchParams,setSearchParams)}>Apply</Button>
-            <Button onClick={()=>handleReset(dispatch,'/ram')}>Reset</Button>
+            <Button onClick={()=>handleApply(searchParams,setSearchParams)}> {t('apply')}</Button>
+            <Button onClick={()=>handleReset(dispatch,'/ram')}>{t('reset')}</Button>
           </StyledFilterButton>
           <FilterRadioGroup
-            name={"Manufactures"}
+            name={t("Manufactures")}
             defaultValue={initialState.manufacturesFilter}
             onChange={handleChange}
             handleLabel={"MANUFACTURES"}
@@ -99,7 +101,7 @@ function MemoryFilter() {
             color={color}
           />
           <FilterRadioGroup
-            name={"Type"}
+            name={t("Type")}
             defaultValue={initialState.typeFilter}
             handleLabel={"TYPE"}
             onChange={handleChange}
@@ -107,7 +109,7 @@ function MemoryFilter() {
             color={color}
           />
           <FilterRangeSlider
-            name={"Speed"}
+            name={t("Speed")}
             handleChangeSlider={handleChange}
             handleLabel={"SPEED"}
             value={state.speedFilter}
@@ -115,7 +117,7 @@ function MemoryFilter() {
             max={initialState.speedFilter[1]}
           />
           <FilterRangeSlider
-            name={"Price"}
+            name={t("Price")}
             handleChangeSlider={handleChange}
             handleLabel={"PRICE"}
             value={state.priceFilter}
@@ -123,7 +125,7 @@ function MemoryFilter() {
             max={initialState.priceFilter[1]}
           />
           <FilterRangeSlider
-            name={"Capcity"}
+            name={t("Capcity")}
             handleChangeSlider={handleChange}
             handleLabel={"CAPACITY"}
             value={state.capacityFilter}

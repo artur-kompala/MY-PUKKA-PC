@@ -15,14 +15,10 @@ export async function getCPU({filter, sortBy, page}){
 }
 
 export async function getCpuFilters(){
-    const data = await axios.get(`${API_URL}/getCpuFilters`)
-    .then(res=> res.data)
-    .catch(err =>{
-        console.log(err)
-    })
-    
-    const query = {data}
-    
-    return query
+    try {
+        return await axios.get(`${API_URL}/getCpuFilters`)
+    } catch (err) {
+        console.log(err);
+    }
 }
 

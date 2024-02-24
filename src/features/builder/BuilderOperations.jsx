@@ -9,7 +9,7 @@ import Suggestion from "./Suggestion";
 function BuilderOperations({ totalCost, totalPower,data}) {
   const {t,i18n} = useTranslation();
     const issues = useCompatibility(data[0],totalPower)
-    const sugestion = useSugestion()
+    const sugestion = useSugestion(data[0],totalPower)
   
   const StyledBuilderLayout = styled.div`
     display: grid;
@@ -39,6 +39,6 @@ function BuilderOperations({ totalCost, totalPower,data}) {
       </ProductBox>
     </StyledBuilderLayout>
   );
-}
 
+  }
 export default BuilderOperations;

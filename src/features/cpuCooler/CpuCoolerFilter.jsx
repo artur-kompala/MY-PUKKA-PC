@@ -7,6 +7,7 @@ import { getCpuCoolerFilters } from "../../services/apiCpuCooler";
 import { StyledFilter, StyledFilterButton } from "../../ui/StyledFilter";
 import color from "../../styles/color";
 import useFilters from "../useFilters";
+import { useTranslation } from "react-i18next";
 
 const labels = {
   manufactures: [{ value: "All", label: "All" }],
@@ -34,6 +35,7 @@ labels.price[0] = dataFilter.data.maxMin[0].minPrice;
 labels.price[1] = dataFilter.data.maxMin[0].maxPrice;
 
 function CpuCoolerFilter() {
+  const {t} = useTranslation();
   const initialState = {
     manufacturesFilter: "All",
     typeFilter: "All",
@@ -85,11 +87,11 @@ function CpuCoolerFilter() {
   return (
     <StyledFilter>
       <StyledFilterButton>
-        <Button onClick={()=>handleApply(searchParams,setSearchParams)}>Apply</Button>
-        <Button onClick={()=>handleReset(dispatch,'/cpu-cooler')}>Reset</Button>
+        <Button onClick={()=>handleApply(searchParams,setSearchParams)}> {t('apply')}</Button>
+        <Button onClick={()=>handleReset(dispatch,'/cpu-cooler')}>{t('reset')}</Button>
       </StyledFilterButton>
       <FilterRadioGroup
-        name={"Manufactures"}
+        name={t("Manufactures")}
         defaultValue={initialState.manufacturesFilter}
         onChange={handleChange}
         handleLabel={"MANUFACTURES"}
@@ -97,7 +99,7 @@ function CpuCoolerFilter() {
         color={color}
       />
       <FilterRadioGroup
-        name={"Type"}
+        name={t("Type")}
         defaultValue={initialState.typeFilter}
         handleLabel={"TYPE"}
         onChange={handleChange}
@@ -105,7 +107,7 @@ function CpuCoolerFilter() {
         color={color}
       />
       <FilterRadioGroup
-        name={"Socket"}
+        name={t("Socket")}
         defaultValue={initialState.socketFilter}
         handleLabel={"SOCKET"}
         onChange={handleChange}
@@ -113,7 +115,7 @@ function CpuCoolerFilter() {
         color={color}
       ></FilterRadioGroup>
       <FilterRangeSlider
-        name={"TDP"}
+        name={t("TDP")}
         handleChangeSlider={handleChange}
         handleLabel={"TDP"}
         value={state.tdpFilter}
@@ -121,7 +123,7 @@ function CpuCoolerFilter() {
         max={initialState.tdpFilter[1]}
       />
       <FilterRangeSlider
-        name={"Price"}
+        name={t("Price")}
         handleChangeSlider={handleChange}
         handleLabel={"PRICE"}
         value={state.priceFilter}

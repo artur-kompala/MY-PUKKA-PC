@@ -7,6 +7,7 @@ import Button from "../../ui/Button";
 import FilterRadioGroup from "../../ui/FilterRadioGroup";
 import FilterRangeSlider from "../../ui/FilterRangeSlider";
 import color from "../../styles/color";
+import { useTranslation } from "react-i18next";
 
 const labels = {
     max_memory: [{ value: "All", label: "All" }],
@@ -23,6 +24,7 @@ const labels = {
   labels.price[1] = dataFilter.data.maxMin[0].maxPrice;
   
 function OsFilter() {
+  const {t} = useTranslation();
     const initialState = {
         max_memoryFilter: "All",
         priceFilter: labels.price,
@@ -64,11 +66,11 @@ function OsFilter() {
       return (
         <StyledFilter>
           <StyledFilterButton>
-            <Button onClick={()=>handleApply(searchParams,setSearchParams)}>Apply</Button>
-            <Button onClick={()=>handleReset(dispatch,'/os')}>Reset</Button>
+            <Button onClick={()=>handleApply(searchParams,setSearchParams)}>{t('apply')}</Button>
+            <Button onClick={()=>handleReset(dispatch,'/os')}>{t('reset')}</Button>
           </StyledFilterButton>
           <FilterRadioGroup
-            name={"Max memory"}
+            name={t("Max memory")}
             defaultValue={initialState.max_memoryFilter}
             onChange={handleChange}
             handleLabel={"MAX_MEMORY"}
@@ -76,7 +78,7 @@ function OsFilter() {
             color={color}
           />
           <FilterRangeSlider
-            name={"Price"}
+            name={t("Price")}
             handleChangeSlider={handleChange}
             handleLabel={"PRICE"}
             value={state.priceFilter}

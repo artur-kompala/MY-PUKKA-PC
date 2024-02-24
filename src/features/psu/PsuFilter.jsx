@@ -7,6 +7,7 @@ import Button from "../../ui/Button";
 import FilterRadioGroup from "../../ui/FilterRadioGroup";
 import color from "../../styles/color";
 import FilterRangeSlider from "../../ui/FilterRangeSlider";
+import { useTranslation } from "react-i18next";
 
 const labels = {
     manufactures: [{ value: "All", label: "All" }],
@@ -35,6 +36,7 @@ const labels = {
   
 
 function PsuFilter() {
+  const {t} = useTranslation();
     const initialState = {
         manufacturesFilter: "All",
         typeFilter: "All",
@@ -86,11 +88,11 @@ function PsuFilter() {
       return (
         <StyledFilter>
           <StyledFilterButton>
-            <Button onClick={()=>handleApply(searchParams,setSearchParams)}>Apply</Button>
-            <Button onClick={()=>handleReset(dispatch,'/psu')}>Reset</Button>
+            <Button onClick={()=>handleApply(searchParams,setSearchParams)}> {t('apply')}</Button>
+            <Button onClick={()=>handleReset(dispatch,'/psu')}>{t('reset')}</Button>
           </StyledFilterButton>
           <FilterRadioGroup
-            name={"Manufactures"}
+            name={t("Manufactures")}
             defaultValue={initialState.manufacturesFilter}
             onChange={handleChange}
             handleLabel={"MANUFACTURES"}
@@ -98,7 +100,7 @@ function PsuFilter() {
             color={color}
           />
           <FilterRadioGroup
-            name={"Type"}
+            name={t("Type")}
             defaultValue={initialState.typeFilter}
             handleLabel={"TYPE"}
             onChange={handleChange}
@@ -106,7 +108,7 @@ function PsuFilter() {
             color={color}
           />
           <FilterRadioGroup
-            name={"Efficiency"}
+            name={t("Efficiency")}
             defaultValue={initialState.efficiencyFilter}
             handleLabel={"SOCKET"}
             onChange={handleChange}
@@ -114,7 +116,7 @@ function PsuFilter() {
             color={color}
           ></FilterRadioGroup>
           <FilterRangeSlider
-            name={"Wattge"}
+            name={t("Wattge")}
             handleChangeSlider={handleChange}
             handleLabel={"WATTGE"}
             value={state.wattageFilter}
@@ -122,7 +124,7 @@ function PsuFilter() {
             max={initialState.wattageFilter[1]}
           />
           <FilterRangeSlider
-            name={"Price"}
+            name={t("Price")}
             handleChangeSlider={handleChange}
             handleLabel={"PRICE"}
             value={state.priceFilter}

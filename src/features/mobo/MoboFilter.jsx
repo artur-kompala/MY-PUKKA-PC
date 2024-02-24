@@ -7,6 +7,7 @@ import { StyledFilter, StyledFilterButton } from "../../ui/StyledFilter";
 import color from "../../styles/color";
 import { getMoboFilters } from "../../services/apiMobo";
 import useFilters from "../useFilters";
+import { useTranslation } from "react-i18next";
 
 const labels = {
   manufactures: [
@@ -65,6 +66,7 @@ labels.price[1] = dataFilter.data.maxMin[0].maxPrice;
 
 
 function MoboFilter() {
+  const {t} = useTranslation();
   const initialState = {
     manufacturesFilter: "All",
     form_factorFilter: "All",
@@ -128,11 +130,11 @@ function MoboFilter() {
   return (
     <StyledFilter>
       <StyledFilterButton>
-        <Button onClick={()=>handleApply(searchParams,setSearchParams)}>Apply</Button>
-        <Button onClick={()=>handleReset(dispatch,'/mobo')}>Reset</Button>
+        <Button onClick={()=>handleApply(searchParams,setSearchParams)}>{t('apply')}</Button>
+        <Button onClick={()=>handleReset(dispatch,'/mobo')}>{t('reset')}</Button>
       </StyledFilterButton>
       <FilterRadioGroup
-        name={"Manufactures"}
+        name={t("Manufactures")}
         defaultValue={initialState.manufacturesFilter}
         onChange={handleChange}
         handleLabel={"MANUFACTURES"}
@@ -140,7 +142,7 @@ function MoboFilter() {
         color={color}
       />
       <FilterRadioGroup
-        name={"Form factor"}
+        name={t("Form factor")}
         defaultValue={initialState.formfactorFilter}
         handleLabel={"FORM_FACTOR"}
         onChange={handleChange}
@@ -148,7 +150,7 @@ function MoboFilter() {
         color={color}
       />
       <FilterRadioGroup
-        name={"Socket"}
+        name={t("Socket")}
         defaultValue={initialState.socketFilter}
         handleLabel={"SOCKET"}
         onChange={handleChange}
@@ -156,7 +158,7 @@ function MoboFilter() {
         color={color}
       ></FilterRadioGroup>
       <FilterRadioGroup
-        name={"Chipset"}
+        name={t("Chipset")}
         defaultValue={initialState.chipsetFilter}
         handleLabel={"CHIPSET"}
         onChange={handleChange}
@@ -164,7 +166,7 @@ function MoboFilter() {
         color={color}
       ></FilterRadioGroup>
       <FilterRadioGroup
-        name={"Wifi"}
+        name={t("Wifi")}
         defaultValue={initialState.wifiFilter}
         handleLabel={"WIFI"}
         onChange={handleChange}
@@ -172,7 +174,7 @@ function MoboFilter() {
         color={color}
       />
       <FilterRadioGroup
-        name={"M.2"}
+        name={t("M.2")}
         defaultValue={initialState.m2Filter}
         handleLabel={"M2"}
         onChange={handleChange}
@@ -180,7 +182,7 @@ function MoboFilter() {
         color={color}
       ></FilterRadioGroup>
        <FilterRadioGroup
-        name={"Graphics"}
+        name={t("Graphic")}
         defaultValue={initialState.integrated_graphics_supportFilter}
         handleLabel={"INTEGRATED_GRAPHICS_SUPPORT"}
         onChange={handleChange}
@@ -188,7 +190,7 @@ function MoboFilter() {
         color={color}
       />
       <FilterRadioGroup
-        name={"PCIe"}
+        name={t("PCIe")}
         defaultValue={initialState.pcieFilter}
         handleLabel={"PCIE"}
         onChange={handleChange}
@@ -196,7 +198,7 @@ function MoboFilter() {
         color={color}
       ></FilterRadioGroup>
       <FilterRangeSlider
-        name={"Price"}
+        name={t("Price")}
         handleChangeSlider={handleChange}
         handleLabel={"PRICE"}
         value={state.priceFilter}

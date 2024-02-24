@@ -8,6 +8,7 @@ import FilterRadioGroup from "../../ui/FilterRadioGroup";
 import color from "../../styles/color";
 import FilterRangeSlider from "../../ui/FilterRangeSlider";
 import { getCaseFilters } from "../../services/apiCase";
+import { useTranslation } from "react-i18next";
 
 const labels = {
     manufactures: [{ value: "All", label: "All" }],
@@ -40,6 +41,7 @@ const labels = {
 
 
 function CaseFilter() {
+  const {t} = useTranslation();
     const initialState = {
         manufacturesFilter: "All",
         typeFilter: "All",
@@ -95,11 +97,11 @@ function CaseFilter() {
       return (
         <StyledFilter>
           <StyledFilterButton>
-            <Button onClick={()=>handleApply(searchParams,setSearchParams)}>Apply</Button>
-            <Button onClick={()=>handleReset(dispatch,'/case')}>Reset</Button>
+            <Button onClick={()=>handleApply(searchParams,setSearchParams)}>{t('apply')}</Button>
+            <Button onClick={()=>handleReset(dispatch,'/case')}>{t('reset')}</Button>
           </StyledFilterButton>
           <FilterRadioGroup
-            name={"Manufactures"}
+            name={t("Manufactures")}
             defaultValue={initialState.manufacturesFilter}
             onChange={handleChange}
             handleLabel={"MANUFACTURES"}
@@ -107,7 +109,7 @@ function CaseFilter() {
             color={color}
           />
           <FilterRadioGroup
-            name={"Type"}
+            name={t("Type")}
             defaultValue={initialState.typeFilter}
             handleLabel={"TYPE"}
             onChange={handleChange}
@@ -115,7 +117,7 @@ function CaseFilter() {
             color={color}
           />
           <FilterRadioGroup
-            name={"Form factor"}
+            name={t("Form factor")}
             defaultValue={initialState.form_factorFilter}
             handleLabel={"FORM_FACTOR"}
             onChange={handleChange}
@@ -123,7 +125,7 @@ function CaseFilter() {
             color={color}
           ></FilterRadioGroup>
           <FilterRangeSlider
-            name={"Cpu Cooler Length"}
+            name={t("Cpu Cooler Length")}
             handleChangeSlider={handleChange}
             handleLabel={"CPU_COOLER_LENGTH"}
             value={state.cpu_cooler_lengthFilter}
@@ -131,7 +133,7 @@ function CaseFilter() {
             max={initialState.cpu_cooler_lengthFilter[1]}
           />
           <FilterRangeSlider
-            name={"Gpu Length"}
+            name={t("Gpu Length")}
             handleChangeSlider={handleChange}
             handleLabel={"GPU_LENGTH"}
             value={state.gpu_lengthFilter}
@@ -139,7 +141,7 @@ function CaseFilter() {
             max={initialState.gpu_lengthFilter[1]}
           />
           <FilterRangeSlider
-            name={"Price"}
+            name={t("Price")}
             handleChangeSlider={handleChange}
             handleLabel={"PRICE"}
             value={state.priceFilter}

@@ -25,3 +25,13 @@ export async function getGpuFilters(){
     
     return query
 }
+
+export async function gpuSuggestion(price,_id,score){
+    const data = {
+        score: score,
+        price: price,
+        _id: _id
+    }
+    const result = await axios.post(`${API_URL}/gpuSuggestion`,data).catch(err=>console.log(err))
+    return result
+}

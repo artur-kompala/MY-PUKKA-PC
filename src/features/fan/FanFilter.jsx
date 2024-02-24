@@ -7,6 +7,7 @@ import Button from "../../ui/Button";
 import FilterRadioGroup from "../../ui/FilterRadioGroup";
 import color from "../../styles/color";
 import FilterRangeSlider from "../../ui/FilterRangeSlider";
+import { useTranslation } from "react-i18next";
 
 const labels = {
     manufactures: [{ value: "All", label: "All" }],
@@ -35,6 +36,7 @@ const labels = {
 
 
 function FanFilter() {
+  const {t} = useTranslation();
     const initialState = {
         manufacturesFilter: "All",
         sizeFilter: "All",
@@ -87,11 +89,11 @@ function FanFilter() {
       return (
         <StyledFilter>
           <StyledFilterButton>
-            <Button onClick={()=>handleApply(searchParams,setSearchParams)}>Apply</Button>
-            <Button onClick={()=>handleReset(dispatch,'/cpu-cooler')}>Reset</Button>
+            <Button onClick={()=>handleApply(searchParams,setSearchParams)}>{t('apply')}</Button>
+            <Button onClick={()=>handleReset(dispatch,'/cpu-cooler')}>{t('reset')}</Button>
           </StyledFilterButton>
           <FilterRadioGroup
-            name={"Manufactures"}
+            name={t("Manufactures")}
             defaultValue={initialState.manufacturesFilter}
             onChange={handleChange}
             handleLabel={"MANUFACTURES"}
@@ -99,7 +101,7 @@ function FanFilter() {
             color={color}
           />
           <FilterRadioGroup
-            name={"Size"}
+            name={t("Size")}
             defaultValue={initialState.sizeFilter}
             handleLabel={"SIZE"}
             onChange={handleChange}
@@ -107,7 +109,7 @@ function FanFilter() {
             color={color}
           />
           <FilterRangeSlider
-            name={"Flow"}
+            name={t("Flow")}
             handleChangeSlider={handleChange}
             handleLabel={"FLOW"}
             value={state.flowFilter}
@@ -115,7 +117,7 @@ function FanFilter() {
             max={initialState.flowFilter[1]}
           />
           <FilterRangeSlider
-            name={"Price"}
+            name={t("Price")}
             handleChangeSlider={handleChange}
             handleLabel={"PRICE"}
             value={state.priceFilter}
@@ -123,7 +125,7 @@ function FanFilter() {
             max={initialState.priceFilter[1]}
           />
           <FilterRangeSlider
-            name={"Noise"}
+            name={t("Noise")}
             handleChangeSlider={handleChange}
             handleLabel={"NOISE"}
             value={state.noiseFilter}

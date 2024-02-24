@@ -6,10 +6,11 @@ import Spinner from "../../ui/Spinner";
 import Pagination from "../../ui/Pagination";
 import { useCPU } from "./useCPU";
 import { TableRow } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 function CpuTable() {
   const { cpus, isLoading, count,error} = useCPU();
-
+  const {t} = useTranslation();
   if (isLoading) return <Spinner />;
   if(error) return <h1>Brak połączenia</h1>
 
@@ -18,16 +19,16 @@ function CpuTable() {
       <Table columns="1.5fr 1.5fr 1.5fr 1.5fr 1.5fr 1.5fr 1.5fr 1.5fr 1.5fr 1.8fr 1.5fr 1.5fr">
         <Table.Header>
           <div></div>
-          <div>Rank</div>
-          <div>Name</div>
-          <div>Core count</div>
-          <div>Core clock</div>
-          <div>Boost clock</div>
-          <div>Graphic</div>
-          <div>Tdp</div>
-          <div>Smt</div>
-          <div>Price (PLN)</div>
-          <div>Score</div>
+          <div>{t('Rank')}</div>
+          <div>{t('name')}</div>
+          <div>{t('Core Count')}</div>
+          <div>{t('Core Clock')}</div>
+          <div>{t('Boost Clock')}</div>
+          <div>{t('Graphic')}</div>
+          <div>TDP</div>
+          <div>SMT</div>
+          <div>{t('Price')}(PLN)</div>
+          <div>{t('Score')}</div>
         </Table.Header>
         {cpus.length ? (
           <Table.Body

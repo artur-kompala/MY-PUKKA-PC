@@ -7,6 +7,8 @@ import { StyledFilter, StyledFilterButton } from "../../ui/StyledFilter";
 import color from "../../styles/color";
 import { getCpuFilters } from "../../services/apiCPU";
 import useFilters from "../useFilters";
+import { useTranslation } from "react-i18next";
+import { logout } from "../../services/apiAuth";
 
 const labels = {
   manufactures: [{ value: "All", label: "All" }],
@@ -29,32 +31,33 @@ const labels = {
   price: [],
 };
 
-const dataFilter = await getCpuFilters();
+const {data} = await getCpuFilters();
 
-dataFilter.data.manufacture.map((item) =>
+data.manufacture.map((item) =>
   labels.manufactures.push({ value: item, label: item })
 );
-dataFilter.data.socket.map((item) =>
+data.socket.map((item) =>
   labels.socket.push({ value: item, label: item })
 );
-dataFilter.data.coreFamily.map((item) =>
+data.coreFamily.map((item) =>
   labels.coreFamily.push({ value: item, label: item })
 );
 
-labels.tdp[0] = dataFilter.data.maxMin[0].minTdp;
-labels.tdp[1] = dataFilter.data.maxMin[0].maxTdp;
-labels.price[0] = dataFilter.data.maxMin[0].minPrice;
-labels.price[1] = dataFilter.data.maxMin[0].maxPrice;
-labels.coreClock[0] = dataFilter.data.maxMin[0].minCoreClock;
-labels.coreClock[1] = dataFilter.data.maxMin[0].maxCoreClock;
-labels.boostClock[0] = dataFilter.data.maxMin[0].minBoostClock;
-labels.boostClock[1] = dataFilter.data.maxMin[0].maxBoostClock;
-labels.coreCount[0] = dataFilter.data.maxMin[0].minCoreCount;
-labels.coreCount[1] = dataFilter.data.maxMin[0].maxCoreCount;
+labels.tdp[0] = data.maxMin[0].minTdp;
+labels.tdp[1] = data.maxMin[0].maxTdp;
+labels.price[0] = data.maxMin[0].minPrice;
+labels.price[1] = data.maxMin[0].maxPrice;
+labels.coreClock[0] = data.maxMin[0].minCoreClock;
+labels.coreClock[1] = data.maxMin[0].maxCoreClock;
+labels.boostClock[0] = data.maxMin[0].minBoostClock;
+labels.boostClock[1] = data.maxMin[0].maxBoostClock;
+labels.coreCount[0] = data.maxMin[0].minCoreCount;
+labels.coreCount[1] = data.maxMin[0].maxCoreCount;
 
 
 
 function CpuFilter() {
+  const {t} = useTranslation();
   const initialState = {
     manufacturesFilter: "All",
     graphicFilter: "All",
@@ -126,12 +129,12 @@ function CpuFilter() {
     <StyledFilter>
       <StyledFilterButton>
         <Button onClick={() => handleApply(searchParams, setSearchParams)}>
-          Apply
+          {t('apply')}
         </Button>
-        <Button onClick={() => handleReset(dispatch, "/cpu")}>Reset</Button>
+        <Button onClick={() => handleReset(dispatch, "/cpu")}>{t('reset')}</Button>
       </StyledFilterButton>
       <FilterRadioGroup
-        name={"Manufactures"}
+        name={t("Manufactures")}
         defaultValue={initialState.manufacturesFilter}
         onChange={handleChange}
         handleLabel={"MANUFACTURES"}
@@ -139,7 +142,7 @@ function CpuFilter() {
         color={color}
       />
       <FilterRangeSlider
-        name={"Core Count"}
+        name={t("Core Count")}
         handleChangeSlider={handleChange}
         handleLabel={"CORECOUNT"}
         value={state.coreCountFilter}
@@ -147,7 +150,7 @@ function CpuFilter() {
         max={initialState.coreCountFilter[1]}
       />
       <FilterRangeSlider
-        name={"Core Clock"}
+        name={t("Core Clock")}
         handleChangeSlider={handleChange}
         handleLabel={"CORECLOCK"}
         value={state.coreClockFilter}
@@ -155,7 +158,7 @@ function CpuFilter() {
         max={initialState.coreClockFilter[1]}
       />
       <FilterRangeSlider
-        name={"Boost Clock"}
+        name={t("Boost Clock")}
         handleChangeSlider={handleChange}
         handleLabel={"BOOSTCLOCK"}
         value={state.boostClockFilter}
@@ -163,7 +166,7 @@ function CpuFilter() {
         max={initialState.boostClockFilter[1]}
       />
       <FilterRadioGroup
-        name={"Graphic"}
+        name={t("Graphic")}
         defaultValue={initialState.graphicFilter}
         handleLabel={"GRAPHIC"}
         onChange={handleChange}
@@ -171,7 +174,7 @@ function CpuFilter() {
         color={color}
       />
       <FilterRangeSlider
-        name={"TDP"}
+        name={t("TDP")}
         handleChangeSlider={handleChange}
         handleLabel={"TDP"}
         value={state.tdpFilter}
@@ -179,7 +182,7 @@ function CpuFilter() {
         max={initialState.tdpFilter[1]}
       />
       <FilterRadioGroup
-        name={"SMT"}
+        name={t("SMT")}
         defaultValue={initialState.smtFilter}
         handleLabel={"SMT"}
         onChange={handleChange}
@@ -187,7 +190,7 @@ function CpuFilter() {
         color={color}
       />
       <FilterRangeSlider
-        name={"Price"}
+        name={t("Price")}
         handleChangeSlider={handleChange}
         handleLabel={"PRICE"}
         value={state.priceFilter}
@@ -195,7 +198,7 @@ function CpuFilter() {
         max={initialState.priceFilter[1]}
       />
       <FilterRadioGroup
-        name={"Core Family"}
+        name={t("Core Family")}
         defaultValue={initialState.coreFamilyFilter}
         handleLabel={"COREFAMILY"}
         onChange={handleChange}
@@ -203,7 +206,7 @@ function CpuFilter() {
         color={color}
       ></FilterRadioGroup>
       <FilterRadioGroup
-        name={"Socket"}
+        name={t("Socket")}
         defaultValue={initialState.socketFilter}
         handleLabel={"SOCKET"}
         onChange={handleChange}

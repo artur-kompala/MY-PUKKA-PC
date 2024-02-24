@@ -7,6 +7,7 @@ import Button from "../../ui/Button";
 import FilterRadioGroup from "../../ui/FilterRadioGroup";
 import color from "../../styles/color";
 import FilterRangeSlider from "../../ui/FilterRangeSlider";
+import { useTranslation } from "react-i18next";
 
 const labels = {
     manufactures: [{ value: "All", label: "All" }],
@@ -40,6 +41,7 @@ const labels = {
   labels.capacity[1] = dataFilter.data.maxMin[0].maxCapacity;
 
 function StorageFilter() {
+  const {t} = useTranslation();
     const initialState = {
         manufacturesFilter: "All",
         typeFilter: "All",
@@ -99,11 +101,11 @@ function StorageFilter() {
       return (
         <StyledFilter>
           <StyledFilterButton>
-            <Button onClick={()=>handleApply(searchParams,setSearchParams)}>Apply</Button>
-            <Button onClick={()=>handleReset(dispatch,'/storage')}>Reset</Button>
+            <Button onClick={()=>handleApply(searchParams,setSearchParams)}>{t('apply')}</Button>
+            <Button onClick={()=>handleReset(dispatch,'/storage')}>{t('reset')}</Button>
           </StyledFilterButton>
           <FilterRadioGroup
-            name={"Manufactures"}
+            name={t("Manufactures")}
             defaultValue={initialState.manufacturesFilter}
             onChange={handleChange}
             handleLabel={"MANUFACTURES"}
@@ -111,7 +113,7 @@ function StorageFilter() {
             color={color}
           />
           <FilterRadioGroup
-            name={"Type"}
+            name={t("Type")}
             defaultValue={initialState.typeFilter}
             handleLabel={"TYPE"}
             onChange={handleChange}
@@ -119,7 +121,7 @@ function StorageFilter() {
             color={color}
           />
           <FilterRadioGroup
-            name={"Interface"}
+            name={t("Interface")}
             defaultValue={initialState.interFilter}
             handleLabel={"INTER"}
             onChange={handleChange}
@@ -127,7 +129,7 @@ function StorageFilter() {
             color={color}
           ></FilterRadioGroup>
           <FilterRangeSlider
-            name={"Read"}
+            name={t("Read")}
             handleChangeSlider={handleChange}
             handleLabel={"READ"}
             value={state.readFilter}
@@ -135,7 +137,7 @@ function StorageFilter() {
             max={initialState.readFilter[1]}
           />
           <FilterRangeSlider
-            name={"Write"}
+            name={t("Write")}
             handleChangeSlider={handleChange}
             handleLabel={"WRITE"}
             value={state.writeFilter}
@@ -143,7 +145,7 @@ function StorageFilter() {
             max={initialState.writeFilter[1]}
           />
           <FilterRangeSlider
-            name={"Capcity"}
+            name={t("Capcity")}
             handleChangeSlider={handleChange}
             handleLabel={"CAPACITY"}
             value={state.capacityFilter}
@@ -151,7 +153,7 @@ function StorageFilter() {
             max={initialState.capacityFilter[1]}
           />
           <FilterRangeSlider
-        name={"Price"}
+        name={t("Price")}
         handleChangeSlider={handleChange}
         handleLabel={"PRICE"}
         value={state.priceFilter}

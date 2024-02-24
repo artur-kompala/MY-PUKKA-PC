@@ -6,29 +6,64 @@ import FormRowVertical from "../../ui/FormRowVertical";
 import { useLogin } from "./useLogin";
 import SpinnerMini from "../../ui/SpinnerMini";
 import { useTranslation } from "react-i18next";
+import { useRegister } from "./useRegister";
+import Heading from "../../ui/Heading";
 
-function LoginForm() {
+function LoginForm({isLogin,setIsLogin}) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login, isLoading } = useLogin();
+  const [fullName, setFullName] = useState("");
+  
+  const { login, isLoadingLogin } = useLogin();
+  const { register, isLoadingRegister } = useRegister();
+  const isLoading = isLoadingLogin || isLoadingRegister;
+
+  const { t, i18n } = useTranslation();
+
   function handleSubmit(e) {
     e.preventDefault();
     if (!email || !password) return;
-    login(
-      { email, password },
-      {
-        onSettled: () => {
-          setEmail("");
-          setPassword("");
-        },
-      }
-    );
+
+    if (isLogin) {
+      login(
+        { email, password },
+        {
+          onSettled: () => {
+            setEmail("");
+            setPassword("");
+          },
+        }
+      );
+    } else {
+      register(
+        { fullName,email,password },
+        {
+          onSettled: () => {
+            setFullName("");
+            setEmail("");
+            setPassword("");
+          },
+        }
+      );
+    }
   }
-  const {t,i18n} = useTranslation();
-  
+
   return (
     <Form onSubmit={handleSubmit}>
-      <FormRowVertical label={t('email')}>
+      {!isLogin && (
+        <FormRowVertical label={t("name")}>
+          <Input
+            type="name"
+            id="username"
+            autoComplete="username"
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
+            disabled={isLoading}
+          />
+        </FormRowVertical>
+      )}
+
+      <FormRowVertical label={t("email")}>
         <Input
           type="email"
           id="email"
@@ -39,7 +74,7 @@ function LoginForm() {
         />
       </FormRowVertical>
 
-      <FormRowVertical label={t('password')}>
+      <FormRowVertical label={t("password")}>
         <Input
           type="password"
           id="password"
@@ -49,9 +84,17 @@ function LoginForm() {
           disabled={isLoading}
         />
       </FormRowVertical>
+
       <FormRowVertical>
-        <Button size="large" disabled={isLoading}>
-          {!isLoading ? t('login') : <SpinnerMini />}
+        <Button type="submit" size="large" disabled={isLoading}>
+          {!isLoading ? isLogin ? t("login") : t("register") : <SpinnerMini />}
+        </Button>
+        <Button
+          type="button"
+          onClick={() => setIsLogin(!isLogin)}
+          disabled={isLoading}
+        >
+          {isLogin ? t("Switch To Register") : t("Switch To Login")}
         </Button>
       </FormRowVertical>
     </Form>

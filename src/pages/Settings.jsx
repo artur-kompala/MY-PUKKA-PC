@@ -5,7 +5,7 @@ import Heading from "../ui/Heading";
 import Row from "../ui/Row";
 
 function Settings() {
-  const {t,i18n} = useTranslation();
+  const {t} = useTranslation();
     return (
         <>
           <Heading as="h1">{t('Update database')}</Heading>

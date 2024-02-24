@@ -7,6 +7,7 @@ import Button from "../../ui/Button";
 import FilterRadioGroup from "../../ui/FilterRadioGroup";
 import color from "../../styles/color";
 import FilterRangeSlider from "../../ui/FilterRangeSlider";
+import { useTranslation } from "react-i18next";
 
 const labels = {
     manufactures: [{ value: "All", label: "All" }],
@@ -40,6 +41,7 @@ const labels = {
 
 
 function GpuFilter() {
+  const {t} = useTranslation();
     const initialState = {
         manufacturesFilter: "All",
         chipsetFilter: "All",
@@ -94,11 +96,11 @@ function GpuFilter() {
       return (
         <StyledFilter>
           <StyledFilterButton>
-            <Button onClick={()=>handleApply(searchParams,setSearchParams)}>Apply</Button>
-            <Button onClick={()=>handleReset(dispatch,'/gpu')}>Reset</Button>
+            <Button onClick={()=>handleApply(searchParams,setSearchParams)}>{t('apply')}</Button>
+            <Button onClick={()=>handleReset(dispatch,'/gpu')}>{t('reset')}</Button>
           </StyledFilterButton>
           <FilterRadioGroup
-            name={"Manufactures"}
+            name={t("Manufactures")}
             defaultValue={initialState.manufacturesFilter}
             onChange={handleChange}
             handleLabel={"MANUFACTURES"}
@@ -106,7 +108,7 @@ function GpuFilter() {
             color={color}
           />
           <FilterRadioGroup
-            name={"Chipset"}
+            name={t("Chipset")}
             defaultValue={initialState.chipsetFilter}
             handleLabel={"CHIPSET"}
             onChange={handleChange}
@@ -114,7 +116,7 @@ function GpuFilter() {
             color={color}
           />
           <FilterRadioGroup
-            name={"PCIe"}
+            name={t("PCIe")}
             defaultValue={initialState.pcieFilter}
             handleLabel={"PCIE"}
             onChange={handleChange}
@@ -122,7 +124,7 @@ function GpuFilter() {
             color={color}
           ></FilterRadioGroup>
           <FilterRadioGroup
-            name={"Frame Genertor"}
+            name={t("Frame Genertor")}
             defaultValue={initialState.fgFilter}
             handleLabel={"FG"}
             onChange={handleChange}
@@ -130,7 +132,7 @@ function GpuFilter() {
             color={color}
           ></FilterRadioGroup>
           <FilterRangeSlider
-            name={"Memory"}
+            name={t("Memory")}
             handleChangeSlider={handleChange}
             handleLabel={"MEMORY"}
             value={state.memoryFilter}
@@ -138,7 +140,7 @@ function GpuFilter() {
             max={initialState.memoryFilter[1]}
           />
           <FilterRangeSlider
-        name={"Price"}
+        name={t("Price")}
         handleChangeSlider={handleChange}
         handleLabel={"PRICE"}
         value={state.priceFilter}
