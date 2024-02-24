@@ -1,3 +1,4 @@
+import { t } from "i18next";
 import styled from "styled-components";
 
 const colorGrey = { color: "#727477" };
@@ -14,21 +15,21 @@ const BenchmarkBox = styled.div`
   gap: 2.4rem;
 `;
 
-function ProductBenchmark() {
+function ProductBenchmark({score,rank,samples}) {
   
   return (
     <>
       <BenchmarkBox>
-        <em>Rank:</em>
-        <strong style={colorGrey}>Rank</strong>
+        <em>{t("Rank")}</em>
+        <strong style={colorGrey}>{rank}</strong>
       </BenchmarkBox>
       <BenchmarkBox>
-        <em>Score:</em>
-        <strong style={colorGrey}>bench</strong>
+        <em>{t("Score")}</em>
+        <strong style={colorGrey}>{score}</strong>
       </BenchmarkBox>
       <BenchmarkBox>
-        <em>Samples:</em>
-        <strong style={colorGrey}>samp</strong>
+        <em>{t('Samples')}</em>
+        <strong style={colorGrey}>{samples}</strong>
       </BenchmarkBox>
     </>
   );

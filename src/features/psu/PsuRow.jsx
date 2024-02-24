@@ -2,9 +2,11 @@ import { useNavigate } from "react-router-dom";
 import { addCart } from "../../services/apiCart";
 import Table from "../../ui/Table";
 import Button from "../../ui/Button";
+import { useTranslation } from "react-i18next";
 
 function PsuRow({psu}) {
     const navigate = useNavigate();
+    const {t} = useTranslation();
     const {manufacture,name,price,type,
         efficiency,wattage,modular,color,gid
         } = psu;
@@ -24,7 +26,7 @@ function PsuRow({psu}) {
             <div style={{backgroundColor: color,borderStyle: 'solid', borderColor: '#4338ca', borderWidth: '2px',borderRadius: '1rem',width: "3rem",height: "3rem"}}>&nbsp;</div>
             <div>{price ? `${price}`: "-"}</div>
             <div>
-                <Button size='small' onClick={()=>handleClick("psu",psu)}>+Add to Build</Button>
+                <Button size='small' onClick={()=>handleClick("psu",psu)}>{t('addToBuild')}</Button>
             </div>
         </Table.Row>
     )

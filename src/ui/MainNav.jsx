@@ -59,16 +59,10 @@ const StyledNavLink = styled(NavLink)`
 `;
 
 function MainNav() {
-  const {t,i18n} = useTranslation();
+  const {t} = useTranslation();
   return (
     <nav>
       <NavList>
-        <li>
-          <StyledNavLink to="/home">
-            <HiOutlineHome />
-            <span>{t('home')}</span>
-          </StyledNavLink>
-        </li>
         <li>
           <StyledNavLink to="/builder">
           <FaScrewdriverWrench />

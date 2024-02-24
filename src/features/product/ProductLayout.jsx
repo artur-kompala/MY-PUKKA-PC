@@ -16,7 +16,7 @@ const StyledProductLayout = styled.div`
   gap: 2.4rem;
 `;
 
-function ProductLayout({gid}) {
+function ProductLayout({gid,rank,samples,score}) {
   const [searchParams] = useSearchParams();
   const last = searchParams.get('last') || '7';
 
@@ -35,20 +35,19 @@ function ProductLayout({gid}) {
     if(isLoading){
       return <Spinner></Spinner>
     }
-    if(!isLoading && data.length !== 0){
+    if(!isLoading){
+      if(!data[0].data.results[0].content) return <h1>Brak danych</h1>
       const { _id, name, chart, data: query } = data[0]
-      
-    
       return(
         <StyledProductLayout> 
         <ProductDetails details={query.results[0].content}></ProductDetails>
-        <ProductBenchmark></ProductBenchmark>
+        {rank && score && samples && <ProductBenchmark rank={rank} samples={samples} score={score}></ProductBenchmark>}
         <PriceChart chart={chart} last={last}/>
         <ProductSpecs details={query.results[0].content}></ProductSpecs>
         </StyledProductLayout>
       )
     }else{
-      return <h1>Błąd wczytywania</h1>
+      return <h1>Brak informacji</h1>
     }
     
       

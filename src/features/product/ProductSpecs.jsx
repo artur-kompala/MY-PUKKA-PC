@@ -1,3 +1,4 @@
+import { t } from "i18next";
 import styled from "styled-components";
 const StyledSpecsItem = styled.div`
   background-color: var(--color-grey-50);
@@ -18,7 +19,7 @@ const StyledSpecsBox = styled.div`
 function ProductSpecs({ details }) {
   return (
     <StyledSpecsBox>
-            <h3>Specification:</h3>
+            <h3>{t("Specification")}</h3>
       {details.specifications.map((item) => (
         <StyledSpecsItem key={item.label}>
           <em >

@@ -2,9 +2,11 @@ import { useNavigate } from "react-router-dom";
 import { addCart } from "../../services/apiCart";
 import Table from "../../ui/Table";
 import Button from "../../ui/Button";
+import { useTranslation } from "react-i18next";
 
 function FanRow({fan}) {
     const navigate = useNavigate();
+    const {t} = useTranslation();
     const {name,manufacture,color,price,size,noise,led,rpm,flow,gid} = fan;
 
     function handleClick(type,data){
@@ -23,7 +25,7 @@ function FanRow({fan}) {
             <div  style={{backgroundColor: color,borderStyle: 'solid', borderColor: '#4338ca', borderWidth: '2px',borderRadius: '1rem',width: "3rem",height: "3rem"}}>&nbsp;</div>
             <div>{price ? `${price}`: "-"}</div>
             <div>
-                <Button size='small' onClick={()=>handleClick("fan",fan)}>+Add to Build</Button>
+                <Button size='small' onClick={()=>handleClick("fan",fan)}>{t('addToBuild')}</Button>
             </div>
         </Table.Row>
     )

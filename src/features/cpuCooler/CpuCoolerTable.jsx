@@ -5,10 +5,11 @@ import CpuCoolerRow from "./CpuCoolerRow";
 import Pagination from "../../ui/Pagination";
 import Spinner from "../../ui/Spinner";
 import { useCpuCooler } from "./useCpuCooler";
+import { useTranslation } from "react-i18next";
 
 function CpuCoolerTable() {
   const { coolers, isLoading, count } = useCpuCooler();
-
+  const {t} = useTranslation();
   if (isLoading) return <Spinner />;
 
   return (
@@ -16,14 +17,14 @@ function CpuCoolerTable() {
       <Table columns="1.5fr 1.5fr 1.4fr 1.5fr 1.2fr 1.3fr 1.2fr 1.4fr 1.5fr 1.5fr">
         <Table.Header>
           <div></div>
-          <div>Name</div>
-          <div>RPM</div>
-          <div>Noise level</div>
-          <div>Type</div>
-          <div>TDP</div>
-          <div>Led</div>
-          <div>Color</div>
-          <div>Price (PLN)</div>
+          <div>{t("name")}</div>
+          <div>{t("RPM")}</div>
+          <div>{t("noise_level")}</div>
+          <div>{t("Type")}</div>
+          <div>{t("TDP")}</div>
+          <div>{t("led")}</div>
+          <div>{t("color")}</div>
+          <div>{t("Price")}(PLN)</div>
         </Table.Header>
         {coolers.length ? (
           <Table.Body

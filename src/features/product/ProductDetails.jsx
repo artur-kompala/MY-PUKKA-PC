@@ -2,6 +2,7 @@ import styled from "styled-components";
 import ProductBox from "./ProductBox"
 import Button  from "../../ui/Button";
 import {useNavigate } from "react-router-dom";
+import { t } from "i18next";
 const Img = styled.img`
     
     border-radius: var(--border-radius-md);
@@ -40,16 +41,16 @@ function ProductDetails({details}) {
             <img src={imgSrc} referrerPolicy="no-referrer" width={300} alt="Zdjęcie produktu"/>
         </ProductBox>
         <ProductBox>
-            <h3>Description:</h3>
+            <h3>{t("Description")}</h3>
             <p>{displayFirstTwoSentences(details.description)}</p>
         </ProductBox>
         <ProductBox>
-            <h3>Cheapest shop:</h3>
+            <h3>{t("Cheapest shop")}</h3>
                 {sortedOffers.map((shop,index)=>(
                     <ShopBox key={index}>
                         <em>{shop.shop_name}</em>   
                         <strong style={{color: '#727477'}}>{shop.price} {shop.currency}</strong>
-                        <Button onClick={()=>window.location.assign(shop.url)}>Go to Shop</Button>
+                        <Button onClick={()=>window.location.assign(shop.url)}>{t("Go to Shop")}</Button>
                     </ShopBox>
                 ))}      
         </ProductBox>

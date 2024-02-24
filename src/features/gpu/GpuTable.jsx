@@ -5,6 +5,7 @@ import Table from "../../ui/Table";
 import GpuRow from "./GpuRow";
 import Pagination from "../../ui/Pagination";
 import { useGpu } from "./useGpu";
+import { t } from "i18next";
 
 function GpuTable() {
     const { gpus, isLoading, count } = useGpu();
@@ -16,19 +17,19 @@ function GpuTable() {
       <Table columns="0.8fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr  0.5fr  0.5fr  0.5fr  0.5fr 8rem">
         <Table.Header>
           <div></div>
-          <div>Rank</div>
+          <div>{t("Rank")}</div>
           <div>Chipset</div>
-          <div>Name</div>
-          <div>Memory</div>
-          <div>Core Clock</div>
-          <div>Boost Clock</div>
-          <div>Length</div>
+          <div>{t("name")}</div>
+          <div>{t("memory")}</div>
+          <div>{t("Core Clock")}</div>
+          <div>{t("Boost Clock")}</div>
+          <div>{t("length")}</div>
           <div>PCIe</div>
-          <div>Power Supply</div>
-          <div>Ray Tracing</div>
-          <div>Frame Generator</div>
-          <div>Score</div>
-          <div>Price (PLN)</div>
+          <div>{t("psu")}</div>
+          <div>{t("rt")}</div>
+          <div>{t("Frame Genertor")}</div>
+          <div>{t("Score")}</div>
+          <div>{t("Price")} (PLN)</div>
         </Table.Header>
         {gpus.length ? (
           <Table.Body

@@ -2,9 +2,11 @@ import { useNavigate } from "react-router-dom";
 import Button from "../../ui/Button";
 import { addCart } from "../../services/apiCart";
 import Table from "../../ui/Table";
+import { useTranslation } from "react-i18next";
 
 function StorageRow({storage}) {
     const navigate = useNavigate();
+    const {t} = useTranslation();
     const {name,price,manufacture,score,capacity,type,cache,form_factor,read,write,gid,rank} = storage;
 
     function handleClick(type,data){
@@ -25,7 +27,7 @@ function StorageRow({storage}) {
             <div>{score}</div>
             <div>{price ? `${price}`: "-"}</div>
             <div>
-                <Button size='small' onClick={()=>handleClick("storage",storage)}>+Add to Build</Button>
+                <Button size='small' onClick={()=>handleClick("storage",storage)}>{t('addToBuild')}</Button>
             </div>
         </Table.Row>
     )

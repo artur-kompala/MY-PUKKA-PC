@@ -3,6 +3,7 @@ import { SiAmd,SiIntel  } from "react-icons/si";
 import Button from "../../ui/Button"
 import { addCart } from "../../services/apiCart";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 function checkManufacture(name){
     if (name.includes("AMD")) {
@@ -18,7 +19,8 @@ function checkManufacture(name){
 
 function CpuRow({cpu}) {
     const navigate = useNavigate();
-    const {name,boost_clock,price,core_clock,core_count,graphics,smt,tdp,rank,benchmark,manufacture,gid} = cpu;
+    const {t} = useTranslation();
+    const {name,boost_clock,price,core_clock,core_count,graphics,smt,tdp,rank,benchmark,manufacture,gid,samples} = cpu;
 
     function handleClick(type,data){
         addCart(type,data).then(navigate('/builder'))
@@ -28,17 +30,17 @@ function CpuRow({cpu}) {
         <Table.Row>
             {checkManufacture(manufacture)}
             <span>{rank || "-"}</span>
-            <span onClick={()=>navigate(`/product/${gid}`)}>{name}</span>
+            <span onClick={()=>navigate(`/product/${gid}?name=${name}&manufacture=${manufacture}&rank=${rank}&samples=${samples}&score=${benchmark}`)}>{name}</span>
             <div>{core_count}</div>
             <div>{core_clock}</div>
             <div>{boost_clock}</div>
             <div>{graphics || "-"}</div>
             <div>{tdp}</div>
-            <div>{smt ? "Yes" : "No"}</div>
+            <div>{smt ? t('Yes') : t('No')}</div>
             <div>{price || "-"}</div>
             <span>{benchmark || "-"}</span>
             <div>
-                <Button size='small' onClick={()=>handleClick("cpu",cpu)}>+Add to Build</Button>
+                <Button size='small' onClick={()=>handleClick("cpu",cpu)}>{t('addToBuild')}</Button>
             </div>
         </Table.Row>
     )

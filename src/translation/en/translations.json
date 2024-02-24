@@ -155,7 +155,28 @@
     "Switch To Register": "Register",
     "Switch To Login": "Login",
     "email taken": "e-mail address is already taken",
-    "register error": "Register error"
+    "register error": "Register error",
+    "Yes": "Yes",
+    "No": "No",
+    "Rank": "Rank",
+    "Showing": "Showing",
+    "to": "to",
+    "of": "of",
+    "results": "results",
+    "air": "air",
+    "water":"water",
+    "graphics support": "Obsługa zintegr. karty",
+    "none": "None",
+    "Description": "Description",
+    "Cheapest shop": "Cheapest shop",
+    "Go to Shop": "Go to Shop",
+    "Samples": "Samples",
+    "Last 7 days": "Last 7 days",
+    "Last 30 days": "Last 30 days",
+    "Last 90 days": "Last 90 days",
+    "Specification": "Specification",
+    "Price from": "Price from"
+
 
 
 } 

@@ -3,9 +3,11 @@ import { addCart } from "../../services/apiCart";
 import { FaWindows } from "react-icons/fa";
 import Table from "../../ui/Table";
 import Button from "../../ui/Button";
+import { useTranslation } from "react-i18next";
 
 function OsRow({os}) {
     const navigate = useNavigate();
+    const {t} = useTranslation();
     const {manufacture,name,price,gid,max_memory,mode} = os;
 
     function handleClick(type,data){
@@ -21,7 +23,7 @@ function OsRow({os}) {
             <div>{max_memory}</div>
             <div>{price ? `${price}`: "-"}</div>
             <div>
-                <Button size='small' onClick={()=>handleClick("os",os)}>+Add to Build</Button>
+                <Button size='small' onClick={()=>handleClick("os",os)}>{t('addToBuild')}</Button>
             </div>
         </Table.Row>
     )

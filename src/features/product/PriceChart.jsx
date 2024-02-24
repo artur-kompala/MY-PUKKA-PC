@@ -14,11 +14,12 @@ import { useDarkMode } from "../../context/DarkModeContext";
 import { useParams } from "react-router-dom";
 import ProductFilter from "./ProductFilter";
 import Row from "../../ui/Row"
+import { useTranslation } from "react-i18next";
+
 
 const StyledPriceChart = styled(ProductBox)`
   grid-column: 1 / -1;
 
-  /* Hack to change grid line colors */
   & .recharts-cartesian-grid-horizontal line,
   & .recharts-cartesian-grid-vertical line {
     stroke: var(--color-grey-300);
@@ -28,7 +29,6 @@ function predict(prices) {
   let n = prices.length;
   let sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0;
 
-  // Obliczanie sum potrzebnych do wzorów
   for (let i = 0; i < n; i++) {
       sumX += i;
       sumY += prices[i].price;
@@ -36,11 +36,9 @@ function predict(prices) {
       sumX2 += i * i;
   }
 
-  // Obliczanie współczynników regresji liniowej
   let slope = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
   let intercept = (sumY - slope * sumX) / n;
 
-  // Przewidywanie następnej ceny
   let nextPrice = slope * n + intercept;
 
   return nextPrice;
@@ -53,9 +51,7 @@ function generateNextSevenDates(dates,last) {
     const currentDate = new Date(lastdate);
     currentDate.setTime(currentDate.getTime() + (i * oneDay));
     dates.push({date: currentDate.toISOString(),price: predict(dates)})
-
   }
-  
   return dates
 }
 
@@ -72,6 +68,7 @@ function zmienNaDzienMiesiac(data) {
 }
 
 function PriceChart({chart,last}) {
+  const {t} = useTranslation();
   
   const n = chart.length
   const {name} = useParams()
@@ -102,9 +99,6 @@ function PriceChart({chart,last}) {
         extrasPrice: item.price,
       };
     }
-    
-    
-    
   });
 
   const colors = isDarkMode
@@ -120,12 +114,13 @@ function PriceChart({chart,last}) {
         text: "#374151",
         background: "#fff",
       };
+  
 
   return (
     <StyledPriceChart>
       <Row type="horizontal">
       <Heading as="h3">
-        {name} price from  &mdash;{" "}
+      {` ${t("Price from")} ${data.at(0).label} - ${data.at(-1).label}`}
       </Heading>
       <ProductFilter/>
       </Row>

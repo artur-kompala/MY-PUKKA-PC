@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import ProductLayout from "../features/product/ProductLayout";
 import Heading from "../ui/Heading";
 import Row from "../ui/Row";
@@ -6,33 +6,21 @@ import Spinner from "../ui/Spinner";
 
 function Product() {
     const {gid} = useParams()
-    /*
-    const {   
-      isLoading,
-      data = {},
-      error,
-    } = useQuery({
-      queryKey: ['cpu', gid],
-      queryFn: () => getOneCPU({gid}),
-    });
-  */
- const isLoading = false;
-    
-  if(!isLoading){
+    const [searchParams] = useSearchParams();
+    const name = searchParams.get('name')
+    const manufacture = searchParams.get('manufacture')
+    const rank = searchParams.get('rank')
+    const score = searchParams.get('score')
+    const samples = searchParams.get('samples')
     
     return (
         <>
           <Row type="horizontal">
-            <Heading as="h1"></Heading>
-           
+            <Heading as="h1">{`${manufacture} ${name}`}</Heading>
           </Row>
-          <ProductLayout gid={gid}/>
+          <ProductLayout gid={gid} rank={rank} score={score} samples={samples}/>
         </>
       );
-    }else{
-       return <Spinner></Spinner>
-    }
-
 }
 
 export default Product
