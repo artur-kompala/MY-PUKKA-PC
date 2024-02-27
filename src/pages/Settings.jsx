@@ -3,6 +3,7 @@ import UpdateBenchmarkForm from "../features/settings/UpdateBenchmarkForm";
 import UpdateDatabaseForm from "../features/settings/UpdateDatabaseForm";
 import Heading from "../ui/Heading";
 import Row from "../ui/Row";
+import DeleteDatabaseForm from "../features/settings/DeleteDatabaseForm";
 
 function Settings() {
   const {t} = useTranslation();
@@ -13,6 +14,10 @@ function Settings() {
           <Row>
             <Heading as="h3">{t('Update benchmark')}</Heading>
             <UpdateBenchmarkForm />
+          </Row>
+          <Row>
+            <Heading as="h3">{t('Delete product')}</Heading>
+            <DeleteDatabaseForm/>
           </Row>
     
           <Row>

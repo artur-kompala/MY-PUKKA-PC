@@ -39,7 +39,7 @@ function predict(prices) {
   let slope = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
   let intercept = (sumY - slope * sumX) / n;
 
-  let nextPrice = slope * n + intercept;
+  let nextPrice = (slope * n + intercept);
 
   return nextPrice;
 }
@@ -80,26 +80,31 @@ function PriceChart({chart,last}) {
 
  
   const data = generateNextSevenDates(chart,last).map((item, index) => {
-    if(index === parseInt(n)-1){
+    
+    if(index === parseInt(n)){
+      
       return {
         label: zmienNaDzienMiesiac(item.date),
         totalPrice: Number(item.price),
-        extrasPrice: item.price,
+        extrasPrice: Number(item.price).toFixed(2),
       };
+      
     }
-    if(index <= parseInt(n)-1){
+    if(index < parseInt(n)){
+      
         return {
           label: zmienNaDzienMiesiac(item.date),
           totalPrice: Number(item.price),
         }
     }
-    if(index >= parseInt(n)-1){
+    if(index > parseInt(n)){
       return {
         label: zmienNaDzienMiesiac(item.date),
-        extrasPrice: item.price,
+        extrasPrice:  Number(item.price).toFixed(2),
       };
     }
   });
+
 
   const colors = isDarkMode
     ? {

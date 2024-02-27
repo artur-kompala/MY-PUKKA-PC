@@ -5,28 +5,26 @@ import FormRow from "../../ui/FormRow";
 import Input from "../../ui/Input";
 import { useUser } from "./useUser";
 import { useUpdateUser } from "./useUpdateUser";
+import { t } from "i18next";
 
 function UpdateUserDataForm() {
   const {
     user: {
-      email,
-      user_metadata: { fullName: currentFullName },
+      user_metadata: { fullName: currentFullName ,email},
     },
   } = useUser();
 
   const { updateUser, isUpdating } = useUpdateUser();
 
   const [fullName, setFullName] = useState(currentFullName);
-  const [avatar, setAvatar] = useState(null);
 
   function handleSubmit(e) {
     e.preventDefault();
     if (!fullName) return;
     updateUser(
-      { fullName, avatar },
+      { fullName},
       {
         onSuccess: () => {
-          setAvatar(null);
           e.target.reset();
         },
       }
@@ -35,16 +33,15 @@ function UpdateUserDataForm() {
 
   function handleCancel() {
     setFullName(currentFullName);
-    setAvatar(null);
   }
 
   return (
     <Form onSubmit={handleSubmit}>
-      <FormRow label="Email address">
+      <FormRow label={t("Email")}>
         <Input value={email} disabled />
       </FormRow>
 
-      <FormRow label="Full name">
+      <FormRow label={t("name")}>
         <Input
           type="text"
           value={fullName}
@@ -61,9 +58,9 @@ function UpdateUserDataForm() {
           disabled={isUpdating}
           onClick={handleCancel}
         >
-          Cancel
+          {t("Cancel")}
         </Button>
-        <Button disabled={isUpdating}>Update account</Button>
+        <Button disabled={isUpdating}>{t("Update account")}</Button>
       </FormRow>
     </Form>
   );

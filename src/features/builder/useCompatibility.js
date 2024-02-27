@@ -52,7 +52,6 @@ export function useCompatibility(cart,totalPower){
     }
     if(memory?.type && mobo?.memory_type){
         if(!mobo.memory_type.includes(memory.type)){
-            console.log('dupa');
             issues.push({component: t('ram'),desc: t('memoryTypeIssues')})
         }
     }
@@ -64,10 +63,5 @@ export function useCompatibility(cart,totalPower){
         }
     }
     
-    
-    
-    
-    
-
     return issues
 }

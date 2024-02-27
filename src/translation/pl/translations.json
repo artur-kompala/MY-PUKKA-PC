@@ -178,6 +178,20 @@
     "Last 30 days": "Ostatnie 30 dni",
     "Last 90 days": "Ostatnie 90 dni",
     "Specification": "Specyfikacja",
-    "Price from": "Cena od"
-    
+    "Price from": "Cena od",
+    "Manufacturer": "Producent",
+    "External volume": "Objętość",
+    "3.5 bays": "zatoki 3.5",
+    "GPU lenght": "Miesjce na kartę",
+    "CPU cooler lenght": "Wysokość chłodzenia procesora",
+    "Fan": "Chłodzenie",
+    "Side panel": "Panel boczny",
+    "Tempered Glass": "Szkło hartowane",
+    "suggestionDesc": "Znaleziono wydajniejszy i tańszy produkt:",
+    "Are you sure": "Czy jesteś pewny że chcesz usunąć",
+    "Delete product": "Usuń produkt",
+    "Update account": "Aktualizuj konto",
+    "Confirm password": "Potwierdź hasło",
+    "New password (min 8 chars)": "Nowe hasło (min 8 znaków)"
+
 }

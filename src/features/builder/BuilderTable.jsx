@@ -27,11 +27,24 @@ function BuilderTable({
     "storage",
     "os",
   ];
-
+  const cart = data[0].cart;
   let calcTotalCost = 0;
   let calcTotalPower = 0;
 
   useEffect(() => {
+   
+    if (cart) {
+      cart["cpu"] && (calcTotalPower += cart["cpu"].watts_usage);
+      console.log(cart["memory"]);
+      cart["memory"] && (calcTotalPower += (4 * counter[0]));
+      cart["storage"] && (calcTotalPower += 10);
+      cart["gpu"] && (calcTotalPower += cart["gpu"].rps);
+      cart["mobo"] && (calcTotalPower += 70);
+    }
+    console.log(calcTotalPower);
+    for (const type in cart) {
+      calcTotalCost += cart[type].price;
+    }
     setTotalPower(calcTotalPower);
     setTotalCost(calcTotalCost);
   }, [
@@ -40,22 +53,13 @@ function BuilderTable({
     setTotalPower,
     setTotalCost,
     refetch,
-    data
+    data,
+    counter
   ]);
 
   if (!isLoading) {
-    const cart = data[0].cart;
-    if (cart) {
-      cart["cpu"] && (calcTotalPower += cart["cpu"].watts_usage);
-      cart["ram"] && (calcTotalPower += 3.5);
-      cart["storage"] && (calcTotalPower += 10);
-      cart["gpu"] && (calcTotalPower += cart["gpu"].rps);
-      cart["mobo"] && (calcTotalPower += 70);
-    }
-
-    for (const type in cart) {
-      calcTotalCost += cart[type].price;
-    }
+    
+    
 
     return (
       <Menus>

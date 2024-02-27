@@ -175,7 +175,21 @@
     "Last 30 days": "Last 30 days",
     "Last 90 days": "Last 90 days",
     "Specification": "Specification",
-    "Price from": "Price from"
+    "Price from": "Price from",
+    "Manufacturer": "Manufacturer",
+    "External volume": "External volume",
+    "3.5 bays": "3.5 bays",
+    "GPU lenght": "GPU lenght",
+    "CPU cooler lenght": "CPU cooler lenght",
+    "Fan": "Fan",
+    "Side panel": "Side panel",
+    "Tempered Glass" : "Tempered Glass",
+    "suggestionDesc": "More efficient and cheaper product was found:",
+    "Are you sure": "Are you sure you want to delete",
+    "Delete product": "Delete product",
+    "Update account": "Update account",
+    "Confirm password": "Confirm password",
+    "New password (min 8 chars)": "New password (min 8 chars)"
 
 
 

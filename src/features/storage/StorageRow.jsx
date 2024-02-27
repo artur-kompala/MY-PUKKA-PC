@@ -20,11 +20,11 @@ function StorageRow({storage}) {
             <span onClick={()=>navigate(`/product/${gid}`)}>{name}</span>
             <div>{`${capacity}GB`}</div>
             <div>{type}</div>
-            <div>{cache}</div>
+            <div>{cache ? `${cache}`: "-"}</div>
             <div>{form_factor}</div>
             <div>{read}</div>
             <div>{write}</div>
-            <div>{score}</div>
+            <div>{score ? `${score}`: "-"}</div>
             <div>{price ? `${price}`: "-"}</div>
             <div>
                 <Button size='small' onClick={()=>handleClick("storage",storage)}>{t('addToBuild')}</Button>

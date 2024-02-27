@@ -16,7 +16,7 @@ const StyledProductLayout = styled.div`
   gap: 2.4rem;
 `;
 
-function ProductLayout({gid,rank,samples,score}) {
+function ProductLayout({gid,rank,samples,score,manufacture}) {
   const [searchParams] = useSearchParams();
   const last = searchParams.get('last') || '7';
 
@@ -31,7 +31,7 @@ function ProductLayout({gid,rank,samples,score}) {
     });
     
     
-    
+
     if(isLoading){
       return <Spinner></Spinner>
     }
@@ -40,8 +40,8 @@ function ProductLayout({gid,rank,samples,score}) {
       const { _id, name, chart, data: query } = data[0]
       return(
         <StyledProductLayout> 
-        <ProductDetails details={query.results[0].content}></ProductDetails>
-        {rank && score && samples && <ProductBenchmark rank={rank} samples={samples} score={score}></ProductBenchmark>}
+        <ProductDetails details={query.results[0].content} manufacture={manufacture}></ProductDetails>
+        {rank && score && samples && rank !== "undefined" && <ProductBenchmark rank={rank} samples={samples} score={score}></ProductBenchmark>}
         <PriceChart chart={chart} last={last}/>
         <ProductSpecs details={query.results[0].content}></ProductSpecs>
         </StyledProductLayout>

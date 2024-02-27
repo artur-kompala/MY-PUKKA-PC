@@ -19,7 +19,7 @@ function FanRow({fan}) {
             <span onClick={()=>navigate(`/product/${gid}`)}>{name}</span>
             <div>{size}</div>
             <div>{`${noise} dB`}</div>
-            <div>{led? "Yes" : "No"}</div>
+            <div>{led? t("Yes") : t("No")}</div>
             <div>{rpm}</div>
             <div>{flow} CFM</div>
             <div  style={{backgroundColor: color,borderStyle: 'solid', borderColor: '#4338ca', borderWidth: '2px',borderRadius: '1rem',width: "3rem",height: "3rem"}}>&nbsp;</div>

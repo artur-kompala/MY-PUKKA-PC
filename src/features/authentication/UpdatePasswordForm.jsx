@@ -5,6 +5,7 @@ import FormRow from "../../ui/FormRow";
 import Input from "../../ui/Input";
 
 import { useUpdateUser } from "./useUpdateUser";
+import { t } from "i18next";
 
 function UpdatePasswordForm() {
   const { register, handleSubmit, formState, getValues, reset } = useForm();
@@ -19,7 +20,7 @@ function UpdatePasswordForm() {
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <FormRow
-        label="New password (min 8 chars)"
+        label={t("New password (min 8 chars)")}
         error={errors?.password?.message}
       >
         <Input
@@ -38,7 +39,7 @@ function UpdatePasswordForm() {
       </FormRow>
 
       <FormRow
-        label="Confirm password"
+        label={t("Confirm password")}
         error={errors?.passwordConfirm?.message}
       >
         <Input
@@ -55,9 +56,9 @@ function UpdatePasswordForm() {
       </FormRow>
       <FormRow>
         <Button onClick={reset} type="reset" variation="secondary">
-          Cancel
+          {t("Cancel")}
         </Button>
-        <Button disabled={isUpdating}>Update password</Button>
+        <Button disabled={isUpdating}>{t("Update password")}</Button>
       </FormRow>
     </Form>
   );

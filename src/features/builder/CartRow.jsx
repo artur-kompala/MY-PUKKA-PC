@@ -62,7 +62,7 @@ function CartRow({ cart, list, isLoading, refetch, counter, setCounter }) {
       return (
         <Table.Row>
           <div>{t(list)}</div>
-          <div onClick={() => navigate(`/product/${cart[type].gid}`)}>
+          <div onClick={() => navigate(`/product/${cart[type].gid}?name=${cart[type].name}&manufacture=${cart[type].manufacture}&rank=${cart[type]?.rank}&samples=${cart[type]?.samples}&score=${cart[type]?.benchmark}`)}>
             {cart[type].manufacture + " " + cart[type].name}
           </div>
           {list === "memory" ? (

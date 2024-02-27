@@ -2,13 +2,15 @@ import { FaRegLightbulb } from "react-icons/fa"
 import ProductBox from "../product/ProductBox"
 import { useTranslation } from "react-i18next";
 
-function Suggestion({sugestion}) {
-    const {t,i18n} = useTranslation();
+function Suggestion({suggestion}) {
+    const {t} = useTranslation();
+    
+    
     return (
         <>
             <FaRegLightbulb />
         <p> {t("suggestion")}</p>
-        {sugestion.map((item,index)=>{
+        {suggestion.map((item,index)=>{
           return (
           <ProductBox key={index}>
           <h3>{item.component}</h3>

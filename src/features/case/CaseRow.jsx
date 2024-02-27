@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { addCart } from "../../services/apiCart";
 import Button from "../../ui/Button";
 import Table from "../../ui/Table";
+import { t } from "i18next";
 
 function CaseRow({ cas }) {
   const navigate = useNavigate();
@@ -26,13 +27,11 @@ function CaseRow({ cas }) {
     addCart(type, data).then(navigate("/builder"));
   }
   function countOccurrences(array) {
-    // Count occurrences
     const counts = array.reduce((acc, value) => {
       acc[value] = (acc[value] || 0) + 1;
       return acc;
     }, {});
 
-    // Convert to array of strings, then to JSX
     const formattedArray = Object.entries(counts).map(([value, count]) => (
       <div key={value}>{`${count}x${value}`}</div>
     ));
@@ -40,16 +39,13 @@ function CaseRow({ cas }) {
     return <>{formattedArray}</>;
   }
   function listElementsOnNewLines(array) {
-    // Map each element to itself followed by a newline character
     const result = array.map((element) => `${element}\n`).join("");
-
-    // Return the resulting string
     return result;
   }
   function DisplayList({ items }) {
     return <pre>{listElementsOnNewLines(items)}</pre>;
   }
-
+  console.log(side_panel);
   return (
     <Table.Row>
       <img
@@ -68,8 +64,8 @@ function CaseRow({ cas }) {
       <div>
         <DisplayList items={form_factor}></DisplayList>
       </div>
-      <div>{psu ? "Yes" : "No"}</div>
-      <div>{side_panel || "-"}</div>
+      <div>{psu ? t("Yes") : t("No")}</div>
+      <div>{side_panel === 'Tempered Glass'? t("Tempered Glass") : "-"}</div>
       <div>{external_volume || "-"}</div>
       <div>{internal_35_bays}</div>
       <div>{gpu_length}</div>
@@ -98,7 +94,7 @@ function CaseRow({ cas }) {
 
       <div>{price ? `${price}` : "-"}</div>
       <div>
-        <Button onClick={() => handleClick("cas", cas)}>+Add to Build</Button>
+        <Button onClick={() => handleClick("cas", cas)}>{t('addToBuild')}</Button>
       </div>
     </Table.Row>
   );

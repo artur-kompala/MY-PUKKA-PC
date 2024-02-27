@@ -3,8 +3,10 @@ import ProductBox from "./ProductBox"
 import Button  from "../../ui/Button";
 import {useNavigate } from "react-router-dom";
 import { t } from "i18next";
+import { useState } from "react";
 const Img = styled.img`
-    
+    margin-top: 30%;
+    margin-bottom: 30%;
     border-radius: var(--border-radius-md);
     
 `
@@ -18,8 +20,8 @@ const ShopBox = styled.div`
     
     
 `
-function ProductDetails({details}) {
-   const imgSrc = details.image_url
+function ProductDetails({details,manufacture}) {
+    const [imgError, setImgError] = useState(false);
    const navigate = useNavigate();
    function displayFirstTwoSentences(text) {
   
@@ -34,11 +36,11 @@ function ProductDetails({details}) {
     
     }
     const sortedOffers = details.offers.sort((a, b) => a.price - b.price).slice(0,3);
-
+    const imgSrc = imgError ? `/${manufacture}.svg` : details.image_url;
     return (
         <>
         <ProductBox>
-            <img src={imgSrc} referrerPolicy="no-referrer" width={300} alt="Zdjęcie produktu"/>
+        <Img src={imgSrc} onError={() => setImgError(true)} referrerPolicy="no-referrer" width={300} alt="Zdjęcie produktu" />
         </ProductBox>
         <ProductBox>
             <h3>{t("Description")}</h3>

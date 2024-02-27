@@ -18,7 +18,7 @@ function Product() {
           <Row type="horizontal">
             <Heading as="h1">{`${manufacture} ${name}`}</Heading>
           </Row>
-          <ProductLayout gid={gid} rank={rank} score={score} samples={samples}/>
+          <ProductLayout gid={gid} rank={rank} score={score} samples={samples} manufacture={manufacture}/>
         </>
       );
 }

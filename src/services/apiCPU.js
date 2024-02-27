@@ -22,3 +22,13 @@ export async function getCpuFilters(){
     }
 }
 
+export async function cpuSuggestion(price,_id,score){
+    const data = {
+        score: score,
+        price: price,
+        _id: _id
+    }
+    const result = await axios.post(`${API_URL}/cpuSuggestion`,data).catch(err=>console.log(err))
+    return result
+}
+

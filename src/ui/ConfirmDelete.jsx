@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Button from "./Button";
 import Heading from "./Heading";
+import { t } from "i18next";
 
 const StyledConfirmDelete = styled.div`
   width: 40rem;
@@ -24,9 +25,9 @@ function ConfirmDelete({ resourceName, onConfirm, disabled, onCloseModal}) {
   
   return (
     <StyledConfirmDelete>
-      <Heading as="h3">Delete {resourceName}</Heading>
+      <Heading as="h3">{`${t('delete')} ${t(resourceName)}`}</Heading>
       <p>
-        Are you sure you want to delete {resourceName} from cart.
+        {`${t('Are you sure')} ${resourceName}`}
       </p>
 
       <div>
@@ -35,10 +36,10 @@ function ConfirmDelete({ resourceName, onConfirm, disabled, onCloseModal}) {
           disabled={disabled}
           onClick={onCloseModal}
         >
-          Cancel
+          {t('Cancel')}
         </Button>
         <Button variation="danger" disabled={disabled} onClick={()=>{onConfirm(); onCloseModal();}}>
-          Delete
+        {t('delete')}
         </Button>
       </div>
     </StyledConfirmDelete>

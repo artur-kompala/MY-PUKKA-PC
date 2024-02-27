@@ -70,7 +70,21 @@ export async function logout() {
   localStorage.removeItem("auth-token");
 }
 
-export async function updateCurrentUser({ password, fullName, avatar }) {}
+export async function updateCurrentUser({ password, fullName}) {
+  const storedData = JSON.parse(localStorage.getItem("auth-token"));
+  const {
+    session: { token },
+    user,
+  } = storedData;
+
+  await axios
+    .post(`${API_URL}/updateUser?user=${user.user_metadata.email}&fullName=${fullName}&password=${password}`)
+    .then(()=> toast.success("Successfully delete"))
+    .catch((err) => toast.error(err.message))
+    .finally(()=>{
+      return;
+    });
+}
 
 export async function updateBench({ collection, file }) {
   let formData = new FormData();
@@ -99,6 +113,22 @@ export async function updateData({ collection, data }) {
       return null;
     }
   } catch (err) {
-    console.log(err);
+    throw new Error('ERROR')
+  }
+}
+
+export async function deleteProduct({collection,gid}){
+  const query = {
+    collection,
+    gid
+  };
+  console.log(query);
+  try {
+    const res = await axios.post(`${API_URL}/deleteProduct`,query);
+    if(res.status === 200){
+      return null
+    }
+  } catch (err) {
+      throw new Error('ERROR')
   }
 }
