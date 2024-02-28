@@ -1,6 +1,7 @@
 import axios from "axios";
 import { API_URL } from "../utils/constants";
 import toast from "react-hot-toast";
+import { t } from "i18next";
 
 
 
@@ -22,8 +23,8 @@ export async function addCart(type, product) {
         "Content-Type": "application/json",
       },
     })
-    .then(()=> toast.success("Product added successfully"))
-    .catch((err) => ()=>toast.error(err.message))
+    .then(()=> toast.success(t("Product added successfully")))
+    .catch((err) => ()=>toast.error(t('Error add product')))
     .finally(()=>{
       return;
     })
@@ -57,8 +58,8 @@ export async function deleteItemCart(item,refetch){
 
   await axios
     .delete(`${API_URL}/deleteItemCart?user=${user.user_metadata.fullName}&item=${item}`)
-    .then(()=> toast.success("Successfully delete"))
-    .catch((err) => toast.error(err.message))
+    .then(()=> toast.success(t("Successfully deleted")))
+    .catch((err) => toast.error(t('Error delete Cart')))
     .finally(()=>{
       refetch();
       return;

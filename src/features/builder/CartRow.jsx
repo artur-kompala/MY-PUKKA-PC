@@ -77,7 +77,13 @@ function CartRow({ cart, list, isLoading, refetch, counter, setCounter }) {
               setCounter={setCounter}
               index={1}
             ></QuanityBox>
-          ) : (
+          ) : list === "storage" ? (
+            <QuanityBox
+              counter={counter}
+              setCounter={setCounter}
+              index={2}
+            ></QuanityBox>
+          ): (
             <div></div>
           )}
           <div>{cart[type].price} PLN</div>

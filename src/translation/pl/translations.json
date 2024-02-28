@@ -192,6 +192,16 @@
     "Delete product": "Usuń produkt",
     "Update account": "Aktualizuj konto",
     "Confirm password": "Potwierdź hasło",
-    "New password (min 8 chars)": "Nowe hasło (min 8 znaków)"
+    "New password (min 8 chars)": "Nowe hasło (min 8 znaków)",
+    "Successfully deleted": "Pomyślnie usunięto",
+    "Error delete Cart": "Wystąpił problem podczas usuwania",
+    "Product added successfully": "Dodano pomyślnie produkt",
+    "Error add product": "Wystąpił problem podczas dodawania do koszyka",
+    "Login failed": "Logowanie nie powiodło się",
+    "Passwords need to match": "Hasła muszą być takie same",
+    "This field is required": "To pole jest wymagane",
+    "Password needs a minimum of 8 characters": "Hasło musi składać się z 8 znaków",
+    "Successfully update user": "Pomyślnie zaktualizowano użytkownika",
+    "Error during update": "Błąd podczas aktualizacji"
 
 }

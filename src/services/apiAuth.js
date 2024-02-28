@@ -63,7 +63,6 @@ export async function getCurrentUser() {
     console.log(err);
   }
 
-  return null;
 }
 
 export async function logout() {
@@ -77,13 +76,9 @@ export async function updateCurrentUser({ password, fullName}) {
     user,
   } = storedData;
 
-  await axios
-    .post(`${API_URL}/updateUser?user=${user.user_metadata.email}&fullName=${fullName}&password=${password}`)
-    .then(()=> toast.success("Successfully delete"))
-    .catch((err) => toast.error(err.message))
-    .finally(()=>{
-      return;
-    });
+  const result = await axios.post(`${API_URL}/updateUser?user=${user.user_metadata.email}&fullName=${fullName}&password=${password}`)
+  
+  return result.data
 }
 
 export async function updateBench({ collection, file }) {

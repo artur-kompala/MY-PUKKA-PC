@@ -189,7 +189,18 @@
     "Delete product": "Delete product",
     "Update account": "Update account",
     "Confirm password": "Confirm password",
-    "New password (min 8 chars)": "New password (min 8 chars)"
+    "New password (min 8 chars)": "New password (min 8 chars)",
+    "Successfully deleted": "Successfully deleted",
+    "Error delete Cart": "There was a problem while deleting",
+    "Product added successfully": "Product added successfully",
+    "Error add product": "There was a problem adding to cart",
+    "Login failed": "Login failed",
+    "Passwords need to match": "Passwords need to match",
+    "This field is required": "This field is required",
+    "Password needs a minimum of 8 characters": "Password needs a minimum of 8 characters",
+    "Successfully update user": "Successfully update user",
+    "Error during update": "Error during update"
+
 
 
 

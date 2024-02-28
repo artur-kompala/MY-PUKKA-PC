@@ -22,6 +22,7 @@ import Builder from "./pages/Builder";
 import Product from "./pages/Product";
 import Fan from "./pages/Fan";
 import Settings from "./pages/Settings";
+import ProtectedAdmin from "./ui/ProtectedAdmin";
 
 
 
@@ -64,7 +65,11 @@ function App() {
             <Route path="ram" element={<Ram />} />
             <Route path="Storage" element={<Storage />} />
             <Route path="account" element={<Account />} />
-            <Route path="settings" element={<Settings/>}/>
+            <Route path="settings" element={
+              <ProtectedAdmin>
+                <Settings></Settings>
+              </ProtectedAdmin>
+            }/>
             </Route>
             <Route path="login" element={<Login/>} />
             <Route path="*" />

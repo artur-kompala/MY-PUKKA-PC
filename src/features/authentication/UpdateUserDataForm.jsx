@@ -6,8 +6,10 @@ import Input from "../../ui/Input";
 import { useUser } from "./useUser";
 import { useUpdateUser } from "./useUpdateUser";
 import { t } from "i18next";
+import { useForm } from "react-hook-form";
 
 function UpdateUserDataForm() {
+  const { register } = useForm();
   const {
     user: {
       user_metadata: { fullName: currentFullName ,email},
@@ -37,7 +39,7 @@ function UpdateUserDataForm() {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <FormRow label={t("Email")}>
+      <FormRow label={"Email"}>
         <Input value={email} disabled />
       </FormRow>
 
@@ -48,6 +50,7 @@ function UpdateUserDataForm() {
           onChange={(e) => setFullName(e.target.value)}
           id="fullName"
           disabled={isUpdating}
+          minLength={5}
         />
       </FormRow>
 

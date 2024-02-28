@@ -27,7 +27,7 @@ function ConfirmDelete({ resourceName, onConfirm, disabled, onCloseModal}) {
     <StyledConfirmDelete>
       <Heading as="h3">{`${t('delete')} ${t(resourceName)}`}</Heading>
       <p>
-        {`${t('Are you sure')} ${resourceName}`}
+        {`${t('Are you sure')} ${t(resourceName)}`}
       </p>
 
       <div>

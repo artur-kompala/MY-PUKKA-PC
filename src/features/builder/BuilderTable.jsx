@@ -12,9 +12,9 @@ function BuilderTable({
   data,
   refetch,
   counter,
-  setCounter
+  setCounter,
 }) {
-  const {t,i18n} = useTranslation();
+  const { t } = useTranslation();
   const list = [
     "cpu",
     "cooler",
@@ -32,18 +32,29 @@ function BuilderTable({
   let calcTotalPower = 0;
 
   useEffect(() => {
-   
     if (cart) {
       cart["cpu"] && (calcTotalPower += cart["cpu"].watts_usage);
-      console.log(cart["memory"]);
-      cart["memory"] && (calcTotalPower += (4 * counter[0]));
-      cart["storage"] && (calcTotalPower += 10);
+      cart["memory"] && (calcTotalPower += 4 * counter[0]);
+      cart["storage"] && (calcTotalPower += 10 * counter[2]);
       cart["gpu"] && (calcTotalPower += cart["gpu"].rps);
       cart["mobo"] && (calcTotalPower += 70);
     }
-    console.log(calcTotalPower);
     for (const type in cart) {
-      calcTotalCost += cart[type].price;
+     console.log(type);
+      if (type === "memory") {
+        calcTotalCost += cart[type].price * counter[0];
+        continue;
+      }
+      if (type === "fan") {
+        calcTotalCost += cart[type].price * counter[1];
+        continue;
+      }
+      if (type === "storage") {
+        calcTotalCost += cart[type].price * counter[2];
+        continue;
+      } else {
+        calcTotalCost += cart[type].price;
+      }
     }
     setTotalPower(calcTotalPower);
     setTotalCost(calcTotalCost);
@@ -54,21 +65,18 @@ function BuilderTable({
     setTotalCost,
     refetch,
     data,
-    counter
+    counter,
   ]);
 
   if (!isLoading) {
-    
-    
-
     return (
       <Menus>
         <Table columns="5fr 5fr 5fr 1fr 1fr">
           <Table.Header>
-            <div>{t('component')}</div>
-            <div>{t('product')}</div>
-            <div>{t('quantity')}</div>
-            <div>{t('price')}</div>
+            <div>{t("component")}</div>
+            <div>{t("product")}</div>
+            <div>{t("quantity")}</div>
+            <div>{t("price")}</div>
           </Table.Header>
 
           <Table.Body
