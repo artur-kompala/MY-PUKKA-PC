@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useUser } from "./useUser";
 
-const StyledUserAvatar = styled.div`
+const StyledUserName = styled.div`
   display: flex;
   gap: 1.2rem;
   align-items: center;
@@ -10,15 +10,15 @@ const StyledUserAvatar = styled.div`
   color: var(--color-grey-600);
 `;
 
-function UserAvatar() {
+function UserName() {
   const { user } = useUser();
   const { fullName} = user.user_metadata;
 
   return (
-    <StyledUserAvatar>
+    <StyledUserName>
       <span>{fullName}</span>
-    </StyledUserAvatar>
+    </StyledUserName>
   );
 }
 
-export default UserAvatar;
+export default UserName;

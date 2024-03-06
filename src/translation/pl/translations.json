@@ -23,7 +23,7 @@
     "component": "komponent",
     "price": "cena",
     "totalCostLabel": "Koszt całkowity:",
-    "powerUsageLabel": "Zużycie prądu:",
+    "powerUsageLabel": "Moc zestawu:",
     "compatibilityIssues": "Problemy z kompatybilnością:",
     "suggestion": "Sugestie:",
     "choose": "Wybierz",
@@ -67,7 +67,7 @@
     "gid": "gid",
     "Update benchmark": "Aktualizuj testy wydajnościowe",
     "Update database": "Aktualizuj baze danych",
-    "Update collection": "Aktualizuj kolekcje",
+    "Update collection": "Dodaj produkt",
     "rpm": "Obroty",
     "noise_level": "Hałas",
     "color": "Kolor",
@@ -202,6 +202,8 @@
     "This field is required": "To pole jest wymagane",
     "Password needs a minimum of 8 characters": "Hasło musi składać się z 8 znaków",
     "Successfully update user": "Pomyślnie zaktualizowano użytkownika",
-    "Error during update": "Błąd podczas aktualizacji"
+    "Error during update": "Błąd podczas aktualizacji",
+    "All": "Wszytskie",
+    "Estimated price": "Przewidywana cena"
 
 }

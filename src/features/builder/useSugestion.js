@@ -25,8 +25,8 @@ export function useSugestion(cart) {
           {
             component: "Karta graficzna",
             desc: `${t("suggestionDesc")} ${gpuResult.data[0].manufacture} ${
-              gpuResult.data[0].name
-            }`,
+              gpuResult.data[0].name 
+            } ${gpuResult.data[0].chipset}`,
           },
         ]);
         }

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import HeaderMenu from "./HeaderMenu";
-import UserAvatar from "../features/authentication/UserAvatar";
+import UserName from "../features/authentication/UserName";
 
 const StyledHeader = styled.header`
   background-color: var(--color-grey-0);
@@ -16,7 +16,7 @@ const StyledHeader = styled.header`
 function Header() {
   return (
     <StyledHeader>
-      <UserAvatar />
+      <UserName />
       <HeaderMenu />
     </StyledHeader>
   );

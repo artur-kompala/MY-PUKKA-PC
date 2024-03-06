@@ -26,25 +26,26 @@ const StyledPriceChart = styled(ProductBox)`
   }
 `;
 function predict(prices) {
-  let n = prices.length;
+  const n = prices.length;
   let sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0;
 
   for (let i = 0; i < n; i++) {
-      sumX += i;
-      sumY += prices[i].price;
-      sumXY += i * prices[i].price;
-      sumX2 += i * i;
+    const currentPrice = prices[i].price;
+    const currentX = i;
+    sumX += currentX;
+    sumY += currentPrice;
+    sumXY += currentX * currentPrice;
+    sumX2 += currentX * currentX;
   }
-
-  let slope = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
-  let intercept = (sumY - slope * sumX) / n;
-
-  let nextPrice = (slope * n + intercept);
+  const slope = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
+  const intercept = (sumY - slope * sumX) / n;
+  const nextPrice = (slope * (n) + intercept);
+  if(nextPrice < 0) return null;
 
   return nextPrice;
 }
 
-function generateNextSevenDates(dates,last) {
+function generateNextDays(dates,last) {
   const lastdate = dates.at(-1).date
   const oneDay = 24 * 60 * 60 * 1000;
   for (let i = 0; i < last; i++) {
@@ -79,7 +80,7 @@ function PriceChart({chart,last}) {
 
 
  
-  const data = generateNextSevenDates(chart,last).map((item, index) => {
+  const data = generateNextDays(chart,last).map((item, index) => {
     
     if(index === parseInt(n)){
       
@@ -151,7 +152,7 @@ function PriceChart({chart,last}) {
             stroke={colors.totalPrice.stroke}
             fill={colors.totalPrice.fill}
             strokeWidth={3}
-            name="Price"
+            name={t("Price")}
             unit="zł"
           />
           <Area
@@ -160,7 +161,7 @@ function PriceChart({chart,last}) {
             stroke={colors.extrasPrice.stroke}
             fill={colors.extrasPrice.fill}
             strokeWidth={2}
-            name="Estimated price"
+            name={t("Estimated price")}
             unit="zł"
           />
         </AreaChart>

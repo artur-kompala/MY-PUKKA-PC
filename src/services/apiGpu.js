@@ -9,9 +9,7 @@ export async function getGpus({filter, sortBy, page}){
         console.log(err)
     })
     
-    const query = {data}
-    
-    return query
+    return data
 }
 
 export async function getGpuFilters(){

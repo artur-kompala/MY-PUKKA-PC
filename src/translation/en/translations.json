@@ -199,7 +199,9 @@
     "This field is required": "This field is required",
     "Password needs a minimum of 8 characters": "Password needs a minimum of 8 characters",
     "Successfully update user": "Successfully update user",
-    "Error during update": "Error during update"
+    "Error during update": "Error during update",
+    "All": "All",
+    "Estimated price": "Estimated price"
 
 
 

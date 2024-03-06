@@ -8,22 +8,22 @@ import color from "../../styles/color";
 import { getCpuFilters } from "../../services/apiCPU";
 import useFilters from "../useFilters";
 import { useTranslation } from "react-i18next";
-import { logout } from "../../services/apiAuth";
+import { t } from "i18next";
 
 const labels = {
-  manufactures: [{ value: "All", label: "All" }],
+  manufactures: [{ value: "All", label: t("All") }],
   graphic: [
-    { value: "All", label: "All" },
-    { value: "Yes", label: "Yes" },
-    { value: "No", label: "No" },
+    { value: "All", label: t("All") },
+    { value: "Yes", label: t("Yes") },
+    { value: "No", label: t("No") },
   ],
   smt: [
-    { value: "All", label: "All" },
-    { value: true, label: "Yes" },
-    { value: false, label: "No" },
+    { value: "All", label: t("All") },
+    { value: true, label: t("Yes") },
+    { value: false, label: t("No") },
   ],
-  coreFamily: [{ value: "All", label: "All" }],
-  socket: [{ value: "All", label: "All" }],
+  coreFamily: [{ value: "All", label: t("All") }],
+  socket: [{ value: "All", label: t("All") }],
   coreCount: [],
   coreClock: [],
   boostClock:[],

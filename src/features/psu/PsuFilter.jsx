@@ -118,7 +118,7 @@ function PsuFilter() {
           <FilterRangeSlider
             name={t("Wattge")}
             handleChangeSlider={handleChange}
-            handleLabel={"WATTGE"}
+            handleLabel={"WATTAGE"}
             value={state.wattageFilter}
             min={initialState.wattageFilter[0]}
             max={initialState.wattageFilter[1]}
